@@ -100,13 +100,18 @@ svg {
 
 .skip_animation {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  left: 10px;
+  top: 10px;
   background: none;
   border: none;
   font-size: large;
   font-weight: bolder;
   color: #fff;
+  cursor: pointer;
+}
+.skip_animation:hover {
+  color: #48f3e8;
+  transition: all 0.2s ease-in-out;
 }
 
 @keyframes fadeInside {

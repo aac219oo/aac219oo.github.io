@@ -12,6 +12,9 @@ body {
     position: relative;
     height: 100%;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 ul {
     list-style: none;
@@ -50,6 +53,7 @@ header {
 main {
     display: flex;
     flex-wrap: wrap;
+    flex: 1;
     section.left {
         flex: 3 1 50%;
         padding: 2rem;
@@ -66,16 +70,6 @@ main {
         // display: flex;
         flex: 1 1 50%;
         position: relative;
-        img {
-            border-radius: 50%;
-            width: 20vw;
-            height: 20vw;
-            position: absolute;
-            top: 50%;
-            right: 25vw;
-            transform: translateY(-50%);
-            object-fit: cover;
-        }
     }
     section.table {
         flex: 3 1 500px;
@@ -190,7 +184,24 @@ main {
         }
     }
 }
+.myPic {
+    position: fixed;
+    z-index: 0;
+    border-radius: 50%;
+    width: 20vw;
+    height: 20vw;
+    top: 50%;
+    right: 25vw;
+    transform: translateY(-50%);
+    object-fit: cover;
+    pointer-events: none;
+}
 footer {
+    padding: 1rem;
+    ul{
+        display: flex;
+        flex-wrap: wrap;
+    }
     a {
         padding: 1rem;
     }

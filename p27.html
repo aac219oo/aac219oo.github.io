@@ -1,46 +1,50 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>`text-shadow` 基本用法</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <style>
-        h2 { font-size: 2em; color: navy; }
-        /* 顏色 X Y 模糊  */
-        .a { 
-            text-shadow: red 1em 5px 10px; /* offset-x, offset-y, blur-radius, color */
-        }
-        .b { 
-            text-shadow: green 0.3em 0.3em 0.2em; /* 陰影顏色可選  */
-        }
-        .c {
-            color: orange;
-            text-shadow: 2px 2px 5px; /* 陰影顏色預設使用文字顏色  */
-        }
-    </style>
-</head>
-<body>
-    <img class="orange" src="./images/OrangeBackground.svg" alt="bgimg" />
-    <header>
-        <nav>
-            <ul>
-                <li><a class="active" href="/">首頁</a></li>
-                <li><a class="active" href="homework.html">作業區</a></li>
-                <!-- <li><a href="resume.html">我的履歷</a></li>
-                <li><a href="contact.html">聯絡方式</a></li> -->
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="left">
-            <h2>`text-shadow` 基本用法</h2>
-            <h2 class="a">效果看起來還不錯?</h2>
-            <h2 class="b">這樣還行吧?</h2>
-            <h2 class="c">這麼炫砲的嗎?</h2>
-            <p>備註：offset-x 右正左負；offset-y 下正上負 。</p>
-        </section>
-        <section class="right"></section>
-    </main>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>`text-shadow` 基本用法</title>
+        <link
+            rel="icon"
+            href="./images/6rifx-u8hmw-001.ico"
+            type="image/x-icon"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="./css/style.css" />
+        <style type="text/css">
+            h2 { font-size: 2em; color: navy; }
+            /* 顏色 X Y 模糊  */
+            .a {
+                text-shadow: red 1em 5px 10px; /* offset-x, offset-y, blur-radius, color */
+            }
+            .b {
+                text-shadow: green 0.3em 0.3em 0.2em; /* 陰影顏色可選  */
+            }
+            .c {
+                color: orange;
+                text-shadow: 2px 2px 5px; /* 陰影顏色預設使用文字顏色  */
+            }
+        </style>
+    </head>
+    <body>
+        <img class="orange" src="./images/OrangeBackground.svg" alt="bgimg" />
+        <header></header>
+        <main>
+            <section class="left">
+                <h2>`text-shadow` 基本用法</h2>
+                <h2 class="a">效果看起來還不錯?</h2>
+                <h2 class="b">這樣還行吧?</h2>
+                <h2 class="c">這麼炫砲的嗎?</h2>
+                <p>備註：offset-x 右正左負；offset-y 下正上負 。</p>
+            </section>
+            <section class="right"></section>
+        </main>
+        <footer></footer>
+    </body>
+    <script src="./js/layout.js"></script>
 </html>
