@@ -198,12 +198,22 @@ main {
 }
 footer {
     padding: 1rem;
-    ul{
+    ul {
         display: flex;
         flex-wrap: wrap;
     }
     a {
         padding: 1rem;
+        img {
+            transition: all 0.2s ease-in-out;
+        }
+        &:hover {
+            transition: all 0.2s ease-in-out;
+            img {
+                transform: translate(0px, -10px);
+                transition: all 0.2s ease-in-out;
+            }
+        }
     }
 }
 /*scrollbar setting*/
@@ -278,5 +288,15 @@ footer {
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-bottom: 10vh;
+        li{
+            text-align: center;
+        }
+        a {
+            padding: 0;
+        }
+        img {
+            width: 50%;
+        }
     }
 }

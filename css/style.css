@@ -201,6 +201,16 @@ footer ul {
 footer a {
   padding: 1rem;
 }
+footer a img {
+  transition: all 0.2s ease-in-out;
+}
+footer a:hover {
+  transition: all 0.2s ease-in-out;
+}
+footer a:hover img {
+  transform: translate(0px, -10px);
+  transition: all 0.2s ease-in-out;
+}
 
 /*scrollbar setting*/
 ::-webkit-scrollbar {
@@ -267,5 +277,15 @@ footer a {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10vh;
+  }
+  footer li {
+    text-align: center;
+  }
+  footer a {
+    padding: 0;
+  }
+  footer img {
+    width: 50%;
   }
 }/*# sourceMappingURL=style.css.map */
