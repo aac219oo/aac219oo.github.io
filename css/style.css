@@ -34,23 +34,34 @@ img.orange {
 header {
   padding: 2rem;
 }
-header nav {
+
+nav {
   width: 100%;
 }
-header nav ul {
+nav ul {
   width: 60%;
   display: flex;
   list-style-type: none;
   justify-content: start;
   gap: 5rem;
 }
-header nav ul li a {
+nav ul li a {
   font-size: 1.5rem;
   color: black;
   text-decoration: none;
 }
-header nav ul li a.active {
+nav ul li a.active {
   color: #e08958;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  margin: 10px;
+  border: none;
 }
 
 main {
@@ -236,11 +247,11 @@ footer a:hover img {
   div.orange {
     opacity: 0.5;
   }
-  header nav ul {
+  nav ul {
     width: 100%;
     flex-direction: column;
   }
-  header nav ul li {
+  nav ul li {
     padding: 1rem 0;
     border-bottom: 2px solid gray;
   }
@@ -287,5 +298,31 @@ footer a:hover img {
   }
   footer img {
     width: 50%;
+  }
+}
+@media screen and (max-width: 720px) {
+  nav ul {
+    opacity: 0;
+    flex-direction: column;
+    background: #444;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 250px;
+    max-width: 100%;
+    padding: 1rem;
+    z-index: 999;
+    transform: translateX(250px);
+    transition: all 0.5s ease-in-out;
+  }
+  nav ul.show {
+    display: flex;
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+  }
+  .menu-toggle {
+    display: block;
   }
 }/*# sourceMappingURL=style.css.map */

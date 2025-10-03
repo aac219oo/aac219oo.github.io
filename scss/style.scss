@@ -29,26 +29,35 @@ img.orange {
 }
 header {
     padding: 2rem;
-    nav {
-        width: 100%;
-        ul {
-            width: 60%;
-            display: flex;
-            list-style-type: none;
-            justify-content: start;
-            gap: 5rem;
-            li {
-                a {
-                    font-size: 1.5rem;
-                    color: black;
-                    text-decoration: none;
-                }
-                a.active {
-                    color: #e08958;
-                }
+}
+nav {
+    width: 100%;
+    ul {
+        width: 60%;
+        display: flex;
+        list-style-type: none;
+        justify-content: start;
+        gap: 5rem;
+        li {
+            a {
+                font-size: 1.5rem;
+                color: black;
+                text-decoration: none;
+            }
+            a.active {
+                color: #e08958;
             }
         }
     }
+}
+.menu-toggle {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+    margin: 10px;
+    border: none;
 }
 main {
     display: flex;
@@ -239,15 +248,15 @@ footer {
     div.orange {
         opacity: 0.5;
     }
-    header {
-        nav {
-            ul {
-                width: 100%;
-                flex-direction: column;
-                li {
-                    padding: 1rem 0;
-                    border-bottom: 2px solid gray;
-                }
+    // header {
+    // }
+    nav {
+        ul {
+            width: 100%;
+            flex-direction: column;
+            li {
+                padding: 1rem 0;
+                border-bottom: 2px solid gray;
             }
         }
     }
@@ -289,7 +298,7 @@ footer {
         justify-content: center;
         align-items: center;
         margin-bottom: 10vh;
-        li{
+        li {
             text-align: center;
         }
         a {
@@ -298,5 +307,36 @@ footer {
         img {
             width: 50%;
         }
+    }
+}
+
+@media screen and (max-width: 720px) {
+    nav {
+        ul {
+            // display: flex; // 預設隱藏
+            opacity: 0;
+            flex-direction: column;
+            background: #444;
+            position: fixed; // 固定在畫面上
+            top: 0;
+            right: 0;
+            height: 100vh; // 全螢幕高度
+            width: 250px;
+            max-width: 100%;
+            padding: 1rem;
+            z-index: 999;
+            transform: translateX(250px);
+            transition: all 0.5s ease-in-out;
+        }
+
+        ul.show {
+            display: flex; // 加上 show class 時顯示
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 0.6s ease-in-out;
+        }
+    }
+    .menu-toggle {
+        display: block;
     }
 }
