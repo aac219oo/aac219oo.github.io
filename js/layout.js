@@ -1,11 +1,12 @@
-function loadPart(selector, file) {
-  return fetch(file)
-    .then(response => response.text())
-    .then(data => {
-      document.querySelector(selector).innerHTML = data;
-      return new Promise(resolve => requestAnimationFrame(resolve)); 
-    })
-    .catch(err => console.error(`Error loading ${file}:`, err));
+async function loadPart(selector, file) {
+  try {
+    const response = await fetch(file);
+    const data = await response.text();
+    document.querySelector(selector).innerHTML = data;
+    return await new Promise(resolve => requestAnimationFrame(resolve));
+  } catch (err) {
+    return console.error(`Error loading ${file}:`, err);
+  }
 }
 
 // 先載入 header 和 footer
