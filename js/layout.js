@@ -16,11 +16,18 @@ Promise.all([
 ]).then(() => {
   // 漢堡特效
   const toggle = document.getElementById("menu-toggle");
+  const close = document.getElementById("menu-close");
   const navUl = document.querySelector("nav ul");
 
   if (toggle && navUl) {
     toggle.addEventListener("click", () => {
       navUl.classList.toggle("show");
+    });
+  }
+
+  if (close && navUl) {
+    close.addEventListener("click", () => {
+      navUl.classList.remove("show");
     });
   }
 
@@ -31,4 +38,14 @@ Promise.all([
       navUl.classList.remove("show");
     }
   });
+});
+
+const header = document.querySelector("header");
+
+window.addEventListener("scroll", () => {
+  if (window.pageYOffset > 0) {
+    header.classList.add("active");
+  } else {
+    header.classList.remove("active");
+  }
 });

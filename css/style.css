@@ -7,7 +7,6 @@
 
 html {
   height: 100%;
-  overflow: hidden;
 }
 
 body {
@@ -33,20 +32,38 @@ img.orange {
 
 header {
   display: flex;
-  padding: 2rem;
+  justify-content: space-between;
+  padding: 0.8rem 2rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: #fff;
+  transition: all 0.5s ease-in-out;
+}
+header.active {
+  padding: 0.3rem 2rem;
+  box-shadow: -6px -6px 16px #444;
+  opacity: 0.9;
+  transition: all 0.5s ease-in-out;
+}
+header.active .JHlogo img {
+  width: 60px;
+  transition: all 0.5s ease-in-out;
 }
 
 .JHlogo {
   display: flex;
-  width: 100%;
-  height: 100%;
 }
 .JHlogo img {
-  width: 120px;
+  width: 100px;
+  transition: all 0.5s ease-in-out;
 }
 
 nav {
-  width: 100%;
+  display: flex;
+  align-items: center;
 }
 nav ul {
   width: 60%;
@@ -56,6 +73,9 @@ nav ul {
   gap: 5rem;
 }
 nav ul li a {
+  display: block;
+  width: -moz-max-content;
+  width: max-content;
   font-size: 1.5rem;
   color: black;
   text-decoration: none;
@@ -79,39 +99,43 @@ main {
   display: flex;
   flex-wrap: wrap;
   flex: 1;
+  margin-top: 150px;
 }
-main section.left {
-  flex: 3 1 50%;
+
+section {
   padding: 2rem;
 }
-main section.left h1 {
+section.left {
+  flex: 3 1 50%;
+}
+section.left h1 {
   font-size: 4rem;
   color: #e08958;
 }
-main section.left p {
+section.left p {
   font-size: 1.5rem;
   padding: 1rem 0;
 }
-main section.right {
+section.right {
   flex: 1 1 50%;
   position: relative;
 }
-main section.table {
+section.table {
   flex: 3 1 500px;
   padding: 3rem;
 }
-main section.table table {
+section.table table {
   border-collapse: collapse;
 }
-main section.table table tr {
+section.table table tr {
   position: relative;
   border-bottom: 2px solid gray;
   background: transparent;
 }
-main section.table table tr td {
+section.table table tr td {
   padding: 2rem;
 }
-main section.table table tr::after {
+section.table table tr::after {
   content: "";
   position: absolute;
   top: 0;
@@ -123,21 +147,23 @@ main section.table table tr::after {
   transition: opacity 0.4s ease-in-out;
   z-index: -1;
 }
-main section.table table tr:hover::after {
+section.table table tr:hover::after {
   opacity: 1;
 }
-main td.icon img {
+
+td.icon img {
   width: 48px;
   height: 48px;
 }
-main section.picture {
+
+section.picture {
   flex: 1 1 600px;
   position: relative;
 }
-main section.picture img {
+section.picture img {
   height: 100%;
 }
-main section.picture div.orangeRect {
+section.picture div.orangeRect {
   width: 30vw;
   height: 50vw;
   background-color: #e08958;
@@ -146,24 +172,25 @@ main section.picture div.orangeRect {
   left: 60px;
   z-index: -1;
 }
-main section.form {
+
+section.form {
   flex: 1 1 600px;
 }
-main section.form form {
+section.form form {
   min-height: 70vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   padding: 0.5rem;
 }
-main section.form form div {
+section.form form div {
   margin: 0.5rem;
 }
-main section.form form div label {
+section.form form div label {
   font-size: 1.5rem;
 }
-main section.form form div input,
-main section.form form div textarea {
+section.form form div input,
+section.form form div textarea {
   background-color: #f9ac7f;
   color: #fff;
   font-size: 1.25rem;
@@ -172,10 +199,10 @@ main section.form form div textarea {
   width: 80%;
   resize: none;
 }
-main section.form form div textarea {
+section.form form div textarea {
   vertical-align: top;
 }
-main section.form form button {
+section.form form button {
   align-self: center;
   font-size: 1.5rem;
   border-radius: 0.75rem;
@@ -185,17 +212,19 @@ main section.form form button {
   color: #fff;
   cursor: pointer;
 }
-main div.line {
+
+div.line {
   background-color: gray;
   width: 3px;
 }
-main section.contact {
+
+section.contact {
   flex: 1 1 500px;
   display: flex;
   align-items: center;
   padding: 2rem;
 }
-main section.contact div.content h2 {
+section.contact div.content h2 {
   margin: 1rem 0rem;
 }
 
@@ -261,39 +290,41 @@ footer a:hover img {
   }
   nav ul {
     width: 100%;
-    flex-direction: column;
   }
   nav ul li {
     padding: 1rem 0;
-    border-bottom: 2px solid gray;
   }
-  main section.left h1 {
+  main {
+    flex-wrap: wrap-reverse;
+  }
+  main div.line {
+    display: none;
+  }
+  section.left h1 {
+    font-size: 3rem;
     color: black;
   }
-  main section.right {
+  section.right {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 1rem;
   }
-  main section.right img {
+  section.right img {
     position: static;
     transform: none;
     width: 50vw;
     height: 50vw;
   }
-  main section.picture {
+  section.picture {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  main section.picture img {
+  section.picture img {
     height: 60vw;
   }
-  main section.picture div.orangeRect {
-    display: none;
-  }
-  main div.line {
+  section.picture div.orangeRect {
     display: none;
   }
   footer {
@@ -313,6 +344,13 @@ footer a:hover img {
   }
 }
 @media screen and (max-width: 720px) {
+  img.orange {
+    width: 100vw;
+    height: 200vh;
+  }
+  nav {
+    justify-content: right;
+  }
   nav ul {
     opacity: 0;
     flex-direction: column;
@@ -327,6 +365,13 @@ footer a:hover img {
     z-index: 999;
     transform: translateX(250px);
     transition: all 0.5s ease-in-out;
+    gap: 0.5rem;
+  }
+  nav ul li {
+    justify-items: right;
+  }
+  nav ul li a {
+    color: #f9ac7f;
   }
   nav ul.show {
     display: flex;
@@ -336,5 +381,17 @@ footer a:hover img {
   }
   .menu-toggle {
     display: block;
+    padding: 1rem;
+  }
+  .menu-close {
+    display: block;
+    color: rgb(255, 239, 221);
+  }
+  section.right img {
+    width: 70vw;
+    height: 70vw;
+  }
+  section.table {
+    padding: 1rem;
   }
 }/*# sourceMappingURL=style.css.map */
