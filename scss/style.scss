@@ -154,8 +154,6 @@ section {
     }
 }
 
-
-
 td.icon {
     img {
         width: 48px;
@@ -266,6 +264,12 @@ footer {
             }
         }
     }
+}
+.width20 {
+    width: 20%;
+}
+.width80 {
+    width: 80%;
 }
 /*scrollbar setting*/
 ::-webkit-scrollbar {

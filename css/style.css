@@ -264,6 +264,14 @@ footer a:hover img {
   transition: all 0.2s ease-in-out;
 }
 
+.width20 {
+  width: 20%;
+}
+
+.width80 {
+  width: 80%;
+}
+
 /*scrollbar setting*/
 ::-webkit-scrollbar {
   width: 10px;
