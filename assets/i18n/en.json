@@ -1,0 +1,54 @@
+{
+    "message": {
+        "welcome": "Welcome",
+        "currentLang": "Current Language",
+        "currentTheme": "Current Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "chinese": "Chinese",
+        "english": "English"
+    },
+    "button": {
+        "switch_to_dark": "Switch to Dark Theme",
+        "switch_to_light": "Switch to Light Theme"
+    },
+    "menu": {
+        "home": "Home",
+        "about": "About",
+        "hw": "HW"
+    },
+    "pages": {
+        "home_title": "Home",
+        "home_content": "Home content",
+        "about_title": "About Me",
+        "about_content": "Introduce myself",
+        "homework_title": "Homework",
+        "homework_content": "Homework content"
+    },
+    "home": {
+    },
+    "about": {
+    },
+    "HW": {
+        "second" : "02.打造第一個網頁",
+        "third" : "03.網域名稱與服務內容",
+        "fourth" : "04.增加網頁顯示技術",
+        "fifth" : "05.表格練習",
+        "sixth" : "06."
+    },
+    "pageTitle": {
+        "home": "Home {pipe} James Hsu",
+        "about": "About me {pipe} James Hsu",
+        "hw": "Homework {pipe} James Hsu",
+        "hwhtmlcafe02": "2.段落",
+        "hwhtmlcafe03": "3.文字處理",
+        "hwhtmlcafe04": "4.清單",
+        "hwhtmlcafe05": "5.圖片",
+        "hw100218340": "04.增加網頁顯示技術",
+        "hw100218476": "05.表格練習",
+        "hwp24": "`text-decoration` 混合樣式",
+        "hwp27": "`text-shadow` 基本用法",
+        "hwp28": "`text-shadow` 多重效果",
+        "fallback": "Error {pipe} James Hsu"
+    }
+}

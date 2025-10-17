@@ -1,25 +1,151 @@
-// animation
-const text = document.querySelectorAll(".thePaths");
+import { createApp, ref, computed, watchEffect } from 'vue';
+import { createI18n } from 'vue-i18n';
+import router from './router/router.js';
 
-// for (let i = 0; i < text.length; i++) {
-//   console.log(`text number ${i} length is ${text[i].getTotalLength()}`);
-// }
+import Animation from './pages/animation.js';
+import Header from './layout/header.js';
+import Footer from './layout/footer.js';
 
-const lastWord = document.querySelector("#fourteenth");
-const animation = document.querySelector("div.animation");
-const skipBtn = document.querySelector("button.skip_animation");
+const DEFAULT_LOCALE = 'zh-Hant';
+const FALLBACK_LOCALE = 'en';
 
-function hideAnimation() {
-  animation.style =
-    "transition: all 0.8s ease; opacity: 0; pointer-events: none;";
+async function loadLanguageMessages(locale) {
+    const response = await fetch(`./assets/i18n/${locale}.json`);
+    if (!response.ok) {
+        console.error(`Failed to load language file for ${locale}`);
+        return {};
+    }
+    return await response.json();
 }
 
-lastWord.addEventListener("animationend", hideAnimation);
+function updateThemeLinks(theme) {
+    const lightLink = document.getElementById('theme-light');
+    const darkLink = document.getElementById('theme-dark');
+    const body = document.body;
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    hideAnimation();
-  }
-});
+    if (theme === 'dark') {
+        if (lightLink) lightLink.disabled = true;
+        if (darkLink) darkLink.disabled = false;
+        body.classList.add('dark');
+    } else {
+        if (lightLink) lightLink.disabled = false;
+        if (darkLink) darkLink.disabled = true;
+        body.classList.remove('dark');
+    }
+}
 
-skipBtn.addEventListener("click", hideAnimation);
+function handleScrollEffect() {
+    const header = document.querySelector("header");
+    if (!header) return;
+
+    const onScroll = () => {
+        if (window.pageYOffset > 0) {
+            header.classList.add("active");
+        } else {
+            header.classList.remove("active");
+        }
+    };
+    
+    // 立即執行一次，檢查初始位置
+    onScroll();
+
+    // 監聽滾動事件
+    window.addEventListener("scroll", onScroll);
+}
+
+async function bootstrapApp() {
+
+    const initialMessages = {};
+    initialMessages[DEFAULT_LOCALE] = await loadLanguageMessages(DEFAULT_LOCALE);
+    initialMessages[FALLBACK_LOCALE] = await loadLanguageMessages(FALLBACK_LOCALE);
+    const i18n = createI18n({ legacy: false, locale: DEFAULT_LOCALE, fallbackLocale: FALLBACK_LOCALE, messages: initialMessages });
+
+    watchEffect(() => {
+        const titleKey = router.currentRoute.value.meta.titleKey;
+        
+        if (titleKey) {
+            document.title = i18n.global.t(titleKey, {pipe: "|"});
+        } else {
+            document.title = 'Blog | James Hsu';
+        }
+    });
+
+    const App = {
+        components: {
+            'app-animation': Animation,
+            'app-header': Header,
+            'app-footer': Footer
+        },
+        setup() {
+            const currentTheme = ref('light');
+            const locale = i18n.global.locale;
+            const animationHasPlayed = ref(false);
+
+            const onAnimationFinished = () => {
+                animationHasPlayed.value = true;
+            };
+
+            const shouldShowAnimation = computed(() => {
+                return router.currentRoute.value.name === 'Home' && !animationHasPlayed.value;
+            });
+
+            const toggleTheme = () => {
+                const newTheme = currentTheme.value === 'light' ? 'dark' : 'light';
+                currentTheme.value = newTheme;
+                updateThemeLinks(newTheme);
+            };
+
+            const changeLocale = async (event) => {
+                const newLocale = event.target.value;
+                if (!i18n.global.messages.value[newLocale]) {
+                    const newMessages = await loadLanguageMessages(newLocale);
+                    i18n.global.setLocaleMessage(newLocale, newMessages);
+                }
+                locale.value = newLocale;
+            };
+
+            return {
+                currentTheme,
+                toggleTheme,
+                changeLocale,
+                i18n,
+                shouldShowAnimation,
+                onAnimationFinished,
+            };
+        },
+
+        mounted() {
+            updateThemeLinks(this.currentTheme);
+            handleScrollEffect();
+        },
+
+        template: `
+                <Transition>
+                    <app-animation 
+                        v-if="shouldShowAnimation" 
+                        @animation-finished="onAnimationFinished" 
+                    />
+                </Transition>
+                <app-header 
+                    :currentTheme="currentTheme" 
+                    :toggleTheme="toggleTheme"
+                    :changeLocale="changeLocale"
+                    :i18n="i18n"
+                />
+                <main class="p-4 md:p-8">
+                        <router-view />
+                </main>
+                <app-footer 
+                    :currentTheme="currentTheme"
+                    :i18n="i18n"
+                />
+        `,
+    };
+
+    createApp(App)
+        .use(i18n)
+        .use(router)
+        .mount('#app');
+}
+
+bootstrapApp();
