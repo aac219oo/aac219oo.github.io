@@ -3,10 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self' https://code.jquery.com 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://upload.wikimedia.org; object-src 'none';"
-        />
         <meta name="author" content="James Hsu" />
         <title>Sample</title>
         <link
@@ -24,9 +20,11 @@
     </head>
     <body>
         <img class="orange" src="./images/OrangeBackground.svg" alt="bgimg" />
-        <header></header>
-        <main></main>
-        <footer></footer>
+        <div id="app">
+            <header></header>
+            <main></main>
+            <footer></footer>
+        </div>
     </body>
     <script src="./js/layout.js"></script>
 </html>

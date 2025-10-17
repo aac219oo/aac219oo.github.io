@@ -1,0 +1,138 @@
+/* we will explain what these classes do next! */
+.v-leave-active {
+  transition: opacity 0.8s ease;
+}
+
+.v-leave-to {
+  opacity: 0;
+}
+
+div.animation {
+  width: 100%;
+  height: 100vh;
+  background-color: #e08958;
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#first {
+  stroke-dasharray: 304px;
+  stroke-dashoffset: 304px;
+  animation: fadeInside 0.5s ease-in forwards;
+}
+
+#second {
+  stroke-dasharray: 414px;
+  stroke-dashoffset: 414px;
+  animation: fadeInside 0.5s ease-in forwards 0.3s;
+}
+
+#third {
+  stroke-dasharray: 570px;
+  stroke-dashoffset: 570px;
+  animation: fadeInside 0.5s ease-in forwards 0.6s;
+}
+
+#fourth {
+  stroke-dasharray: 427px;
+  stroke-dashoffset: 427px;
+  animation: fadeInside 0.5s ease-in forwards 0.8s;
+}
+
+#fifth {
+  stroke-dasharray: 375px;
+  stroke-dashoffset: 375px;
+  animation: fadeInside 0.5s ease-in forwards 1s;
+}
+
+#sixth {
+  stroke-dasharray: 513px;
+  stroke-dashoffset: 513px;
+  animation: fadeInside 0.5s ease-in forwards 1.2s;
+}
+
+#seventh {
+  stroke-dasharray: 375px;
+  stroke-dashoffset: 375px;
+  animation: fadeInside 0.5s ease-in forwards 1.4s;
+}
+
+#eighth {
+  stroke-dasharray: 375px;
+  stroke-dashoffset: 375px;
+  animation: fadeInside 0.5s ease-in forwards 1.6s;
+}
+
+#ninth {
+  stroke-dasharray: 1540px;
+  stroke-dashoffset: 1540px;
+  animation: fadeInside 0.5s ease-in forwards 0.3s;
+}
+
+#tenth {
+  stroke-dasharray: 1178px;
+  stroke-dashoffset: 1178px;
+  animation: fadeInside 0.5s ease-in forwards 0.5s;
+}
+
+#eleventh {
+  stroke-dasharray: 1193px;
+  stroke-dashoffset: 1193px;
+  animation: fadeInside 0.5s ease-in forwards 0.7s;
+}
+
+#twelfth {
+  stroke-dasharray: 1439px;
+  stroke-dashoffset: 1439px;
+  animation: fadeInside 0.5s ease-in forwards 1s;
+}
+
+#thirdteenth {
+  stroke-dasharray: 1387px;
+  stroke-dashoffset: 1387px;
+  animation: fadeInside 0.5s ease-in forwards 1.3s;
+}
+
+#fourteenth {
+  stroke-dasharray: 1108px;
+  stroke-dashoffset: 1108px;
+  animation: fadeInside 0.5s ease-in forwards 1.6s;
+}
+
+svg {
+  animation: fill 0.5s ease-in forwards 1.6s;
+}
+
+.skip_animation {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  background: none;
+  border: none;
+  font-size: large;
+  font-weight: bolder;
+  color: #fff;
+  cursor: pointer;
+}
+.skip_animation:hover {
+  color: #48f3e8;
+  transition: all 0.2s ease-in-out;
+}
+
+@keyframes fadeInside {
+  to {
+    stroke-dashoffset: 0px;
+  }
+}
+@keyframes fill {
+  from {
+    fill: transparent;
+  }
+  to {
+    fill: #fff;
+  }
+}/*# sourceMappingURL=animation.css.map */

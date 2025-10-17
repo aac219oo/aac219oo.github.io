@@ -1,0 +1,54 @@
+{
+    "message": {
+        "welcome": "歡迎",
+        "currentLang": "當前語言",
+        "currentTheme": "當前主題",
+        "light": "淺色",
+        "dark": "深色",
+        "chinese": "中文",
+        "english": "英文"
+    },
+    "button": {
+        "switch_to_dark": "切換到深色主題",
+        "switch_to_light": "切換到淺色主題"
+    },
+    "menu": {
+        "home": "首頁",
+        "about": "關於我",
+        "hw": "作業"
+    },
+    "pages": {
+        "home_title": "應用程式首頁",
+        "home_content": "這是應用程式的主要內容。",
+        "about_title": "關於我",
+        "about_content": "這是關於我們的介紹頁面。",
+        "homework_title": "作業",
+        "homework_content": "這是作業區頁面。"
+    },
+    "home": {
+    },
+    "about": {
+    },
+    "HW": {
+        "second" : "02.打造第一個網頁",
+        "third" : "03.網域名稱與服務內容",
+        "fourth" : "04.增加網頁顯示技術",
+        "fifth" : "05.表格練習",
+        "sixth" : "06."
+    },
+    "pageTitle": {
+        "home": "首頁 {pipe} James Hsu",
+        "about": "關於我 {pipe} James Hsu",
+        "hw": "作業 {pipe} James Hsu",
+        "hwhtmlcafe02": "2.段落",
+        "hwhtmlcafe03": "3.文字處理",
+        "hwhtmlcafe04": "4.清單",
+        "hwhtmlcafe05": "5.圖片",
+        "hw100218340": "04.增加網頁顯示技術",
+        "hw100218476": "05.表格練習",
+        "hwp24": "`text-decoration` 混合樣式",
+        "hwp27": "`text-shadow` 基本用法",
+        "hwp28": "`text-shadow` 多重效果",
+        "fallback": "找不到頁面"
+    }
+}
