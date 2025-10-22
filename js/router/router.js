@@ -75,14 +75,6 @@ const routes = [
         }
     },
     {
-        path: '/HW/100218476',
-        name: 'HW/100218476',
-        component: () => import('../pages/HW/100218476.js'),
-        meta: {
-            titleKey: 'pageTitle.hw100218476'
-        }
-    },
-    {
         path: '/HW/p24',
         name: 'HW/p24',
         component: () => import('../pages/HW/p24.js'),
@@ -107,6 +99,54 @@ const routes = [
         }
     },
     {
+        path: '/HW/100218476',
+        name: 'HW/100218476',
+        component: () => import('../pages/HW/100218476.js'),
+        meta: {
+            titleKey: 'pageTitle.hw100218476'
+        }
+    },
+    {
+        path: '/HW/100219151',
+        name: 'HW/100219151',
+        component: () => import('../pages/HW/100219151.js'),
+        meta: {
+            titleKey: 'pageTitle.hw100219151.index'
+        }
+    },
+    {
+        path: '/HW/100219151/chatGPT',
+        name: 'HW/100219151/chatGPT',
+        component: () => import('../pages/HW/100219151/chatGPT.js'),
+        meta: {
+            titleKey: 'pageTitle.hw100219151_m.chatgpt'
+        }
+    },
+    {
+        path: '/HW/100219151/gemini',
+        name: 'HW/100219151/gemini',
+        component: () => import('../pages/HW/100219151/gemini.js'),
+        meta: {
+            titleKey: 'pageTitle.hw100219151.gemini'
+        }
+    },
+    {
+        path: '/HW/100219151/grok',
+        name: 'HW/100219151/grok',
+        component: () => import('../pages/HW/100219151/grok.js'),
+        meta: {
+            titleKey: 'pageTitle.hw100219151.grok'
+        }
+    },
+    {
+        path: '/HW/100219151/perplexity',
+        name: 'HW/100219151/perplexity',
+        component: () => import('../pages/HW/100219151/perplexity.js'),
+        meta: {
+            titleKey: 'pageTitle.hw100219151.perplexity'
+        }
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: () => import('../pages/error.js'),
@@ -120,6 +160,13 @@ const routes = [
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition;
+        } else {
+            return { top: 0, left: 0 };
+        }
+    }
 });
 
 export default router;

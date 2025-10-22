@@ -46,6 +46,13 @@
         "hwhtmlcafe05": "5.圖片",
         "hw100218340": "04.增加網頁顯示技術",
         "hw100218476": "05.表格練習",
+        "hw100219151": {
+            "index": "07.課堂練習2",
+            "chatgpt": "07.課堂練習2 - ChatGPT",
+            "gemini": "07.課堂練習2 - Gemini",
+            "grok": "07.課堂練習2 - Grok",
+            "perplexity": "07.課堂練習2 - Perplexity"
+        },
         "hwp24": "`text-decoration` 混合樣式",
         "hwp27": "`text-shadow` 基本用法",
         "hwp28": "`text-shadow` 多重效果",

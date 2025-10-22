@@ -132,7 +132,7 @@ async function bootstrapApp() {
                     :changeLocale="changeLocale"
                     :i18n="i18n"
                 />
-                <main class="p-4 md:p-8">
+                <main class="px-4 md:px-8 my-[120px] justify-center">
                         <router-view />
                 </main>
                 <app-footer 
