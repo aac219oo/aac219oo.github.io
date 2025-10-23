@@ -1,4 +1,4 @@
-import { createApp, ref, computed, watchEffect, onMounted } from 'vue';
+import { createApp, ref, computed, watchEffect } from 'vue';
 import { createI18n } from 'vue-i18n';
 import router from './router/router.js';
 
@@ -104,13 +104,6 @@ async function bootstrapApp() {
                 locale.value = newLocale;
             };
 
-            onMounted(() => {
-                const mask = document.querySelector('.mask');
-                if (mask) {
-                    mask.style.display = 'none';
-                }
-            });
-
             return {
                 currentTheme,
                 toggleTheme,
@@ -156,3 +149,8 @@ async function bootstrapApp() {
 }
 
 bootstrapApp();
+
+const mask = document.querySelector('.mask');
+if (mask) {
+    mask.style.display = 'none';
+}
