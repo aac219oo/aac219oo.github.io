@@ -119,7 +119,7 @@ const routes = [
         name: 'HW/100219151/chatGPT',
         component: () => import('../pages/HW/100219151/chatGPT.js'),
         meta: {
-            titleKey: 'pageTitle.hw100219151_m.chatgpt'
+            titleKey: 'pageTitle.hw100219151.chatgpt'
         }
     },
     {
