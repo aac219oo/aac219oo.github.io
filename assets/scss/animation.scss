@@ -1,9 +1,15 @@
 /* we will explain what these classes do next! */
 .v-leave-active {
-  transition: opacity 0.8s ease;
+    transition: opacity 0.8s ease;
 }
 .v-leave-to {
-  opacity: 0;
+    opacity: 0;
+}
+.mask {
+    &.hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 div.animation {
     width: 100%;

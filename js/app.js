@@ -83,6 +83,10 @@ async function bootstrapApp() {
 
             const onAnimationFinished = () => {
                 animationHasPlayed.value = true;
+                const mask = document.querySelector('.mask');
+                if (mask || animationHasPlayed.value) {
+                    mask.classList.add('hidden');
+                }
             };
 
             const shouldShowAnimation = computed(() => {
@@ -149,8 +153,3 @@ async function bootstrapApp() {
 }
 
 bootstrapApp();
-
-const mask = document.querySelector('.mask');
-if (mask) {
-    mask.style.display = 'none';
-}
