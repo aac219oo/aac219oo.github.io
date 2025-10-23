@@ -1,4 +1,4 @@
-import { createApp, ref, computed, watchEffect } from 'vue';
+import { createApp, ref, computed, watchEffect, onMounted } from 'vue';
 import { createI18n } from 'vue-i18n';
 import router from './router/router.js';
 
@@ -45,7 +45,7 @@ function handleScrollEffect() {
             header.classList.remove("active");
         }
     };
-    
+
     // 立即執行一次，檢查初始位置
     onScroll();
 
@@ -62,9 +62,9 @@ async function bootstrapApp() {
 
     watchEffect(() => {
         const titleKey = router.currentRoute.value.meta.titleKey;
-        
+
         if (titleKey) {
-            document.title = i18n.global.t(titleKey, {pipe: "|"});
+            document.title = i18n.global.t(titleKey, { pipe: "|" });
         } else {
             document.title = 'Blog | James Hsu';
         }
@@ -103,6 +103,13 @@ async function bootstrapApp() {
                 }
                 locale.value = newLocale;
             };
+
+            onMounted(() => {
+                const mask = document.querySelector('.mask');
+                if (mask) {
+                    mask.style.display = 'none';
+                }
+            });
 
             return {
                 currentTheme,
