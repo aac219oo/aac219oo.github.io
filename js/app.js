@@ -35,14 +35,14 @@ function updateThemeLinks(theme) {
 }
 
 function handleScrollEffect() {
-    const header = document.querySelector("header");
+    const header = document.querySelector('header');
     if (!header) return;
 
     const onScroll = () => {
         if (window.pageYOffset > 0) {
-            header.classList.add("active");
+            header.classList.add('active');
         } else {
-            header.classList.remove("active");
+            header.classList.remove('active');
         }
     };
 
@@ -50,21 +50,29 @@ function handleScrollEffect() {
     onScroll();
 
     // 監聽滾動事件
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener('scroll', onScroll);
 }
 
 async function bootstrapApp() {
-
     const initialMessages = {};
-    initialMessages[DEFAULT_LOCALE] = await loadLanguageMessages(DEFAULT_LOCALE);
-    initialMessages[FALLBACK_LOCALE] = await loadLanguageMessages(FALLBACK_LOCALE);
-    const i18n = createI18n({ legacy: false, locale: DEFAULT_LOCALE, fallbackLocale: FALLBACK_LOCALE, messages: initialMessages });
+    initialMessages[DEFAULT_LOCALE] = await loadLanguageMessages(
+        DEFAULT_LOCALE
+    );
+    initialMessages[FALLBACK_LOCALE] = await loadLanguageMessages(
+        FALLBACK_LOCALE
+    );
+    const i18n = createI18n({
+        legacy: false,
+        locale: DEFAULT_LOCALE,
+        fallbackLocale: FALLBACK_LOCALE,
+        messages: initialMessages,
+    });
 
     watchEffect(() => {
         const titleKey = router.currentRoute.value.meta.titleKey;
 
         if (titleKey) {
-            document.title = i18n.global.t(titleKey, { pipe: "|" });
+            document.title = i18n.global.t(titleKey, { pipe: '|' });
         } else {
             document.title = 'Blog | James Hsu';
         }
@@ -74,7 +82,7 @@ async function bootstrapApp() {
         components: {
             'app-animation': Animation,
             'app-header': Header,
-            'app-footer': Footer
+            'app-footer': Footer,
         },
         setup() {
             const currentTheme = ref('light');
@@ -84,17 +92,30 @@ async function bootstrapApp() {
 
             const onAnimationFinished = () => {
                 animationHasPlayed.value = true;
-
+                if (animationHasPlayed.value) {
+                    mask.classList.add('hidden');
+                }
             };
 
-            const shouldShowAnimation = computed(() => {
-                return router.currentRoute.value.name === 'Home' && !animationHasPlayed.value;
-            });
-            if (shouldShowAnimation) {
-                mask.classList.add('hidden');
+            if (mask) {
+                router.isReady().then(() => {
+                    if (router.currentRoute.value.name !== 'Home') {
+                        mask.classList.add('hidden');
+                        animationHasPlayed.value = true;
+                    }
+                });
             }
+
+            const shouldShowAnimation = computed(() => {
+                return (
+                    router.currentRoute.value.name === 'Home' &&
+                    !animationHasPlayed.value
+                );
+            });
+
             const toggleTheme = () => {
-                const newTheme = currentTheme.value === 'light' ? 'dark' : 'light';
+                const newTheme =
+                    currentTheme.value === 'light' ? 'dark' : 'light';
                 currentTheme.value = newTheme;
                 updateThemeLinks(newTheme);
             };
@@ -146,10 +167,7 @@ async function bootstrapApp() {
         `,
     };
 
-    createApp(App)
-        .use(i18n)
-        .use(router)
-        .mount('#app');
+    createApp(App).use(i18n).use(router).mount('#app');
 }
 
 bootstrapApp();
