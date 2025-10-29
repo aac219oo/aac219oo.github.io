@@ -1,7 +1,7 @@
 import { h, ref, onMounted, onUnmounted } from 'vue';
-import { animationTemplate } from './templates/animation.js'
+import { AnimationTemplate } from './templates/animation_temp.js'
 const Animation = {
-    template: animationTemplate,
+    template: AnimationTemplate,
     emits: ['animation-finished'],
     setup(props, { emit }) {
         const lastWord = ref(null);
