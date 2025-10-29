@@ -80,19 +80,19 @@ async function bootstrapApp() {
             const currentTheme = ref('light');
             const locale = i18n.global.locale;
             const animationHasPlayed = ref(false);
+            const mask = document.querySelector('.mask');
 
             const onAnimationFinished = () => {
                 animationHasPlayed.value = true;
-                const mask = document.querySelector('.mask');
-                if (mask || animationHasPlayed.value) {
-                    mask.classList.add('hidden');
-                }
+
             };
 
             const shouldShowAnimation = computed(() => {
                 return router.currentRoute.value.name === 'Home' && !animationHasPlayed.value;
             });
-
+            if (shouldShowAnimation) {
+                mask.classList.add('hidden');
+            }
             const toggleTheme = () => {
                 const newTheme = currentTheme.value === 'light' ? 'dark' : 'light';
                 currentTheme.value = newTheme;

@@ -1,0 +1,16 @@
+{
+    "navLinks": [
+        {
+            "path": "/",
+            "i18nKey": "menu.home"
+        },
+        {
+            "path": "/About",
+            "i18nKey": "menu.about"
+        },
+        {
+            "path": "/HW",
+            "i18nKey": "menu.hw"
+        }
+    ]
+}

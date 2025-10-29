@@ -1,4 +1,4 @@
-export const animationTemplate = `
+export const AnimationTemplate = `
 <!-- Animation -->
 <div class="animation" id="animation-target">
     <button type="button" class="skip_animation" @click="finishAnimation">

@@ -11,6 +11,7 @@ const Homework = {
                 <li><router-link to="/HW/100218340">04.增加網頁顯示技術</router-link></li>
                 <li><router-link to="/HW/100218476">05.表格練習</router-link></li>
                 <li><router-link to="/HW/100219151">07.課堂練習2</router-link></li>
+                <li><router-link to="/HW/100219359">08.課堂作業</router-link></li>
             </ul>
         </div>
     `
