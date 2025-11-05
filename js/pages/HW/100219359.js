@@ -7,6 +7,7 @@ const HW100219359 = {
                     'https://unsplash.com/@leongsan?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText',
                 photoUrl:
                     'https://unsplash.com/photos/people-waiting-on-a-train-platform-d2aCbaPymVU?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText',
+                model: '電腦',
             },
             photoSource: 'Unsplash',
         };
@@ -23,6 +24,7 @@ const HW100219359 = {
                         'https://unsplash.com/@junelmujar?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText',
                     photoUrl:
                         'https://unsplash.com/photos/sandy-dunes-with-misty-ocean-and-distant-hills-3fKdRnTBYkw?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText',
+                    model: '手機直式',
                 };
             } else if (desktop.matches) {
                 this.currentAuthor = {
@@ -31,6 +33,7 @@ const HW100219359 = {
                         'https://unsplash.com/@leongsan?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText',
                     photoUrl:
                         'https://unsplash.com/photos/people-waiting-on-a-train-platform-d2aCbaPymVU?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText',
+                    model: '電腦',
                 };
             } else {
                 this.currentAuthor = {
@@ -39,6 +42,7 @@ const HW100219359 = {
                         'https://unsplash.com/@zvchmiller?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText',
                     photoUrl:
                         'https://unsplash.com/photos/person-in-pig-mask-and-overalls-on-train-EdGIQOgIKjI?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText',
+                    model: '手機橫式',
                 };
             }
         };
@@ -49,6 +53,7 @@ const HW100219359 = {
     },
     template: `
         <section>
+            <p>現在是【{{ currentAuthor.model }}】模式<p>
             <picture>
                 <source
                     media="(min-width: 1200px)"
