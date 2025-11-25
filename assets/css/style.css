@@ -8,6 +8,11 @@ html {
 
 body {
   position: relative;
+  color: var(--color-primary-500, #000000);
+}
+
+a {
+  transition: all 0.2s ease-in-out;
 }
 
 #app {
@@ -18,12 +23,64 @@ body {
   min-height: 100vh;
 }
 
-img.orange {
-  position: fixed;
-  right: 0;
-  z-index: -1;
-  width: 55vw;
-  height: 2400px;
+.theme-selector-popover {
+  position: absolute;
+  top: 100%;
+  margin-top: 8px;
+  width: auto;
+  padding: 16px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dark {
+  background-color: #363636;
+  color: var(--color-primary-500, #f1f1f1);
+}
+.dark.theme-default {
+  color: var(--color-primary-500, #f1f1f1);
+}
+.dark header {
+  background-color: #363636;
+}
+.dark header.active {
+  box-shadow: -6px -6px 16px rgb(0, 0, 0);
+  opacity: 0.9;
+}
+.dark .theme-selector-popover {
+  background-color: #434343;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.theme-orange header {
+  border-bottom: var(--color-primary-500, #e08958) 1px;
+}
+.theme-orange a:hover,
+.theme-orange button:hover {
+  color: var(--color-primary-500, #e08958);
+}
+
+.theme-blue a:hover,
+.theme-blue button:hover {
+  color: var(--color-primary-500, #6595ff);
+}
+
+.theme-green a:hover,
+.theme-green button:hover {
+  color: var(--color-primary-500, #0dbe33);
+}
+
+.theme-red a:hover,
+.theme-red button:hover {
+  color: var(--color-primary-500, #ff5c5f);
+}
+
+.toggle-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 header {
@@ -72,7 +129,6 @@ nav ul li a {
   width: -moz-max-content;
   width: max-content;
   font-size: 1.5rem;
-  color: black;
   text-decoration: none;
 }
 nav ul li a.active {
