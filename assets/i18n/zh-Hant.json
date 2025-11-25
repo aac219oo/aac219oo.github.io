@@ -8,9 +8,14 @@
         "chinese": "中文",
         "english": "英文"
     },
-    "button": {
-        "switch_to_dark": "切換到深色主題",
-        "switch_to_light": "切換到淺色主題"
+    "theme": {
+        "color_theme": "顏色主題：",
+        "theme_mode": "主題模式：",
+        "default": "預設",
+        "orange": "橘色",
+        "blue": "藍色",
+        "green": "綠色",
+        "red": "紅色"
     },
     "menu": {
         "home": "首頁",
@@ -25,16 +30,14 @@
         "homework_title": "作業",
         "homework_content": "這是作業區頁面。"
     },
-    "home": {
-    },
-    "about": {
-    },
+    "home": {},
+    "about": {},
     "HW": {
-        "second" : "02.打造第一個網頁",
-        "third" : "03.網域名稱與服務內容",
-        "fourth" : "04.增加網頁顯示技術",
-        "fifth" : "05.表格練習",
-        "sixth" : "06."
+        "second": "02.打造第一個網頁",
+        "third": "03.網域名稱與服務內容",
+        "fourth": "04.增加網頁顯示技術",
+        "fifth": "05.表格練習",
+        "sixth": "06."
     },
     "pageTitle": {
         "home": "首頁 {pipe} James Hsu",

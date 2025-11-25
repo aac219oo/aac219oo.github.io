@@ -3,11 +3,13 @@ import { createI18n } from 'vue-i18n';
 import router from './router/router.js';
 
 import Animation from './pages/animation.js';
-import Header from './layout/header.js';
+import Header, { THEMES } from './layout/header.js';
 import Footer from './layout/footer.js';
 
 const DEFAULT_LOCALE = 'zh-Hant';
 const FALLBACK_LOCALE = 'en';
+
+const DEFAULT_THEME = 'orange';
 
 async function loadLanguageMessages(locale) {
     const response = await fetch(`./assets/i18n/${locale}.json`);
@@ -32,6 +34,16 @@ function updateThemeLinks(theme) {
         if (darkLink) darkLink.disabled = true;
         body.classList.remove('dark');
     }
+}
+
+function updateColorTheme(themeName) {
+    const body = document.body;
+
+    THEMES.forEach((t) => {
+        body.classList.remove(`theme-${t}`);
+    });
+
+    body.classList.add(`theme-${themeName}`);
 }
 
 function handleScrollEffect() {
@@ -85,7 +97,8 @@ async function bootstrapApp() {
             'app-footer': Footer,
         },
         setup() {
-            const currentTheme = ref('light');
+            const currentMode = ref('light');
+            const currentColorTheme = ref(DEFAULT_THEME);
             const locale = i18n.global.locale;
             const animationHasPlayed = ref(false);
             const mask = document.querySelector('.mask');
@@ -113,11 +126,16 @@ async function bootstrapApp() {
                 );
             });
 
-            const toggleTheme = () => {
-                const newTheme =
-                    currentTheme.value === 'light' ? 'dark' : 'light';
-                currentTheme.value = newTheme;
-                updateThemeLinks(newTheme);
+            const toggleMode = () => {
+                const newMode =
+                    currentMode.value === 'light' ? 'dark' : 'light';
+                currentMode.value = newMode;
+                updateThemeLinks(newMode);
+            };
+
+            const changeColorTheme = (targetTheme) => {
+                currentColorTheme.value = targetTheme;
+                updateColorTheme(targetTheme);
             };
 
             const changeLocale = async (event) => {
@@ -130,8 +148,10 @@ async function bootstrapApp() {
             };
 
             return {
-                currentTheme,
-                toggleTheme,
+                currentMode,
+                currentColorTheme,
+                toggleMode,
+                changeColorTheme,
                 changeLocale,
                 i18n,
                 shouldShowAnimation,
@@ -140,7 +160,8 @@ async function bootstrapApp() {
         },
 
         mounted() {
-            updateThemeLinks(this.currentTheme);
+            updateThemeLinks(this.currentMode);
+            updateColorTheme(this.currentColorTheme);
             handleScrollEffect();
         },
 
@@ -151,17 +172,20 @@ async function bootstrapApp() {
                         @animation-finished="onAnimationFinished" 
                     />
                 </Transition>
-                <app-header 
-                    :currentTheme="currentTheme" 
-                    :toggleTheme="toggleTheme"
+                <app-header
+                    :currentMode="currentMode" 
+                    :toggleMode="toggleMode"
+                    :currentColorTheme="currentColorTheme"
+                    :changeColorTheme="changeColorTheme"
                     :changeLocale="changeLocale"
                     :i18n="i18n"
                 />
                 <main class="px-4 md:px-8 my-[120px] justify-center">
                         <router-view />
                 </main>
-                <app-footer 
-                    :currentTheme="currentTheme"
+                <app-footer
+                    :currentMode="currentMode"
+                    :currentColorTheme="currentColorTheme"
                     :i18n="i18n"
                 />
         `,
