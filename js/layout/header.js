@@ -8,6 +8,10 @@ export const THEME_COLORS = {
     red: '#FF5C5F',
 };
 export const THEMES = Object.keys(THEME_COLORS);
+export const LANGUAGES = [
+    { name: '中文', value: 'zh-Hant' },
+    { name: 'English', value: 'en' },
+];
 
 export const HeaderTemplate = /* html */ `
     <header>
@@ -43,22 +47,20 @@ export const HeaderTemplate = /* html */ `
                 
                 <div v-if="isThemeSelectorOpen" class="theme-selector-popover">
                     
-                    <div class="theme-section">
-                        <div class="flex gap-[10px]">
-                            <span class="w-max">{{ $t('theme.color_theme') }}</span>
-                            <button 
-                                v-for="theme in THEMES" 
-                                :key="theme" 
-                                @click="setThemeColor(theme)"
-                                :class="[
-                                    'color-theme w-6 h-6 rounded-lg cursor-pointer hover:scale-[1.2] transition-transform duration-200 ease-in-out',
-                                    'theme-' + theme,
-                                    currentColorTheme === theme ? 'scale-[1.2]' : ''
-                                ]"
-                                :style="{ backgroundColor: getThemeColor(theme) }"
-                                :aria-label="$t('theme.' + theme)"
-                            ></button>
-                        </div>
+                    <div class="theme-section flex gap-[10px]">
+                        <span class="w-max">{{ $t('theme.color_theme') }}</span>
+                        <button 
+                            v-for="theme in THEMES" 
+                            :key="theme" 
+                            @click="setThemeColor(theme)"
+                            :class="[
+                                'color-theme w-6 h-6 rounded-lg cursor-pointer hover:scale-[1.2] transition-transform duration-200 ease-in-out',
+                                'theme-' + theme,
+                                currentColorTheme === theme ? 'scale-[1.2]' : ''
+                            ]"
+                            :style="{ backgroundColor: getThemeColor(theme) }"
+                            :aria-label="$t('theme.' + theme)"
+                        ></button>
                     </div>
                     
                     <hr class="my-3 border-gray-200 dark:border-gray-700"/>
@@ -104,22 +106,29 @@ export const HeaderTemplate = /* html */ `
                 </div>
             </div>
             
-            <button>
-                <svg class="w-[30px] fill-current text-primary-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M192 64C209.7 64 224 78.3 224 96L224 128L352 128C369.7 128 384 142.3 384 160C384 177.7 369.7 192 352 192L342.4 192L334 215.1C317.6 260.3 292.9 301.6 261.8 337.1C276 345.9 290.8 353.7 306.2 360.6L356.6 383L418.8 243C423.9 231.4 435.4 224 448 224C460.6 224 472.1 231.4 477.2 243L605.2 531C612.4 547.2 605.1 566.1 589 573.2C572.9 580.3 553.9 573.1 546.8 557L526.8 512L369.3 512L349.3 557C342.1 573.2 323.2 580.4 307.1 573.2C291 566 283.7 547.1 290.9 531L330.7 441.5L280.3 419.1C257.3 408.9 235.3 396.7 214.5 382.7C193.2 399.9 169.9 414.9 145 427.4L110.3 444.6C94.5 452.5 75.3 446.1 67.4 430.3C59.5 414.5 65.9 395.3 81.7 387.4L116.2 370.1C132.5 361.9 148 352.4 162.6 341.8C148.8 329.1 135.8 315.4 123.7 300.9L113.6 288.7C102.3 275.1 104.1 254.9 117.7 243.6C131.3 232.3 151.5 234.1 162.8 247.7L173 259.9C184.5 273.8 197.1 286.7 210.4 298.6C237.9 268.2 259.6 232.5 273.9 193.2L274.4 192L64.1 192C46.3 192 32 177.7 32 160C32 142.3 46.3 128 64 128L160 128L160 96C160 78.3 174.3 64 192 64zM448 334.8L397.7 448L498.3 448L448 334.8z"/></svg>
-            </button>
-            <select @change="changeLocale" class="mr-auto">
-                <option
-                    value="zh-Hant"
-                    :selected="$i18n.locale === 'zh-Hant'"
+            <div class="relative toggle-lang">
+                <button
+                    @click="isLangSelectorOpen = !isLangSelectorOpen" 
+                    class="cursor-pointer flex items-center p-2 rounded"
                 >
-                    中文
-                </option>
-                <option value="en" :selected="$i18n.locale === 'en'">
-                    English
-                </option>
-            </select>
+                    <app-icon name="language" class="w-[30px] text-primary-500" />
+                </button>
+                <div v-if="isLangSelectorOpen" class="theme-selector-popover">
+                    <div class="flex flex-col gap-[10px]">
+                        <button 
+                            v-for="lang in LANGUAGES" 
+                            :key="lang.value" 
+                            @click="setLocale(lang.value)"
+                            class="text-left px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            :class="{ 'text-primary-500 font-bold': i18n.global.locale.value === lang.value }"
+                        >
+                            {{ lang.name }}
+                        </button>
+                    </div>
+                </div>
+            </div>
         
-            <ul>
+            <ul class="ml-auto">
                 <li 
                     v-for="link in navLinks" 
                     :key="link.path"
@@ -150,6 +159,7 @@ const Header = {
         const isMenuOpen = ref(false);
         const navLinks = ref([]);
         const isThemeSelectorOpen = ref(false);
+        const isLangSelectorOpen = ref(false);
 
         const toggleMenu = () => {
             isMenuOpen.value = !isMenuOpen.value;
@@ -160,10 +170,15 @@ const Header = {
         const getThemeColor = (theme) => {
             return THEME_COLORS[theme] || 'gray';
         };
+        const setLocale = (langValue) => {
+            props.changeLocale({ target: { value: langValue } });
+            isLangSelectorOpen.value = false; // 選擇後關閉選單
+        };
         const handleClickOutside = (event) => {
             const toggleButton = document.getElementById('menu-toggle');
             const navElement = document.querySelector('header nav');
             const themeContainer = document.querySelector('.toggle-theme');
+            const langContainer = document.querySelector('.toggle-lang');
 
             if (
                 isMenuOpen.value &&
@@ -181,6 +196,14 @@ const Header = {
                 !themeContainer.contains(event.target)
             ) {
                 isThemeSelectorOpen.value = false;
+            }
+
+            if (
+                isLangSelectorOpen.value &&
+                langContainer &&
+                !langContainer.contains(event.target)
+            ) {
+                isLangSelectorOpen.value = false;
             }
         };
 
@@ -211,12 +234,16 @@ const Header = {
             toggleMenu,
             navLinks,
             isThemeSelectorOpen,
+            isLangSelectorOpen,
             THEMES,
             THEME_COLORS,
+            LANGUAGES,
             setThemeColor,
             getThemeColor,
+            setLocale,
             toggleMode: props.toggleMode,
             currentColorTheme: toRef(props, 'currentColorTheme'),
+            i18n: props.i18n,
         };
     },
 
