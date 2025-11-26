@@ -1,12 +1,21 @@
 import { h } from 'vue';
+import AppIcon from '/js/components/AppIcon.js';
 
 const Home = {
-    template: `
-        <div class="page-content">
-            <h2>{{ $t('pages.home_title') }}</h2>
-            <p>{{ $t('pages.home_content') }}</p>
-        </div>
-    `
+    components: {
+        'app-icon': AppIcon,
+    },
+    template: /* html */ `
+            <div class="relative w-full">
+                <img class="block w-full h-[480px] object-cover brightness-125" src="/assets/images/christian-joudrey-yCCZvWbah_g-unsplash.jpg" alt="banner">
+                <div class="absolute top-[40%] left-[50%] -translate-[50%]">
+                    <p class="text-white font-black text-7xl drop-shadow-xl/80 text-center">JH BLOG</p>
+                    <p class="text-white font-bold text-2xl drop-shadow-xl/80 text-center">"Fear is an interesting counselor."</p>
+                    <p class="text-white font-bold text-xl drop-shadow-xl/80 text-right">by Alex Honnold</p>
+                </div>
+                <app-icon name="vector" class="absolute top-[85%] left-[50%] w-[50px] -translate-[50%]" />
+            </div>
+    `,
 };
 
 export default Home;

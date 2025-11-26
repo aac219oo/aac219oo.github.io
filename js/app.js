@@ -1,4 +1,4 @@
-import { createApp, ref, computed, watchEffect } from 'vue';
+import { createApp, ref, computed, watchEffect, onMounted, onUnmounted } from 'vue';
 import { createI18n } from 'vue-i18n';
 import router from './router/router.js';
 
@@ -39,25 +39,6 @@ function updateColorTheme(themeName) {
     });
 
     body.classList.add(`theme-${themeName}`);
-}
-
-function handleScrollEffect() {
-    const header = document.querySelector('header');
-    if (!header) return;
-
-    const onScroll = () => {
-        if (window.pageYOffset > 0) {
-            header.classList.add('active');
-        } else {
-            header.classList.remove('active');
-        }
-    };
-
-    // 立即執行一次，檢查初始位置
-    onScroll();
-
-    // 監聽滾動事件
-    window.addEventListener('scroll', onScroll);
 }
 
 async function bootstrapApp() {
@@ -105,6 +86,38 @@ async function bootstrapApp() {
             const animationHasPlayed = ref(false);
             const mask = document.querySelector('.mask');
             const progressBarRef = ref(null);
+            const headerRef = ref(null);
+            const lastScrollY = ref(0);
+            const isHeaderHidden = ref(false);
+            const isHeaderActive = ref(false);
+
+            const handleScroll = () => {
+                const currentScrollY = window.scrollY;
+
+                if (currentScrollY <= 0) {
+                    isHeaderHidden.value = false;
+                    isHeaderActive.value = false;
+                }
+                else if (currentScrollY > lastScrollY.value) {
+                    isHeaderHidden.value = true;
+                    isHeaderActive.value = false;
+                }
+                else {
+                    isHeaderHidden.value = false;
+                    isHeaderActive.value = true;
+                }
+
+                lastScrollY.value = currentScrollY;
+            };
+
+            const headerClasses = computed(() => {
+                return {
+                    'fixed w-full top-0 z-50 transition-transform duration-300 ease-in-out': true,
+                    '-translate-y-full': isHeaderHidden.value,
+                    'translate-y-0': !isHeaderHidden.value,
+                    'active': isHeaderActive.value,
+                };
+            });
 
             const onAnimationFinished = () => {
                 animationHasPlayed.value = true;
@@ -162,6 +175,16 @@ async function bootstrapApp() {
                 progressBarRef.value?.finish();
             });
 
+            onMounted(() => {
+                updateThemeLinks(currentMode.value);
+                updateColorTheme(currentColorTheme.value);
+                window.addEventListener('scroll', handleScroll);
+            });
+            
+            onUnmounted(() => {
+                window.removeEventListener('scroll', handleScroll);
+            });
+
             return {
                 currentMode,
                 currentColorTheme,
@@ -172,13 +195,9 @@ async function bootstrapApp() {
                 shouldShowAnimation,
                 onAnimationFinished,
                 progressBarRef,
+                headerRef,
+                headerClasses,
             };
-        },
-
-        mounted() {
-            updateThemeLinks(this.currentMode);
-            updateColorTheme(this.currentColorTheme);
-            handleScrollEffect();
         },
 
         template: `
@@ -190,6 +209,8 @@ async function bootstrapApp() {
                     />
                 </Transition>
                 <app-header
+                    ref="headerRef"
+                    :class="headerClasses"
                     :currentMode="currentMode" 
                     :toggleMode="toggleMode"
                     :currentColorTheme="currentColorTheme"
@@ -197,7 +218,7 @@ async function bootstrapApp() {
                     :changeLocale="changeLocale"
                     :i18n="i18n"
                 />
-                <main class="px-4 md:px-8 my-[120px] justify-center">
+                <main class="max-w-[1980px] my-[106px] justify-center">
                     <router-view />
                 </main>
                 <app-footer
