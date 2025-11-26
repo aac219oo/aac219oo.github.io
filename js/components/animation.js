@@ -1,5 +1,5 @@
 import { h, ref, onMounted, onUnmounted } from 'vue';
-import { AnimationTemplate } from './templates/animation_temp.js'
+import { AnimationTemplate } from './animation_temp.js'
 const Animation = {
     template: AnimationTemplate,
     emits: ['animation-finished'],

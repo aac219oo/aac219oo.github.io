@@ -2,9 +2,10 @@ import { createApp, ref, computed, watchEffect } from 'vue';
 import { createI18n } from 'vue-i18n';
 import router from './router/router.js';
 
-import Animation from './pages/animation.js';
+import Animation from './components/animation.js';
 import Header, { THEMES } from './layout/header.js';
 import Footer from './layout/footer.js';
+import ProgressBar from './components/ProgressBar.js';
 
 const DEFAULT_LOCALE = 'zh-Hant';
 const FALLBACK_LOCALE = 'en';
@@ -93,6 +94,7 @@ async function bootstrapApp() {
             'app-animation': Animation,
             'app-header': Header,
             'app-footer': Footer,
+            'app-progress-bar': ProgressBar,
         },
         setup() {
             const savedMode = localStorage.getItem('theme-mode');
@@ -102,6 +104,7 @@ async function bootstrapApp() {
             const locale = i18n.global.locale;
             const animationHasPlayed = ref(false);
             const mask = document.querySelector('.mask');
+            const progressBarRef = ref(null);
 
             const onAnimationFinished = () => {
                 animationHasPlayed.value = true;
@@ -150,6 +153,15 @@ async function bootstrapApp() {
                 localStorage.setItem('user-locale', newLocale);
             };
 
+            router.beforeEach((to, from, next) => {
+                progressBarRef.value?.start();
+                next();
+            });
+
+            router.afterEach(() => {
+                progressBarRef.value?.finish();
+            });
+
             return {
                 currentMode,
                 currentColorTheme,
@@ -159,6 +171,7 @@ async function bootstrapApp() {
                 i18n,
                 shouldShowAnimation,
                 onAnimationFinished,
+                progressBarRef,
             };
         },
 
@@ -169,6 +182,7 @@ async function bootstrapApp() {
         },
 
         template: `
+                <app-progress-bar ref="progressBarRef" />
                 <Transition>
                     <app-animation 
                         v-if="shouldShowAnimation" 
@@ -184,7 +198,7 @@ async function bootstrapApp() {
                     :i18n="i18n"
                 />
                 <main class="px-4 md:px-8 my-[120px] justify-center">
-                        <router-view />
+                    <router-view />
                 </main>
                 <app-footer
                     :currentMode="currentMode"
