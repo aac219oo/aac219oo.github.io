@@ -21,17 +21,11 @@ async function loadLanguageMessages(locale) {
 }
 
 function updateThemeLinks(theme) {
-    const lightLink = document.getElementById('theme-light');
-    const darkLink = document.getElementById('theme-dark');
     const body = document.body;
 
     if (theme === 'dark') {
-        if (lightLink) lightLink.disabled = true;
-        if (darkLink) darkLink.disabled = false;
         body.classList.add('dark');
     } else {
-        if (lightLink) lightLink.disabled = false;
-        if (darkLink) darkLink.disabled = true;
         body.classList.remove('dark');
     }
 }
@@ -66,6 +60,7 @@ function handleScrollEffect() {
 }
 
 async function bootstrapApp() {
+    const savedLocale = localStorage.getItem('user-locale') || DEFAULT_LOCALE;
     const initialMessages = {};
     initialMessages[DEFAULT_LOCALE] = await loadLanguageMessages(
         DEFAULT_LOCALE
@@ -73,9 +68,12 @@ async function bootstrapApp() {
     initialMessages[FALLBACK_LOCALE] = await loadLanguageMessages(
         FALLBACK_LOCALE
     );
+    if (savedLocale !== DEFAULT_LOCALE && savedLocale !== FALLBACK_LOCALE) {
+        initialMessages[savedLocale] = await loadLanguageMessages(savedLocale);
+    }
     const i18n = createI18n({
         legacy: false,
-        locale: DEFAULT_LOCALE,
+        locale: savedLocale,
         fallbackLocale: FALLBACK_LOCALE,
         messages: initialMessages,
     });
@@ -97,8 +95,10 @@ async function bootstrapApp() {
             'app-footer': Footer,
         },
         setup() {
-            const currentMode = ref('light');
-            const currentColorTheme = ref(DEFAULT_THEME);
+            const savedMode = localStorage.getItem('theme-mode');
+            const currentMode = ref(savedMode || 'light');
+            const savedColorTheme = localStorage.getItem('color-theme');
+            const currentColorTheme = ref(savedColorTheme || DEFAULT_THEME);
             const locale = i18n.global.locale;
             const animationHasPlayed = ref(false);
             const mask = document.querySelector('.mask');
@@ -131,11 +131,13 @@ async function bootstrapApp() {
                     currentMode.value === 'light' ? 'dark' : 'light';
                 currentMode.value = newMode;
                 updateThemeLinks(newMode);
+                localStorage.setItem('theme-mode', newMode);
             };
 
             const changeColorTheme = (targetTheme) => {
                 currentColorTheme.value = targetTheme;
                 updateColorTheme(targetTheme);
+                localStorage.setItem('color-theme', targetTheme);
             };
 
             const changeLocale = async (event) => {
@@ -145,6 +147,7 @@ async function bootstrapApp() {
                     i18n.global.setLocaleMessage(newLocale, newMessages);
                 }
                 locale.value = newLocale;
+                localStorage.setItem('user-locale', newLocale);
             };
 
             return {

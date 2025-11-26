@@ -119,7 +119,7 @@ export const HeaderTemplate = /* html */ `
                             v-for="lang in LANGUAGES" 
                             :key="lang.value" 
                             @click="setLocale(lang.value)"
-                            class="text-left px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            class="text-left px-2 py-1 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                             :class="{ 'text-primary-500 font-bold': i18n.global.locale.value === lang.value }"
                         >
                             {{ lang.name }}
