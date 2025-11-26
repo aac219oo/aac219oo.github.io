@@ -56,6 +56,9 @@ a {
     }
 }
 .theme-orange {
+    .mask {
+        background-color: var(--color-primary-500, #e08958);
+    }
     header {
         border-bottom: var(--color-primary-500, #e08958) 1px solid;
         &.active {
@@ -73,6 +76,9 @@ a {
     }
 }
 .theme-blue {
+    .mask {
+        background-color: var(--color-primary-500, #6595ff);
+    }
     header {
         border-bottom: var(--color-primary-500, #6595ff) 1px solid;
         &.active {
@@ -90,6 +96,9 @@ a {
     }
 }
 .theme-green {
+    .mask {
+        background-color: var(--color-primary-500, #0dbe33);
+    }
     header {
         border-bottom: var(--color-primary-500, #0dbe33) 1px solid;
         &.active {
@@ -107,6 +116,9 @@ a {
     }
 }
 .theme-red {
+    .mask {
+        background-color: var(--color-primary-500, #ff5c5f);
+    }
     header {
         border-bottom: var(--color-primary-500, #ff5c5f) 1px solid;
         &.active {
