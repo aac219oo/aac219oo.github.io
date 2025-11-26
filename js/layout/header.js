@@ -1,5 +1,6 @@
 import { ref, toRef, onMounted, onUnmounted } from 'vue';
 import AppIcon from '/js/components/AppIcon.js';
+import { useClickOutside } from '/js/composables/useClickOutside.js';
 
 export const THEME_COLORS = {
     orange: '#E08958',
@@ -19,6 +20,7 @@ export const HeaderTemplate = /* html */ `
             <app-icon name="logo" class="w-[80px] text-primary-500" />
         </router-link>
         <button 
+            ref="menuBtnRef"
             class="menu-toggle" 
             id="menu-toggle" 
             aria-label="切換選單"
@@ -27,7 +29,7 @@ export const HeaderTemplate = /* html */ `
             <app-icon name="menu" width="40" height="40" class="fill-black" />
         </button>
         
-        <nav :class="{ 'show': isMenuOpen }" class="w-full gap-2 mx-2"> 
+        <nav ref="navRef" :class="{ 'show': isMenuOpen }" class="w-full gap-2 mx-2"> 
             <button
                 class="menu-toggle menu-close"
                 id="menu-close"
@@ -37,8 +39,9 @@ export const HeaderTemplate = /* html */ `
                 <app-icon name="close" width="40" height="40" />
             </button>
         
-            <div class="relative toggle-theme">
+            <div ref="themeContainerRef" class="relative">
                 <button 
+                    ref="themeBtnRef"
                     @click="isThemeSelectorOpen = !isThemeSelectorOpen" 
                     class="cursor-pointer flex items-center p-2 rounded"
                 >
@@ -46,7 +49,6 @@ export const HeaderTemplate = /* html */ `
                 </button>
                 
                 <div v-if="isThemeSelectorOpen" class="theme-selector-popover">
-                    
                     <div class="theme-section flex gap-[10px]">
                         <span class="w-max">{{ $t('theme.color_theme') }}</span>
                         <button 
@@ -106,8 +108,9 @@ export const HeaderTemplate = /* html */ `
                 </div>
             </div>
             
-            <div class="relative toggle-lang">
+            <div ref="langContainerRef" class="relative">
                 <button
+                    ref="langBtnRef"
                     @click="isLangSelectorOpen = !isLangSelectorOpen" 
                     class="cursor-pointer flex items-center p-2 rounded"
                 >
@@ -160,6 +163,14 @@ const Header = {
         const navLinks = ref([]);
         const isThemeSelectorOpen = ref(false);
         const isLangSelectorOpen = ref(false);
+        const menuBtnRef = ref(null);
+        const navRef = ref(null);
+
+        const themeBtnRef = ref(null);
+        const themeContainerRef = ref(null);
+
+        const langBtnRef = ref(null);
+        const langContainerRef = ref(null);
 
         const toggleMenu = () => {
             isMenuOpen.value = !isMenuOpen.value;
@@ -172,40 +183,32 @@ const Header = {
         };
         const setLocale = (langValue) => {
             props.changeLocale({ target: { value: langValue } });
-            isLangSelectorOpen.value = false; // 選擇後關閉選單
         };
-        const handleClickOutside = (event) => {
-            const toggleButton = document.getElementById('menu-toggle');
-            const navElement = document.querySelector('header nav');
-            const themeContainer = document.querySelector('.toggle-theme');
-            const langContainer = document.querySelector('.toggle-lang');
 
-            if (
-                isMenuOpen.value &&
-                navElement &&
-                !navElement.contains(event.target) &&
-                toggleButton &&
-                !toggleButton.contains(event.target)
-            ) {
-                isMenuOpen.value = false;
-            }
+        useClickOutside(
+            navRef,
+            () => {
+                if (isMenuOpen.value) isMenuOpen.value = false;
+            },
+            menuBtnRef
+        );
 
-            if (
-                isThemeSelectorOpen.value &&
-                themeContainer &&
-                !themeContainer.contains(event.target)
-            ) {
-                isThemeSelectorOpen.value = false;
-            }
+        useClickOutside(
+            themeContainerRef,
+            () => {
+                if (isThemeSelectorOpen.value)
+                    isThemeSelectorOpen.value = false;
+            },
+            themeBtnRef
+        );
 
-            if (
-                isLangSelectorOpen.value &&
-                langContainer &&
-                !langContainer.contains(event.target)
-            ) {
-                isLangSelectorOpen.value = false;
-            }
-        };
+        useClickOutside(
+            langContainerRef,
+            () => {
+                if (isLangSelectorOpen.value) isLangSelectorOpen.value = false;
+            },
+            langBtnRef
+        );
 
         const loadheader = async () => {
             try {
@@ -221,12 +224,7 @@ const Header = {
         };
 
         onMounted(() => {
-            document.addEventListener('click', handleClickOutside);
             loadheader();
-        });
-
-        onUnmounted(() => {
-            document.removeEventListener('click', handleClickOutside);
         });
 
         return {
@@ -244,6 +242,12 @@ const Header = {
             toggleMode: props.toggleMode,
             currentColorTheme: toRef(props, 'currentColorTheme'),
             i18n: props.i18n,
+            menuBtnRef,
+            navRef,
+            themeBtnRef,
+            themeContainerRef,
+            langBtnRef,
+            langContainerRef,
         };
     },
 
