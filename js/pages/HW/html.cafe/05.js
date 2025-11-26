@@ -11,7 +11,7 @@ const htmlCafe05 = {
             <hr>
             <h2>這是本地連結圖片</h2>
             <img
-                src="./js/pages/HW/html.cafe/images/ChatGPT Image 2025年9月17日 下午07_59_16.png"
+                src="./assets/images/ChatGPT Image 2025年9月17日 下午07_59_16.png"
                 alt="ChatGPT Image：做菜"
                 title="ChatGPT Image：做菜"
                 width="100%"

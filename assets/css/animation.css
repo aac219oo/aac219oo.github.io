@@ -166,6 +166,22 @@
   animation: fill 0.5s ease-in forwards 1.6s;
 }
 
+.theme-orange .animation {
+  background-color: var(--color-primary-500, #e08958);
+}
+
+.theme-blue .animation {
+  background-color: var(--color-primary-500, #6595ff);
+}
+
+.theme-green .animation {
+  background-color: var(--color-primary-500, #0dbe33);
+}
+
+.theme-red .animation {
+  background-color: var(--color-primary-500, #ff5c5f);
+}
+
 #first {
   stroke-dasharray: 304px;
   stroke-dashoffset: 304px;
@@ -256,13 +272,15 @@
   top: 10px;
   background: none;
   border: none;
-  font-size: large;
+  font-size: small;
   font-weight: bolder;
   color: #fff;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 .skip_animation:hover {
-  color: #48f3e8;
+  transform: scale(1.2);
+  color: #fff !important;
   transition: all 0.2s ease-in-out;
 }
 
