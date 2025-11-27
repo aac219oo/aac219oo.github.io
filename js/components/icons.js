@@ -33,5 +33,24 @@ export const icons = {
     moon: {
         viewBox: "0 0 640 640",
         path: `<path d="M320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576C388.8 576 451.3 548.8 497.3 504.6C504.6 497.6 506.7 486.7 502.6 477.5C498.5 468.3 488.9 462.6 478.8 463.4C473.9 463.8 469 464 464 464C362.4 464 280 381.6 280 280C280 207.9 321.5 145.4 382.1 115.2C391.2 110.7 396.4 100.9 395.2 90.8C394 80.7 386.6 72.5 376.7 70.3C358.4 66.2 339.4 64 320 64z"/>`
+    },
+    // banner裝飾 
+    vector: {
+        viewBox: "0 0 60 70",
+        path: `<g filter="url(#filter0_d_105_5)">
+        <path d="M42.5 15C43.8828 15 45 16.1172 45 17.5V47.5C45 48.8828 43.8828 50 42.5 50C41.1172 50 40 48.8828 40 47.5V17.5C40 16.1172 41.1172 15 42.5 15ZM30 20C31.3828 20 32.5 21.1172 32.5 22.5V52.5C32.5 53.8828 31.3828 55 30 55C28.6172 55 27.5 53.8828 27.5 52.5V22.5C27.5 21.1172 28.6172 20 30 20ZM17.5 50C16.1172 50 15 48.8828 15 47.5V17.5C15 16.1172 16.1172 15 17.5 15C18.8828 15 20 16.1172 20 17.5V47.5C20 48.8828 18.8828 50 17.5 50Z" fill="white"/>
+        </g>
+        <defs>
+        <filter id="filter0_d_105_5" x="0" y="0" width="60" height="70" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset/>
+        <feGaussianBlur stdDeviation="7.5"/>
+        <feComposite in2="hardAlpha" operator="out"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.75 0"/>
+        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_105_5"/>
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_105_5" result="shape"/>
+        </filter>
+        </defs>`
     }
 };

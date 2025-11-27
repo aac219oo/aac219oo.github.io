@@ -43,7 +43,7 @@ export default {
     },
     template: `
         <div 
-            class="progress-bar fixed top-0 left-0 h-[2px] bg-primary-500 z-[99999] transition-all duration-300 ease-out"
+            class="progress-bar fixed top-0 left-0 h-[2px] bg-primary z-[99999] transition-all duration-300 ease-out"
             :style="{ 
                 width: progress + '%', 
                 opacity: show ? 1 : 0 

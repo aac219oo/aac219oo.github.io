@@ -14,7 +14,7 @@ a {
 
 #app {
     height: 100%;
-    overflow: auto;
+    // overflow: auto;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -26,27 +26,13 @@ a {
     margin-top: 8px;
     width: auto;
     padding: 16px;
-    background-color: white;
     border-radius: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
 
 .dark {
-    background-color: #363636;
-    color: var(--color-primary-500, #f1f1f1);
-    &.theme-default {
-        color: var(--color-primary-500, #f1f1f1);
-    }
-    header {
-        background-color: #363636;
-        &.active {
-            box-shadow: -6px -6px 16px rgba(0, 0, 0, 1);
-            opacity: 0.9;
-        }
-    }
     .theme-selector-popover {
-        background-color: #434343;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
 }
@@ -56,84 +42,16 @@ a {
     }
 }
 .theme-orange {
-    .mask {
-        background-color: var(--color-primary-500, #e08958);
-    }
-    header {
-        border-bottom: var(--color-primary-500, #e08958) 1px solid;
-        &.active {
-            box-shadow: -6px -6px 16px #e08958;
-        }
-    }
-    a,
-    button {
-        &:hover {
-            color: var(--color-primary-500, #e08958);
-        }
-    }
-    .progress-bar {
-        background-color: var(--color-primary-500, #e08958);
-    }
-}
-.theme-blue {
-    .mask {
-        background-color: var(--color-primary-500, #6595ff);
-    }
-    header {
-        border-bottom: var(--color-primary-500, #6595ff) 1px solid;
-        &.active {
-            box-shadow: -6px -6px 16px #6595ff;
-        }
-    }
-    a,
-    button {
-        &:hover {
-            color: var(--color-primary-500, #6595ff);
-        }
-    }
-    .progress-bar {
-        background-color: var(--color-primary-500, #6595ff);
-    }
+    --color-primary: #e08958;
 }
 .theme-green {
-    .mask {
-        background-color: var(--color-primary-500, #0dbe33);
-    }
-    header {
-        border-bottom: var(--color-primary-500, #0dbe33) 1px solid;
-        &.active {
-            box-shadow: -6px -6px 16px #0dbe33;
-        }
-    }
-    a,
-    button {
-        &:hover {
-            color: var(--color-primary-500, #0dbe33);
-        }
-    }
-    .progress-bar {
-        background-color: var(--color-primary-500, #0dbe33);
-    }
+    --color-primary: #0dbe33;
+}
+.theme-blue {
+    --color-primary: #6595ff;
 }
 .theme-red {
-    .mask {
-        background-color: var(--color-primary-500, #ff5c5f);
-    }
-    header {
-        border-bottom: var(--color-primary-500, #ff5c5f) 1px solid;
-        &.active {
-            box-shadow: -6px -6px 16px #ff5c5f;
-        }
-    }
-    a,
-    button {
-        &:hover {
-            color: var(--color-primary-500, #ff5c5f);
-        }
-    }
-    .progress-bar {
-        background-color: var(--color-primary-500, #ff5c5f);
-    }
+    --color-primary: #ff5c5f;
 }
 
 .toggle-checkbox {
@@ -145,29 +63,13 @@ a {
 header {
     display: flex;
     justify-content: space-between;
-    padding: 0.8rem 2rem;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 999;
-    background-color: #fff;
-    transition: all 0.5s ease-in-out;
-    &.active {
-        padding: 0.3rem 2rem;
-        box-shadow: -6px -6px 16px #444;
-        opacity: 0.9;
-        transition: all 0.5s ease-in-out;
-        .JHlogo {
-            transform: scale(75%);
-            transition: all 0.2s ease-in-out;
-        }
-    }
 }
-.JHlogo {
-    display: flex;
-    transition: all 0.2s ease-in-out;
-}
+
 nav {
     display: flex;
     // width: 100%;

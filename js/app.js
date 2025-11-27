@@ -1,15 +1,23 @@
-import { createApp, ref, computed, watchEffect } from 'vue';
+import {
+    createApp,
+    ref,
+    computed,
+    watchEffect,
+    onMounted,
+    onUnmounted,
+} from 'vue';
 import { createI18n } from 'vue-i18n';
 import router from './router/router.js';
-
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import Animation from './components/animation.js';
 import Header, { THEMES } from './layout/header.js';
 import Footer from './layout/footer.js';
 import ProgressBar from './components/ProgressBar.js';
 
+gsap.registerPlugin(ScrollTrigger);
 const DEFAULT_LOCALE = 'zh-Hant';
 const FALLBACK_LOCALE = 'en';
-
 const DEFAULT_THEME = 'orange';
 
 async function loadLanguageMessages(locale) {
@@ -22,12 +30,12 @@ async function loadLanguageMessages(locale) {
 }
 
 function updateThemeLinks(theme) {
-    const body = document.body;
+    const html = document.documentElement;
 
     if (theme === 'dark') {
-        body.classList.add('dark');
+        html.classList.add('dark');
     } else {
-        body.classList.remove('dark');
+        html.classList.remove('dark');
     }
 }
 
@@ -39,25 +47,6 @@ function updateColorTheme(themeName) {
     });
 
     body.classList.add(`theme-${themeName}`);
-}
-
-function handleScrollEffect() {
-    const header = document.querySelector('header');
-    if (!header) return;
-
-    const onScroll = () => {
-        if (window.pageYOffset > 0) {
-            header.classList.add('active');
-        } else {
-            header.classList.remove('active');
-        }
-    };
-
-    // 立即執行一次，檢查初始位置
-    onScroll();
-
-    // 監聽滾動事件
-    window.addEventListener('scroll', onScroll);
 }
 
 async function bootstrapApp() {
@@ -105,6 +94,47 @@ async function bootstrapApp() {
             const animationHasPlayed = ref(false);
             const mask = document.querySelector('.mask');
             const progressBarRef = ref(null);
+            const headerRef = ref(null);
+            const isHeaderHidden = ref(false);
+            const isHeaderActive = ref(false);
+
+            let ctx;
+
+            const initScrollTrigger = () => {
+                ctx = gsap.context(() => {
+                    ScrollTrigger.create({
+                        start: 'top top',
+                        end: 99999,
+                        onUpdate: (self) => {
+                            const scrollTop = self.scroll();
+                            const direction = self.direction;
+                            if (scrollTop <= 0) {
+                                isHeaderHidden.value = false;
+                                isHeaderActive.value = false;
+                            }
+                            else if (direction === 1) {
+                                isHeaderHidden.value = true;
+                                isHeaderActive.value = false;
+                            }
+                            else if (direction === -1) {
+                                isHeaderHidden.value = false;
+                                isHeaderActive.value = true;
+                            }
+                        },
+                    });
+                });
+            };
+
+            const headerClasses = computed(() => {
+                return {
+                    'fixed w-full top-0 z-50 px-[2rem] transition-transform duration-500 ease-in-out transition-shadow': true,
+                    '-translate-y-full': isHeaderHidden.value,
+                    'translate-y-0': !isHeaderHidden.value,
+                    ' py-[0.2rem] backdrop-blur-sm shadow-[-6px_-6px_16px_var(--color-primary)]':
+                        isHeaderActive.value,
+                    'py-[0.8rem] shadow-none': !isHeaderActive.value,
+                };
+            });
 
             const onAnimationFinished = () => {
                 animationHasPlayed.value = true;
@@ -162,6 +192,16 @@ async function bootstrapApp() {
                 progressBarRef.value?.finish();
             });
 
+            onMounted(() => {
+                updateThemeLinks(currentMode.value);
+                updateColorTheme(currentColorTheme.value);
+                initScrollTrigger();
+            });
+
+            onUnmounted(() => {
+                ctx && ctx.revert();
+            });
+
             return {
                 currentMode,
                 currentColorTheme,
@@ -172,16 +212,13 @@ async function bootstrapApp() {
                 shouldShowAnimation,
                 onAnimationFinished,
                 progressBarRef,
+                headerRef,
+                isHeaderActive,
+                headerClasses,
             };
         },
 
-        mounted() {
-            updateThemeLinks(this.currentMode);
-            updateColorTheme(this.currentColorTheme);
-            handleScrollEffect();
-        },
-
-        template: `
+        template: /* html */ `
                 <app-progress-bar ref="progressBarRef" />
                 <Transition>
                     <app-animation 
@@ -190,14 +227,17 @@ async function bootstrapApp() {
                     />
                 </Transition>
                 <app-header
+                    ref="headerRef"
+                    :class="headerClasses"
                     :currentMode="currentMode" 
                     :toggleMode="toggleMode"
                     :currentColorTheme="currentColorTheme"
                     :changeColorTheme="changeColorTheme"
                     :changeLocale="changeLocale"
                     :i18n="i18n"
+                    :isHeaderActive="isHeaderActive"
                 />
-                <main class="px-4 md:px-8 my-[120px] justify-center">
+                <main class="flex justify-center items-center w-full">
                     <router-view />
                 </main>
                 <app-footer
