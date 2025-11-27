@@ -22,10 +22,13 @@
         <script type="importmap">
             {
                 "imports": {
-                    "vue": "./assets/lib/vue@3/vue.esm-browser.js",
-                    "vue-i18n": "./assets/lib/vue-i18n@9/vue-i18n.esm-browser.js",
-                    "vue-router": "./assets/lib/vue-router@4/vue-router.esm-browser.js",
-                    "@vue/devtools-api": "./assets/lib/devtools-api@6.5.0/index.js"
+                    "vue": "./assets/libs/vue@3/vue.esm-browser.js",
+                    "vue-i18n": "./assets/libs/vue-i18n@9/vue-i18n.esm-browser.js",
+                    "vue-router": "./assets/libs/vue-router@4/vue-router.esm-browser.js",
+                    "@vue/devtools-api": "./assets/libs/devtools-api@6.5.0/index.js",
+                    "gsap": "./assets/libs/gsap-public/esm/index.js",
+                    "gsap/ScrollTrigger": "./assets/libs/gsap-public/esm/ScrollTrigger.js",
+                    "gsap/ScrollSmoother": "./assets/libs/gsap-public/esm/ScrollSmoother.js"
                 }
             }
         </script>
@@ -34,7 +37,7 @@
                 theme: {
                     extend: {
                         colors: {
-                            'primary': { 
+                            'primary': {
                                 500: 'var(--color-primary-500)',
                             },
                         },
@@ -42,7 +45,7 @@
                 },
             }
         </script>
-        <script src="./assets/lib/tailwindcss/browser@4.js"></script>
+        <script src="./assets/libs/tailwindcss/browser@4.js"></script>
         <link rel="stylesheet" href="./assets/css/animation.css" />
         <link rel="stylesheet" href="./assets/css/style.css" />
     </head>

@@ -17,7 +17,7 @@ export const LANGUAGES = [
 export const HeaderTemplate = /* html */ `
     <header>
         <router-link to="/" title="回首頁" class="JHlogo">
-            <app-icon name="logo" class="w-[80px] text-primary-500" />
+            <app-icon name="logo" class="w-[80px]" />
         </router-link>
         <button 
             ref="menuBtnRef"
