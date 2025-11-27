@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="author" content="James Hsu" />
         <meta name="robots" content="index, follow" />
-        <meta name="description" content="這是James Hsu的Blog。" />
+        <meta name="description" content="歡迎來到James Hsu的Blog。" />
         <title>首頁 | James Hsu</title>
         <link
             rel="icon"
@@ -22,20 +22,57 @@
         <script type="importmap">
             {
                 "imports": {
-                    "vue": "./assets/lib/vue@3/vue.esm-browser.js",
-                    "vue-i18n": "./assets/lib/vue-i18n@9/vue-i18n.esm-browser.js",
-                    "vue-router": "./assets/lib/vue-router@4/vue-router.esm-browser.js",
-                    "@vue/devtools-api": "./assets/lib/devtools-api@6.5.0/index.js"
+                    "vue": "./assets/libs/vue@3/vue.esm-browser.js",
+                    "vue-i18n": "./assets/libs/vue-i18n@9/vue-i18n.esm-browser.js",
+                    "vue-router": "./assets/libs/vue-router@4/vue-router.esm-browser.js",
+                    "@vue/devtools-api": "./assets/libs/devtools-api@6.5.0/index.js",
+                    "gsap": "./assets/libs/gsap-public/esm/index.js",
+                    "gsap/ScrollTrigger": "./assets/libs/gsap-public/esm/ScrollTrigger.js",
+                    "gsap/ScrollSmoother": "./assets/libs/gsap-public/esm/ScrollSmoother.js"
                 }
             }
         </script>
-        <script src="./assets/lib/tailwindcss/browser@4.js"></script>
+        <script type="text/tailwindcss">
+            module.exports = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'primary': {
+                                500: 'var(--color-primary-500)',
+                            },
+                        },
+                    },
+                },
+            }
+        </script>
+        <script src="./assets/libs/tailwindcss/browser@4.js"></script>
         <link rel="stylesheet" href="./assets/css/animation.css" />
         <link rel="stylesheet" href="./assets/css/style.css" />
     </head>
     <body>
-        <img class="orange" src="./assets/images/OrangeBackground.svg" alt="bgimg" />
+        <div
+            class="mask flex flex-col items-center justify-center w-full h-full fixed top-0 left-0 z-[9998] opacity-100 transition-opacity ease-out duration-500"
+        >
+            <div class="spinner">
+                <div class="spinner-container" id="spinner"></div>
+            </div>
+        </div>
         <div id="app"></div>
     </body>
     <script type="module" src="./js/app.js"></script>
+    <script>
+        // spinner animation
+        const spinner = document.getElementById('spinner');
+        const numDots = 6;
+        const radius = 20;
+
+        for (let i = 0; i < numDots; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot', `dot-${i}`);
+            const angle = (i / numDots) * Math.PI * 2;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            spinner.appendChild(dot);
+        }
+    </script>
 </html>

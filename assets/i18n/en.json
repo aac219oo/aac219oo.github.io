@@ -8,9 +8,14 @@
         "chinese": "Chinese",
         "english": "English"
     },
-    "button": {
-        "switch_to_dark": "Switch to Dark Theme",
-        "switch_to_light": "Switch to Light Theme"
+    "theme": {
+        "color_theme": "顏色主題：",
+        "theme_mode": "主題模式：",
+        "default": "預設",
+        "orange": "橘色",
+        "blue": "藍色",
+        "green": "綠色",
+        "red": "紅色"
     },
     "menu": {
         "home": "Home",
@@ -25,16 +30,14 @@
         "homework_title": "Homework",
         "homework_content": "Homework content"
     },
-    "home": {
-    },
-    "about": {
-    },
+    "home": {},
+    "about": {},
     "HW": {
-        "second" : "02.打造第一個網頁",
-        "third" : "03.網域名稱與服務內容",
-        "fourth" : "04.增加網頁顯示技術",
-        "fifth" : "05.表格練習",
-        "sixth" : "06."
+        "second": "02.打造第一個網頁",
+        "third": "03.網域名稱與服務內容",
+        "fourth": "04.增加網頁顯示技術",
+        "fifth": "05.表格練習",
+        "sixth": "06."
     },
     "pageTitle": {
         "home": "Home {pipe} James Hsu",
@@ -46,6 +49,14 @@
         "hwhtmlcafe05": "5.圖片",
         "hw100218340": "04.增加網頁顯示技術",
         "hw100218476": "05.表格練習",
+        "hw100219151": {
+            "index": "07.課堂練習2",
+            "chatgpt": "07.課堂練習2 - ChatGPT",
+            "gemini": "07.課堂練習2 - Gemini",
+            "grok": "07.課堂練習2 - Grok",
+            "perplexity": "07.課堂練習2 - Perplexity"
+        },
+        "hw100219359": "08.課堂作業",
         "hwp24": "`text-decoration` 混合樣式",
         "hwp27": "`text-shadow` 基本用法",
         "hwp28": "`text-shadow` 多重效果",

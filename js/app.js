@@ -1,13 +1,16 @@
-import { createApp, ref, computed, watchEffect } from 'vue';
+import { createApp, ref, computed, watchEffect, onMounted, onUnmounted } from 'vue';
 import { createI18n } from 'vue-i18n';
 import router from './router/router.js';
 
-import Animation from './pages/animation.js';
-import Header from './layout/header.js';
+import Animation from './components/animation.js';
+import Header, { THEMES } from './layout/header.js';
 import Footer from './layout/footer.js';
+import ProgressBar from './components/ProgressBar.js';
 
 const DEFAULT_LOCALE = 'zh-Hant';
 const FALLBACK_LOCALE = 'en';
+
+const DEFAULT_THEME = 'orange';
 
 async function loadLanguageMessages(locale) {
     const response = await fetch(`./assets/i18n/${locale}.json`);
@@ -19,52 +22,49 @@ async function loadLanguageMessages(locale) {
 }
 
 function updateThemeLinks(theme) {
-    const lightLink = document.getElementById('theme-light');
-    const darkLink = document.getElementById('theme-dark');
     const body = document.body;
 
     if (theme === 'dark') {
-        if (lightLink) lightLink.disabled = true;
-        if (darkLink) darkLink.disabled = false;
         body.classList.add('dark');
     } else {
-        if (lightLink) lightLink.disabled = false;
-        if (darkLink) darkLink.disabled = true;
         body.classList.remove('dark');
     }
 }
 
-function handleScrollEffect() {
-    const header = document.querySelector("header");
-    if (!header) return;
+function updateColorTheme(themeName) {
+    const body = document.body;
 
-    const onScroll = () => {
-        if (window.pageYOffset > 0) {
-            header.classList.add("active");
-        } else {
-            header.classList.remove("active");
-        }
-    };
-    
-    // 立即執行一次，檢查初始位置
-    onScroll();
+    THEMES.forEach((t) => {
+        body.classList.remove(`theme-${t}`);
+    });
 
-    // 監聽滾動事件
-    window.addEventListener("scroll", onScroll);
+    body.classList.add(`theme-${themeName}`);
 }
 
 async function bootstrapApp() {
-
+    const savedLocale = localStorage.getItem('user-locale') || DEFAULT_LOCALE;
     const initialMessages = {};
-    initialMessages[DEFAULT_LOCALE] = await loadLanguageMessages(DEFAULT_LOCALE);
-    initialMessages[FALLBACK_LOCALE] = await loadLanguageMessages(FALLBACK_LOCALE);
-    const i18n = createI18n({ legacy: false, locale: DEFAULT_LOCALE, fallbackLocale: FALLBACK_LOCALE, messages: initialMessages });
+    initialMessages[DEFAULT_LOCALE] = await loadLanguageMessages(
+        DEFAULT_LOCALE
+    );
+    initialMessages[FALLBACK_LOCALE] = await loadLanguageMessages(
+        FALLBACK_LOCALE
+    );
+    if (savedLocale !== DEFAULT_LOCALE && savedLocale !== FALLBACK_LOCALE) {
+        initialMessages[savedLocale] = await loadLanguageMessages(savedLocale);
+    }
+    const i18n = createI18n({
+        legacy: false,
+        locale: savedLocale,
+        fallbackLocale: FALLBACK_LOCALE,
+        messages: initialMessages,
+    });
 
     watchEffect(() => {
         const titleKey = router.currentRoute.value.meta.titleKey;
-        
+
         if (titleKey) {
-            document.title = i18n.global.t(titleKey, {pipe: "|"});
+            document.title = i18n.global.t(titleKey, { pipe: '|' });
         } else {
             document.title = 'Blog | James Hsu';
         }
@@ -74,25 +74,86 @@ async function bootstrapApp() {
         components: {
             'app-animation': Animation,
             'app-header': Header,
-            'app-footer': Footer
+            'app-footer': Footer,
+            'app-progress-bar': ProgressBar,
         },
         setup() {
-            const currentTheme = ref('light');
+            const savedMode = localStorage.getItem('theme-mode');
+            const currentMode = ref(savedMode || 'light');
+            const savedColorTheme = localStorage.getItem('color-theme');
+            const currentColorTheme = ref(savedColorTheme || DEFAULT_THEME);
             const locale = i18n.global.locale;
             const animationHasPlayed = ref(false);
+            const mask = document.querySelector('.mask');
+            const progressBarRef = ref(null);
+            const headerRef = ref(null);
+            const lastScrollY = ref(0);
+            const isHeaderHidden = ref(false);
+            const isHeaderActive = ref(false);
+
+            const handleScroll = () => {
+                const currentScrollY = window.scrollY;
+
+                if (currentScrollY <= 0) {
+                    isHeaderHidden.value = false;
+                    isHeaderActive.value = false;
+                }
+                else if (currentScrollY > lastScrollY.value) {
+                    isHeaderHidden.value = true;
+                    isHeaderActive.value = false;
+                }
+                else {
+                    isHeaderHidden.value = false;
+                    isHeaderActive.value = true;
+                }
+
+                lastScrollY.value = currentScrollY;
+            };
+
+            const headerClasses = computed(() => {
+                return {
+                    'fixed w-full top-0 z-50 transition-transform duration-300 ease-in-out': true,
+                    '-translate-y-full': isHeaderHidden.value,
+                    'translate-y-0': !isHeaderHidden.value,
+                    'active': isHeaderActive.value,
+                };
+            });
 
             const onAnimationFinished = () => {
                 animationHasPlayed.value = true;
+                if (animationHasPlayed.value) {
+                    mask.classList.add('hidden');
+                }
             };
 
+            if (mask) {
+                router.isReady().then(() => {
+                    if (router.currentRoute.value.name !== 'Home') {
+                        mask.classList.add('hidden');
+                        animationHasPlayed.value = true;
+                    }
+                });
+            }
+
             const shouldShowAnimation = computed(() => {
-                return router.currentRoute.value.name === 'Home' && !animationHasPlayed.value;
+                return (
+                    router.currentRoute.value.name === 'Home' &&
+                    !animationHasPlayed.value
+                );
             });
 
-            const toggleTheme = () => {
-                const newTheme = currentTheme.value === 'light' ? 'dark' : 'light';
-                currentTheme.value = newTheme;
-                updateThemeLinks(newTheme);
+            const toggleMode = () => {
+                const newMode =
+                    currentMode.value === 'light' ? 'dark' : 'light';
+                currentMode.value = newMode;
+                updateThemeLinks(newMode);
+                localStorage.setItem('theme-mode', newMode);
+            };
+
+            const changeColorTheme = (targetTheme) => {
+                currentColorTheme.value = targetTheme;
+                updateColorTheme(targetTheme);
+                localStorage.setItem('color-theme', targetTheme);
             };
 
             const changeLocale = async (event) => {
@@ -102,50 +163,73 @@ async function bootstrapApp() {
                     i18n.global.setLocaleMessage(newLocale, newMessages);
                 }
                 locale.value = newLocale;
+                localStorage.setItem('user-locale', newLocale);
             };
 
+            router.beforeEach((to, from, next) => {
+                progressBarRef.value?.start();
+                next();
+            });
+
+            router.afterEach(() => {
+                progressBarRef.value?.finish();
+            });
+
+            onMounted(() => {
+                updateThemeLinks(currentMode.value);
+                updateColorTheme(currentColorTheme.value);
+                window.addEventListener('scroll', handleScroll);
+            });
+            
+            onUnmounted(() => {
+                window.removeEventListener('scroll', handleScroll);
+            });
+
             return {
-                currentTheme,
-                toggleTheme,
+                currentMode,
+                currentColorTheme,
+                toggleMode,
+                changeColorTheme,
                 changeLocale,
                 i18n,
                 shouldShowAnimation,
                 onAnimationFinished,
+                progressBarRef,
+                headerRef,
+                headerClasses,
             };
         },
 
-        mounted() {
-            updateThemeLinks(this.currentTheme);
-            handleScrollEffect();
-        },
-
         template: `
+                <app-progress-bar ref="progressBarRef" />
                 <Transition>
                     <app-animation 
                         v-if="shouldShowAnimation" 
                         @animation-finished="onAnimationFinished" 
                     />
                 </Transition>
-                <app-header 
-                    :currentTheme="currentTheme" 
-                    :toggleTheme="toggleTheme"
+                <app-header
+                    ref="headerRef"
+                    :class="headerClasses"
+                    :currentMode="currentMode" 
+                    :toggleMode="toggleMode"
+                    :currentColorTheme="currentColorTheme"
+                    :changeColorTheme="changeColorTheme"
                     :changeLocale="changeLocale"
                     :i18n="i18n"
                 />
-                <main class="p-4 md:p-8">
-                        <router-view />
+                <main class="max-w-[2160px] justify-center">
+                    <router-view />
                 </main>
-                <app-footer 
-                    :currentTheme="currentTheme"
+                <app-footer
+                    :currentMode="currentMode"
+                    :currentColorTheme="currentColorTheme"
                     :i18n="i18n"
                 />
         `,
     };
 
-    createApp(App)
-        .use(i18n)
-        .use(router)
-        .mount('#app');
+    createApp(App).use(i18n).use(router).mount('#app');
 }
 
 bootstrapApp();

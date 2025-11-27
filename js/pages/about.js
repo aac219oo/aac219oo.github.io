@@ -2,7 +2,7 @@ import { h } from 'vue';
 
 const About = {
     template: `
-        <section class="left table">
+        <section class="left table mt-[110px]">
         <h1>
             Hi. I am <br />
             James Hsu.
