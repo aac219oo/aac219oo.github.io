@@ -15,13 +15,13 @@ export const LANGUAGES = [
 ];
 
 export const HeaderTemplate = /* html */ `
-    <header>
-        <router-link to="/" title="回首頁" class="JHlogo">
-            <app-icon name="logo" class="w-[80px]" />
+    <header class="border-(--color-primary) border-b-[1px] border-solid bg-(--color-light-bg) text-(--color-light-text) dark:bg-(--color-dark-bg) dark:text-(--color-dark-text)">
+        <router-link to="/" title="James Hsu 首頁" class="hover:text-primary transition-all duration-500 origin-left ease-in-out" :class="isHeaderActive ? 'w-[45px]' : 'w-[80px]'">
+            <app-icon name="logo"/>
         </router-link>
         <button 
             ref="menuBtnRef"
-            class="menu-toggle" 
+            class="menu-toggle hover:text-primary" 
             id="menu-toggle" 
             aria-label="切換選單"
             @click="toggleMenu"
@@ -43,14 +43,14 @@ export const HeaderTemplate = /* html */ `
                 <button 
                     ref="themeBtnRef"
                     @click="isThemeSelectorOpen = !isThemeSelectorOpen" 
-                    class="cursor-pointer flex items-center p-2 rounded"
+                    class="cursor-pointer flex items-center p-2 rounded hover:text-primary"
                 >
                     <app-icon name="palette" class="w-[30px] text-primary-500" />
                 </button>
                 
-                <div v-if="isThemeSelectorOpen" class="theme-selector-popover">
+                <div v-if="isThemeSelectorOpen" class="theme-selector-popover bg-[#fff] text-(--color-light-text) dark:bg-[#434343] dark:text-(--color-dark-text)">
                     <div class="theme-section flex gap-[10px]">
-                        <span class="w-max">{{ $t('theme.color_theme') }}</span>
+                        <span class="w-max dark:text-(--color-dark-text)">{{ $t('theme.color_theme') }}</span>
                         <button 
                             v-for="theme in THEMES" 
                             :key="theme" 
@@ -65,10 +65,10 @@ export const HeaderTemplate = /* html */ `
                         ></button>
                     </div>
                     
-                    <hr class="my-3 border-gray-200 dark:border-gray-700"/>
+                    <hr class="my-3 border-gray-200 dark:border-white-700"/>
 
                     <div class="theme-section flex items-center gap-[10px]">
-                        <span class="w-max">{{ $t('theme.theme_mode') }}</span>
+                        <span class="w-max dark:text-(--color-dark-text)">{{ $t('theme.theme_mode') }}</span>
                         <div 
                             class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in"
                         >
@@ -84,7 +84,7 @@ export const HeaderTemplate = /* html */ `
                             <label 
                                 for="darkModeToggle" 
                                 class="toggle-label block w-[50px] h-[27px] rounded-full bg-gray-400 cursor-pointer"
-                                :class="{'bg-primary-500': currentMode === 'dark', 'bg-gray-400': currentMode === 'light'}"
+                                :class="{'bg-gray-400': currentMode === 'dark', 'bg-sky-400': currentMode === 'light'}"
                             >
                                 <div 
                                     class="absolute top-[50%] left-1 -translate-y-1/2 w-5 h-5 transition-transform duration-300 ease-in-out fill-current text-yellow-500"
@@ -112,17 +112,17 @@ export const HeaderTemplate = /* html */ `
                 <button
                     ref="langBtnRef"
                     @click="isLangSelectorOpen = !isLangSelectorOpen" 
-                    class="cursor-pointer flex items-center p-2 rounded"
+                    class="cursor-pointer flex items-center p-2 rounded hover:text-primary"
                 >
                     <app-icon name="language" class="w-[30px] text-primary-500" />
                 </button>
-                <div v-if="isLangSelectorOpen" class="theme-selector-popover">
+                <div v-if="isLangSelectorOpen" class="theme-selector-popover bg-[#fff] text-(--color-light-text) dark:bg-[#434343] dark:text-(--color-dark-text)">
                     <div class="flex flex-col gap-[10px]">
                         <button 
                             v-for="lang in LANGUAGES" 
                             :key="lang.value" 
                             @click="setLocale(lang.value)"
-                            class="text-left px-2 py-1 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            class="text-left px-2 py-1 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors hover:text-primary"
                             :class="{ 'text-primary-500 font-bold': i18n.global.locale.value === lang.value }"
                         >
                             {{ lang.name }}
@@ -137,7 +137,7 @@ export const HeaderTemplate = /* html */ `
                     :key="link.path"
                     @click="isMenuOpen = false"
                 >
-                    <router-link :to="link.path">
+                    <router-link :to="link.path" class="hover:text-primary">
                         {{ $t(link.i18nKey) }}
                     </router-link>
                 </li>
@@ -154,6 +154,7 @@ const Header = {
         'changeColorTheme',
         'changeLocale',
         'i18n',
+        'isHeaderActive',
     ],
     components: {
         'app-icon': AppIcon,
@@ -248,6 +249,7 @@ const Header = {
             themeContainerRef,
             langBtnRef,
             langContainerRef,
+            isHeaderActive: toRef(props, 'isHeaderActive'),
         };
     },
 

@@ -1,4 +1,3 @@
-/* we will explain what these classes do next! */
 .v-leave-active {
   transition: opacity 0.8s ease;
 }
@@ -154,7 +153,6 @@
 .animation {
   width: 100%;
   height: 100vh;
-  background-color: #e08958;
   position: fixed;
   top: 0;
   z-index: 9999;
@@ -164,22 +162,6 @@
 }
 .animation svg {
   animation: fill 0.5s ease-in forwards 1.6s;
-}
-
-.theme-orange .animation {
-  background-color: var(--color-primary-500, #e08958);
-}
-
-.theme-blue .animation {
-  background-color: var(--color-primary-500, #6595ff);
-}
-
-.theme-green .animation {
-  background-color: var(--color-primary-500, #0dbe33);
-}
-
-.theme-red .animation {
-  background-color: var(--color-primary-500, #ff5c5f);
 }
 
 #first {

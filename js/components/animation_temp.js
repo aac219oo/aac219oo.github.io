@@ -1,6 +1,6 @@
 export const AnimationTemplate = `
 <!-- Animation -->
-<div class="animation" id="animation-target">
+<div class="animation bg-primary" id="animation-target">
     <button type="button" class="skip_animation" @click="finishAnimation">
         跳過 esc
     </button>

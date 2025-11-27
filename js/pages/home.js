@@ -30,15 +30,18 @@ const Home = {
         };
     },
     template: /* html */ `
-                <div ref="containerRef" class="sticky top-0 z-0 flex items-center h-screen">
+                <div ref="containerRef" class="max-w-[2160px] sticky top-0 z-0 flex items-center min-h-screen dark:text-(--color-dark-text)">
                     <div class="w-1/2 flex flex-col justify-center items-center h-full px-10">
-                        <h2 class="text-6xl font-bold mb-8">Hello World! <br> I'm James Hsu</h2>
-                        <p class="text-xl text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            <br><br>
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                        </p>
+                        <div class="max-w-md">
+                            <h2 class="font-bold pb-3"><span class="block pb-3 text-4xl">你好, 我是</span><span class="text-7xl text-primary">許家瑜</span></h2>
+                            <p class="text-xl">
+                                專長為前端開發技術的工程師,
+                                <br/>
+                                擁有 2 年多的 Web3 相關應用的實務開發經驗,
+                                <br/>
+                                目前正朝著全端技術努力發展中。
+                            </p>
+                        </div>
                     </div>
 
                     <div ref="imgRef" class="w-1/2 flex justify-center">
@@ -50,7 +53,7 @@ const Home = {
                     </div>
                 </div>
 
-                <div class="relative z-10 bg-sky-500 w-full h-screen flex flex-col justify-center items-center">
+                <div class="relative z-10 w-full h-screen flex flex-col justify-center items-center transition-colors duration-300 bg-sky-50 dark:bg-gray-500 dark:text-(--color-dark-text)">
                     <div class="text-center">
                         <p class="text-4xl mb-4">About me</p>
                         <p class="text-xl mb-4">I'm a programmer.</p>
