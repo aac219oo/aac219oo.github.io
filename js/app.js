@@ -102,6 +102,14 @@ async function bootstrapApp() {
 
             const initScrollTrigger = () => {
                 ctx = gsap.context(() => {
+                    const showHeaderAnim = gsap
+                        .from(headerRef.value.$el, {
+                            yPercent: -100,
+                            duration: 0.4,
+                            ease: 'power2.out',
+                            paused: true,
+                        })
+                        .progress(1);
                     ScrollTrigger.create({
                         start: 'top top',
                         end: 99999,
@@ -109,15 +117,13 @@ async function bootstrapApp() {
                             const scrollTop = self.scroll();
                             const direction = self.direction;
                             if (scrollTop <= 0) {
-                                isHeaderHidden.value = false;
+                                showHeaderAnim.play();
                                 isHeaderActive.value = false;
-                            }
-                            else if (direction === 1) {
-                                isHeaderHidden.value = true;
+                            } else if (direction === 1) {
+                                showHeaderAnim.reverse();
                                 isHeaderActive.value = false;
-                            }
-                            else if (direction === -1) {
-                                isHeaderHidden.value = false;
+                            } else if (direction === -1) {
+                                showHeaderAnim.play();
                                 isHeaderActive.value = true;
                             }
                         },
@@ -127,9 +133,7 @@ async function bootstrapApp() {
 
             const headerClasses = computed(() => {
                 return {
-                    'fixed w-full top-0 z-50 px-[2rem] transition-transform duration-500 ease-in-out transition-shadow': true,
-                    '-translate-y-full': isHeaderHidden.value,
-                    'translate-y-0': !isHeaderHidden.value,
+                    'fixed w-full top-0 z-50 px-[2rem]': true,
                     ' py-[0.2rem] backdrop-blur-sm shadow-[-6px_-6px_16px_var(--color-primary)]':
                         isHeaderActive.value,
                     'py-[0.8rem] shadow-none': !isHeaderActive.value,

@@ -1,5 +1,5 @@
 export const FooterTemplate = /* html */ `
-<footer class="p-6">
+<footer class="p-6 z-1">
     <ul class="flex flex-wrap justify-center gap-5">
         <li>
             <a href="https://github.com/aac219oo" target="_blank" class="block"
