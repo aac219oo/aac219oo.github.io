@@ -1,4 +1,4 @@
-import { ref, toRef, onMounted, onUnmounted } from 'vue';
+import { ref, toRef, onMounted, onUnmounted, watch } from 'vue';
 import AppIcon from '/js/components/AppIcon.js';
 import { useClickOutside } from '/js/composables/useClickOutside.js';
 
@@ -15,7 +15,7 @@ export const LANGUAGES = [
 ];
 
 export const HeaderTemplate = /* html */ `
-    <header class="border-(--color-primary) border-b-[1px] border-solid bg-(--color-light-bg) text-(--color-light-text) dark:bg-(--color-dark-bg) dark:text-(--color-dark-text)">
+    <header class="fixed w-full top-0 z-50 px-[2rem] border-(--color-primary) border-b-[1px] border-solid bg-(--color-light-bg) text-(--color-light-text) dark:bg-(--color-dark-bg) dark:text-(--color-dark-text)">
         <router-link to="/" title="James Hsu 首頁" class="hover:text-primary transition-all duration-500 origin-left ease-in-out" :class="isHeaderActive ? 'w-[45px]' : 'w-[80px]'">
             <app-icon name="logo"/>
         </router-link>
@@ -155,6 +155,7 @@ const Header = {
         'changeLocale',
         'i18n',
         'isHeaderActive',
+        'isHeaderHidden',
     ],
     components: {
         'app-icon': AppIcon,
@@ -224,6 +225,16 @@ const Header = {
             }
         };
 
+        watch(
+            () => props.isHeaderHidden,
+            (newVal) => {
+                if (newVal) {
+                    isThemeSelectorOpen.value = false;
+                    isLangSelectorOpen.value = false;
+                }
+            }
+        );
+
         onMounted(() => {
             loadheader();
         });
@@ -250,6 +261,7 @@ const Header = {
             langBtnRef,
             langContainerRef,
             isHeaderActive: toRef(props, 'isHeaderActive'),
+            isHeaderHidden: toRef(props, 'isHeaderHidden'),
         };
     },
 

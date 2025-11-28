@@ -1,5 +1,5 @@
 export const FooterTemplate = /* html */ `
-<footer class="p-6">
+<footer class="p-6 z-1">
     <ul class="flex flex-wrap justify-center gap-5">
         <li>
             <a href="https://github.com/aac219oo" target="_blank" class="block"
@@ -29,6 +29,7 @@ export const FooterTemplate = /* html */ `
             /></a>
         </li>
     </ul>
+    <p class="text-center text-sm">Copyright © Chiayu Hsu</p>
 </footer>
 `;
 

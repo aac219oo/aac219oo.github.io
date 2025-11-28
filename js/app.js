@@ -10,12 +10,13 @@ import { createI18n } from 'vue-i18n';
 import router from './router/router.js';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import ScrollSmoother from 'gsap/ScrollSmoother';
 import Animation from './components/animation.js';
 import Header, { THEMES } from './layout/header.js';
 import Footer from './layout/footer.js';
 import ProgressBar from './components/ProgressBar.js';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 const DEFAULT_LOCALE = 'zh-Hant';
 const FALLBACK_LOCALE = 'en';
 const DEFAULT_THEME = 'orange';
@@ -102,21 +103,24 @@ async function bootstrapApp() {
 
             const initScrollTrigger = () => {
                 ctx = gsap.context(() => {
+                    ScrollSmoother.create({
+                        smooth: 1,
+                        effects: true,
+                        smoothTouch: 0.1,
+                    });
                     ScrollTrigger.create({
                         start: 'top top',
                         end: 99999,
                         onUpdate: (self) => {
                             const scrollTop = self.scroll();
                             const direction = self.direction;
-                            if (scrollTop <= 0) {
+                            if (scrollTop <= 100) {
                                 isHeaderHidden.value = false;
                                 isHeaderActive.value = false;
-                            }
-                            else if (direction === 1) {
+                            } else if (direction === 1) {
                                 isHeaderHidden.value = true;
                                 isHeaderActive.value = false;
-                            }
-                            else if (direction === -1) {
+                            } else if (direction === -1) {
                                 isHeaderHidden.value = false;
                                 isHeaderActive.value = true;
                             }
@@ -127,10 +131,10 @@ async function bootstrapApp() {
 
             const headerClasses = computed(() => {
                 return {
-                    'fixed w-full top-0 z-50 px-[2rem] transition-transform duration-500 ease-in-out transition-shadow': true,
+                    'transition-transform duration-500 ease-in-out transition-shadow': true,
                     '-translate-y-full': isHeaderHidden.value,
                     'translate-y-0': !isHeaderHidden.value,
-                    ' py-[0.2rem] backdrop-blur-sm shadow-[-6px_-6px_16px_var(--color-primary)]':
+                    'py-[0.2rem] backdrop-blur-sm shadow-[-6px_-6px_16px_var(--color-primary)]':
                         isHeaderActive.value,
                     'py-[0.8rem] shadow-none': !isHeaderActive.value,
                 };
@@ -213,6 +217,7 @@ async function bootstrapApp() {
                 onAnimationFinished,
                 progressBarRef,
                 headerRef,
+                isHeaderHidden,
                 isHeaderActive,
                 headerClasses,
             };
@@ -236,15 +241,20 @@ async function bootstrapApp() {
                     :changeLocale="changeLocale"
                     :i18n="i18n"
                     :isHeaderActive="isHeaderActive"
+                    :isHeaderHidden="isHeaderHidden"
                 />
-                <main class="flex justify-center items-center w-full">
-                    <router-view />
-                </main>
-                <app-footer
-                    :currentMode="currentMode"
-                    :currentColorTheme="currentColorTheme"
-                    :i18n="i18n"
-                />
+                <div id="smooth-wrapper">
+                    <div id="smooth-content" class="flex flex-col min-h-screen">
+                        <main class="flex justify-center items-center w-full">
+                            <router-view />
+                        </main>
+                        <app-footer
+                            :currentMode="currentMode"
+                            :currentColorTheme="currentColorTheme"
+                            :i18n="i18n"
+                        />
+                    </div>
+                </div>
         `,
     };
 

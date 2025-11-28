@@ -12,14 +12,6 @@ a {
     transition: all 0.2s ease-in-out;
 }
 
-#app {
-    height: 100%;
-    // overflow: auto;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
 .theme-selector-popover {
     position: absolute;
     top: 100%;
