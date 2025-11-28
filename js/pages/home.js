@@ -16,6 +16,8 @@ const Home = {
         const projects = ref([]);
         const projectsRef = ref(null);
         const projectTitleRef = ref(null);
+        const bubbleRefs = ref([]);
+
         let ctx;
 
         const initScrollTrigger = () => {
@@ -96,12 +98,76 @@ const Home = {
             ctx && ctx.revert();
         });
 
+        const handleMouseEnter = (index) => {
+            const bubble = bubbleRefs.value[index];
+            if (!bubble) return;
+
+            gsap.to(bubble, {
+                duration: 0.3,
+                ease: 'power2.in',
+                overwrite: 'auto',
+            });
+        };
+
+        // 2. 滑鼠移動：泡泡跟隨 (使用 fixed 定位)
+        const handleMouseMove = (e, index) => {
+            const bubble = bubbleRefs.value[index];
+            const target = e.currentTarget;
+
+            if (!bubble || !target) return;
+
+            // 取得 router-link 的邊界資訊
+            const rect = target.getBoundingClientRect();
+
+            // X 軸計算 (相對於左邊)：滑鼠 X - 容器左邊界
+            const relativeX = e.clientX - rect.left;
+
+            // Y 軸計算 (相對於底部)：滑鼠 Y - 容器下邊界
+            // 因為 CSS 是 bottom-0，往上移動 y 會是負值，這是正確的
+            const relativeY = e.clientY - rect.bottom;
+
+            // 設定偏移量 (讓泡泡出現在滑鼠右下方)
+            const offsetX = 10;
+            const offsetY = 50;
+
+            gsap.to(bubble, {
+                x: relativeX + offsetX,
+                y: relativeY + offsetY,
+                duration: 0.15,
+                ease: 'power2.out',
+                overwrite: 'auto',
+            });
+        };
+
+        // 3. 滑鼠離開：隱藏泡泡
+        const handleMouseLeave = (index) => {
+            const bubble = bubbleRefs.value[index];
+            if (!bubble) return;
+
+            gsap.to(bubble, {
+                y: 0,
+                x: 0,
+                duration: 0.3,
+                ease: 'power2.in',
+                overwrite: 'auto',
+            });
+        };
+
+        // 用來綁定 v-for 裡的 ref
+        const setBubbleRef = (el, index) => {
+            if (el) bubbleRefs.value[index] = el;
+        };
+
         return {
             containerRef,
             aboutRef,
             projectsRef,
             projectTitleRef,
             projects,
+            setBubbleRef,
+            handleMouseEnter,
+            handleMouseMove,
+            handleMouseLeave,
         };
     },
     template: /* html */ `
@@ -134,42 +200,58 @@ const Home = {
                     <div ref="aboutRef" data-speed="0.5" class="z-10 w-full min-h-[360px] flex flex-col justify-center items-center bg-sky-50 dark:bg-gray-500 dark:text-dark-text">
                         <div class="text-center max-w-[480px]">
                             <h3 class="text-4xl font-bold mb-4">關於我</h3>
-                            <p class="text-left mb-4">
+                            <p class="text-justify mb-4">
                             具備前端工程師、專案管理師與MIS的三重實務經驗，曾任職於麥斯科技與哲煜科技。
                             自軍旅與美國進修背景成功轉職，精通HTML、CSS、JavaScript及Angular、Vue3、React等主流框架。
                             <br>
                             我將過往培養的紀律與執行力轉化為職場優勢，擅長跨部門溝通與問題解決。
                             這段跨領域歷程證明我具備高度適應力與學習熱忱，能以「技術＋管理」的全面視角，為專案創造最大價值。
                             </p>
-                            <router-link to="/About" class="underline hover:text-primary">閱讀更多...</router-link>
+                            <router-link to="/About" class="underline float-right hover:text-primary">更多關於我...</router-link>
                         </div>
                     </div>
 
                     <div ref="projectsRef" data-speed="0.5" class="relative w-full pb-[100px] z-10 min-h-[720px] flex flex-col justify-start items-center bg-light-bg dark:bg-dark-bg dark:text-dark-text overflow-hidden">
                         <div class="text-center w-full py-10">
-                            <h3 ref="projectTitleRef" class="absolute top-0 w-full text-4xl font-bold p-10 bg-light-bg dark:bg-dark-bg">精選作品集</h3>
+                            <h3 ref="projectTitleRef" class="absolute -top-1 z-10 w-full text-4xl font-bold pt-[70px] pb-2 bg-light-bg dark:bg-dark-bg">精選作品集</h3>
                             <div class="w-full flex justify-center items-center flex-col flex-wrap gap-[40px] mt-32">
                                 <div
-                                    v-for="project in projects" 
+                                    v-for="(project, index) in projects" 
                                     :key="project.name" 
                                     class="flex justify-center items-center flex-col gap-[40px] w-1/2 mx-4"
-                                    >
+                                >
                                     <router-link 
                                         :to="project.link" 
-                                        class="flex justify-center items-center w-full max-w-sm hover:shadow-xl transition-shadow duration-300"
-                                        >
-                                        <div class="p-4">
-                                            <p class="font-bold text-xl mb-2">{{ project.title }}</p>
-                                            <p class="text-gray-600 dark:text-gray-300 text-sm line-clamp-2">{{ project.description }}</p>
+                                        class="group relative flex justify-between items-center w-full hover:text-primary transition-shadow duration-300"
+                                        @mouseenter="handleMouseEnter(index)"
+                                        @mousemove="handleMouseMove($event, index)"
+                                        @mouseleave="handleMouseLeave(index)"
+                                    >
+                                        <div class="p-4 text-justify">
+                                            <p class="font-bold text-xl mb-2">{{ project.name }}</p>
+                                            <p class="">{{ project.description }}</p>
                                         </div>
 
                                         <img 
                                             :src="project.image" 
-                                            :alt="project.title" 
-                                            class="rounded-b-lg w-full h-48 object-cover"
-                                            />
+                                            :alt="project.name" 
+                                            class="rounded-lg w-full max-w-md m-4 transition-all duration-300 group-hover:scale-[1.05] group-hover:shadow-2xl"
+                                        />
+
+                                        <div 
+                                            :ref="(el) => setBubbleRef(el, index)"
+                                            class="absolute bottom-0 left-0 z-50 pointer-events-none
+                                                bg-primary text-dark-text dark:text-light-text 
+                                                px-4 py-2 rounded-full shadow-xl text-sm tracking-wider whitespace-nowrap
+                                                border-2 border-transparent"
+                                            >
+                                            了解更多<span class="font-bold">{{ project.name }}</span> <app-icon name="link" class="inline-block w-[15px] text-dark-text dark:text-light-text" />
+                                        </div>
                                     </router-link>
-                                    <hr />
+                                    <hr
+                                        v-if="index !== projects.length - 1"
+                                        class="w-full border-t border-primary"
+                                    />
                                 </div>
                             </div>
                         </div>

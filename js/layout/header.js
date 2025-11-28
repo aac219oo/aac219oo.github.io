@@ -1,4 +1,4 @@
-import { ref, toRef, onMounted, onUnmounted } from 'vue';
+import { ref, toRef, onMounted, onUnmounted, watch } from 'vue';
 import AppIcon from '/js/components/AppIcon.js';
 import { useClickOutside } from '/js/composables/useClickOutside.js';
 
@@ -155,6 +155,7 @@ const Header = {
         'changeLocale',
         'i18n',
         'isHeaderActive',
+        'isHeaderHidden',
     ],
     components: {
         'app-icon': AppIcon,
@@ -224,6 +225,16 @@ const Header = {
             }
         };
 
+        watch(
+            () => props.isHeaderHidden,
+            (newVal) => {
+                if (newVal) {
+                    isThemeSelectorOpen.value = false;
+                    isLangSelectorOpen.value = false;
+                }
+            }
+        );
+
         onMounted(() => {
             loadheader();
         });
@@ -250,6 +261,7 @@ const Header = {
             langBtnRef,
             langContainerRef,
             isHeaderActive: toRef(props, 'isHeaderActive'),
+            isHeaderHidden: toRef(props, 'isHeaderHidden'),
         };
     },
 

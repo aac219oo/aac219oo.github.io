@@ -217,6 +217,7 @@ async function bootstrapApp() {
                 onAnimationFinished,
                 progressBarRef,
                 headerRef,
+                isHeaderHidden,
                 isHeaderActive,
                 headerClasses,
             };
@@ -240,6 +241,7 @@ async function bootstrapApp() {
                     :changeLocale="changeLocale"
                     :i18n="i18n"
                     :isHeaderActive="isHeaderActive"
+                    :isHeaderHidden="isHeaderHidden"
                 />
                 <div id="smooth-wrapper">
                     <div id="smooth-content" class="flex flex-col min-h-screen">
