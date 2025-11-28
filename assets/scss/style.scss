@@ -55,11 +55,6 @@ a {
 header {
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
 }
 
 nav {
@@ -299,12 +294,7 @@ footer {
             }
         }
     }
-    main {
-        flex-wrap: wrap-reverse;
-        div.line {
-            display: none;
-        }
-    }
+
     section.left {
         h1 {
             font-size: 3rem;

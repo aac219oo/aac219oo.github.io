@@ -207,18 +207,17 @@ const Home = {
                             我將過往培養的紀律與執行力轉化為職場優勢，擅長跨部門溝通與問題解決。
                             這段跨領域歷程證明我具備高度適應力與學習熱忱，能以「技術＋管理」的全面視角，為專案創造最大價值。
                             </p>
-                            <router-link to="/About" class="underline float-right hover:text-primary">更多關於我...</router-link>
+                            <router-link to="/About" class="underline float-right hover:text-primary block w-fit border p-2 rounded">更多關於我</router-link>
                         </div>
                     </div>
 
-                    <div ref="projectsRef" data-speed="0.5" class="relative w-full pb-[100px] z-10 min-h-[720px] flex flex-col justify-start items-center bg-light-bg dark:bg-dark-bg dark:text-dark-text overflow-hidden">
-                        <div class="text-center w-full py-10">
-                            <h3 ref="projectTitleRef" class="absolute -top-1 z-10 w-full text-4xl font-bold pt-[70px] pb-2 bg-light-bg dark:bg-dark-bg">精選作品集</h3>
-                            <div class="w-full flex justify-center items-center flex-col flex-wrap gap-[40px] mt-32">
+                    <div ref="projectsRef" data-speed="0.5" class="relative w-full pb-[100px] z-10 min-h-[720px] flex flex-col justify-start items-center bg-light-bg dark:bg-dark-bg dark:text-dark-text">
+                            <h3 ref="projectTitleRef" class="absolute -top-1 z-10 w-full text-center text-4xl font-bold p-8 bg-light-bg dark:bg-dark-bg">精選作品集</h3>
+                            <div class="flex justify-center items-center flex-col flex-wrap gap-[40px] mt-24">
                                 <div
                                     v-for="(project, index) in projects" 
                                     :key="project.name" 
-                                    class="flex justify-center items-center flex-col gap-[40px] w-1/2 mx-4"
+                                    class="flex justify-center items-center flex-col gap-[40px] w-full max-w-[1200px] w-1/2 mx-4"
                                 >
                                     <router-link 
                                         :to="project.link" 
@@ -240,7 +239,7 @@ const Home = {
 
                                         <div 
                                             :ref="(el) => setBubbleRef(el, index)"
-                                            class="absolute bottom-0 left-0 z-50 pointer-events-none
+                                            class="absolute bottom-0 left-0 z-1 pointer-events-none
                                                 bg-primary text-dark-text dark:text-light-text 
                                                 px-4 py-2 rounded-full shadow-xl text-sm tracking-wider whitespace-nowrap
                                                 border-2 border-transparent"
@@ -253,8 +252,8 @@ const Home = {
                                         class="w-full border-t border-primary"
                                     />
                                 </div>
+                                <router-link to="/Projects" class="block w-fit border p-2 underline rounded hover:text-primary">更多作品集</router-link>
                             </div>
-                        </div>
                     </div>
     `,
 };

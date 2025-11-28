@@ -1,4 +1,6 @@
-import { ref, toRef, onMounted, onUnmounted, watch } from 'vue';
+import { ref, toRef, onMounted, nextTick, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import gsap from 'gsap';
 import AppIcon from '/js/components/AppIcon.js';
 import { useClickOutside } from '/js/composables/useClickOutside.js';
 
@@ -15,8 +17,8 @@ export const LANGUAGES = [
 ];
 
 export const HeaderTemplate = /* html */ `
-    <header class="fixed w-full top-0 z-50 px-[2rem] border-(--color-primary) border-b-[1px] border-solid bg-(--color-light-bg) text-(--color-light-text) dark:bg-(--color-dark-bg) dark:text-(--color-dark-text)">
-        <router-link to="/" title="James Hsu 首頁" class="hover:text-primary transition-all duration-500 origin-left ease-in-out" :class="isHeaderActive ? 'w-[45px]' : 'w-[80px]'">
+    <header class="fixed w-full top-0 left-0 z-999 px-[2rem] py-[0.8rem] border-(--color-primary) border-b-[1px] border-solid bg-(--color-light-bg) text-(--color-light-text) dark:bg-(--color-dark-bg) dark:text-(--color-dark-text)">
+        <router-link to="/" title="James Hsu 首頁" class="w-[70px] hover:text-primary transition-all duration-500 origin-left ease-in-out">
             <app-icon name="logo"/>
         </router-link>
         <button 
@@ -131,16 +133,23 @@ export const HeaderTemplate = /* html */ `
                 </div>
             </div>
         
-            <ul class="ml-auto">
+            <ul class="ml-auto relative flex" @mouseleave="handleMouseLeave">
                 <li 
                     v-for="link in navLinks" 
                     :key="link.path"
+                    :ref="(el) => { if(el) linkRefs[link.path] = el }"
                     @click="isMenuOpen = false"
+                    @mouseenter="handleMouseEnter(link.path)"
                 >
                     <router-link :to="link.path" class="hover:text-primary">
                         {{ $t(link.i18nKey) }}
                     </router-link>
                 </li>
+                <span 
+                    ref="markerRef"
+                    class="absolute -bottom-[15px] h-0 w-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[8px] border-b-(--color-primary) opacity-0 pointer-events-none"
+                    aria-hidden="true"
+                ></span>
             </ul>
         </nav>
     </header>
@@ -161,6 +170,7 @@ const Header = {
         'app-icon': AppIcon,
     },
     setup(props) {
+        const route = useRoute();
         const isMenuOpen = ref(false);
         const navLinks = ref([]);
         const isThemeSelectorOpen = ref(false);
@@ -173,6 +183,66 @@ const Header = {
 
         const langBtnRef = ref(null);
         const langContainerRef = ref(null);
+        const linkRefs = ref({});
+        const markerRef = ref(null);
+
+        const updateMarker = (path) => {
+            // 1. Try to find an exact match first
+            let el = linkRefs.value[path];
+
+            // 2. If no exact match, try to find a parent path (active state logic)
+            // This handles cases like /HW/123 -> matching /HW
+            if (!el) {
+                // Sort keys by length descending to match longest prefix first
+                // e.g. Match '/blog/tech' before '/blog' before '/'
+                const keys = Object.keys(linkRefs.value).sort((a, b) => b.length - a.length);
+                
+                for (const key of keys) {
+                    // Check if current path starts with the key
+                    // And ensure it's a valid path segment boundary
+                    if (path.startsWith(key)) {
+                        // Valid boundaries:
+                        // 1. key is root '/'
+                        // 2. key ends with '/' (unlikely in nav links usually)
+                        // 3. path has '/' right after key length (e.g. /HW/123 matches /HW)
+                        // This prevents /HW2 matching /HW
+                        if (key === '/' || path.charAt(key.length) === '/') {
+                            el = linkRefs.value[key];
+                            break; // Found the longest match
+                        }
+                    }
+                }
+            }
+
+            if (el && markerRef.value) {
+                // Calculate center: offsetLeft + half width - half triangle width (6px)
+                const center = el.offsetLeft + el.offsetWidth / 2 - 6;
+                
+                gsap.to(markerRef.value, {
+                    x: center,
+                    opacity: 1,
+                    duration: 0.4,
+                    ease: 'power2.out', // You can change this to 'back.out(1.7)' for a bouncy effect
+                    overwrite: true // Ensure new animations override old ones immediately
+                });
+            } else if (markerRef.value) {
+                // Hide if no matching link
+                gsap.to(markerRef.value, { 
+                    opacity: 0, 
+                    duration: 0.2,
+                    overwrite: true 
+                });
+            }
+        };
+
+        const handleMouseEnter = (path) => {
+            updateMarker(path);
+        };
+
+        const handleMouseLeave = () => {
+            // Return to current route on mouse leave
+            updateMarker(route.path);
+        };
 
         const toggleMenu = () => {
             isMenuOpen.value = !isMenuOpen.value;
@@ -220,6 +290,10 @@ const Header = {
                 }
                 const data = await response.json();
                 navLinks.value = data.navLinks;
+
+                nextTick(() => {
+                    updateMarker(route.path);
+                });
             } catch (error) {
                 console.error('Failed to load navigation links:', error);
             }
@@ -235,8 +309,25 @@ const Header = {
             }
         );
 
+        watch(
+            () => route.path,
+            (newPath) => {
+                nextTick(() => {
+                    updateMarker(newPath);
+                });
+            }
+        );
+
         onMounted(() => {
             loadheader();
+            window.addEventListener('resize', () => {
+                // Use gsap.set for instant resize updates instead of animating
+                const el = linkRefs.value[route.path];
+                if (el && markerRef.value) {
+                    const center = el.offsetLeft + el.offsetWidth / 2 - 6;
+                    gsap.set(markerRef.value, { x: center });
+                }
+            });
         });
 
         return {
@@ -262,6 +353,10 @@ const Header = {
             langContainerRef,
             isHeaderActive: toRef(props, 'isHeaderActive'),
             isHeaderHidden: toRef(props, 'isHeaderHidden'),
+            linkRefs,
+            markerRef, // Changed from markerStyle
+            handleMouseEnter,
+            handleMouseLeave,
         };
     },
 

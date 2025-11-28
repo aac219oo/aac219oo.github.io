@@ -134,9 +134,9 @@ async function bootstrapApp() {
                     'transition-transform duration-500 ease-in-out transition-shadow': true,
                     '-translate-y-full': isHeaderHidden.value,
                     'translate-y-0': !isHeaderHidden.value,
-                    'py-[0.2rem] backdrop-blur-sm shadow-[-6px_-6px_16px_var(--color-primary)]':
+                    'backdrop-blur-sm shadow-[-6px_-6px_16px_var(--color-primary)]':
                         isHeaderActive.value,
-                    'py-[0.8rem] shadow-none': !isHeaderActive.value,
+                    'shadow-none': !isHeaderActive.value,
                 };
             });
 
