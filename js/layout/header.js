@@ -15,7 +15,7 @@ export const LANGUAGES = [
 ];
 
 export const HeaderTemplate = /* html */ `
-    <header class="border-(--color-primary) border-b-[1px] border-solid bg-(--color-light-bg) text-(--color-light-text) dark:bg-(--color-dark-bg) dark:text-(--color-dark-text)">
+    <header class="fixed w-full top-0 z-50 px-[2rem] border-(--color-primary) border-b-[1px] border-solid bg-(--color-light-bg) text-(--color-light-text) dark:bg-(--color-dark-bg) dark:text-(--color-dark-text)">
         <router-link to="/" title="James Hsu 首頁" class="hover:text-primary transition-all duration-500 origin-left ease-in-out" :class="isHeaderActive ? 'w-[45px]' : 'w-[80px]'">
             <app-icon name="logo"/>
         </router-link>

@@ -1,70 +1,22 @@
 {
     "projects": [
         {
+            "name": "台灣電力公司",
+            "link": "/projects/taiwanmobile",
+            "image": "/images/projects/taiwanmobile.png",
+            "description": "台灣大哥大是台灣主要的電信服務提供商之一，致力於提供高品質的行動通訊及數據服務。"
+        },
+        {
             "name": "商鼎數位出版",
             "link": "/projects/scbooks",
             "image": "/images/projects/scbooks.png",
             "description": "商鼎數位出版股份有限公司成立於2001年，專注於數位出版及電子書解決方案，提供多元化的數位內容服務。"
         },
         {
-            "name": "台灣大哥大",
-            "link": "/projects/taiwanmobile",
-            "image": "/images/projects/taiwanmobile.png",
-            "description": "台灣大哥大是台灣主要的電信服務提供商之一，致力於提供高品質的行動通訊及數據服務。"
-        },
-        {
             "name": "遠傳電信",
             "link": "/projects/fetnet",
             "image": "/images/projects/fetnet.png",
             "description": "遠傳電信成立於1997年，是台灣領先的電信公司，提供多樣化的通訊解決方案及創新服務。"
-        },
-        {
-            "name": "中華電信",
-            "link": "/projects/chunghwa",
-            "image": "/images/projects/chunghwa.png",
-            "description": "中華電信是台灣最大的電信公司，提供全面的通訊服務，包括固定電話、行動通訊及寬頻網路。"
-        },
-        {
-            "name": "中華電信",
-            "link": "/projects/chunghwa",
-            "image": "/images/projects/chunghwa.png",
-            "description": "中華電信是台灣最大的電信公司，提供全面的通訊服務，包括固定電話、行動通訊及寬頻網路。"
-        },
-        {
-            "name": "中華電信",
-            "link": "/projects/chunghwa",
-            "image": "/images/projects/chunghwa.png",
-            "description": "中華電信是台灣最大的電信公司，提供全面的通訊服務，包括固定電話、行動通訊及寬頻網路。"
-        },
-        {
-            "name": "中華電信",
-            "link": "/projects/chunghwa",
-            "image": "/images/projects/chunghwa.png",
-            "description": "中華電信是台灣最大的電信公司，提供全面的通訊服務，包括固定電話、行動通訊及寬頻網路。"
-        },
-        {
-            "name": "中華電信",
-            "link": "/projects/chunghwa",
-            "image": "/images/projects/chunghwa.png",
-            "description": "中華電信是台灣最大的電信公司，提供全面的通訊服務，包括固定電話、行動通訊及寬頻網路。"
-        },
-        {
-            "name": "中華電信",
-            "link": "/projects/chunghwa",
-            "image": "/images/projects/chunghwa.png",
-            "description": "中華電信是台灣最大的電信公司，提供全面的通訊服務，包括固定電話、行動通訊及寬頻網路。"
-        },
-        {
-            "name": "中華電信",
-            "link": "/projects/chunghwa",
-            "image": "/images/projects/chunghwa.png",
-            "description": "中華電信是台灣最大的電信公司，提供全面的通訊服務，包括固定電話、行動通訊及寬頻網路。"
-        },
-        {
-            "name": "中華電信",
-            "link": "/projects/chunghwa",
-            "image": "/images/projects/chunghwa.png",
-            "description": "中華電信是台灣最大的電信公司，提供全面的通訊服務，包括固定電話、行動通訊及寬頻網路。"
         },
         {
             "name": "中華電信",
