@@ -59,7 +59,7 @@ const Home = {
                 ScrollTrigger.create({
                     trigger: projectsRef.value,
                     pin: projectTitleRef.value,
-                    start: 'top top',
+                    start: 'top -1px',
                     endTrigger: 'footer',
                     end: 'bottom bottom',
                     pinSpacing: false,
@@ -197,7 +197,7 @@ const Home = {
                         </div>
                     </div>
 
-                    <div ref="aboutRef" data-speed="0.5" class="z-10 w-full min-h-[360px] flex flex-col justify-center items-center bg-sky-50 dark:bg-gray-500 dark:text-dark-text">
+                    <div ref="aboutRef" data-speed="0.5" class="z-1 w-full min-h-[360px] flex flex-col justify-center items-center bg-sky-50 dark:bg-gray-500 dark:text-dark-text">
                         <div class="text-center max-w-[480px]">
                             <h3 class="text-4xl font-bold mb-4">關於我</h3>
                             <p class="text-justify mb-4">
@@ -211,8 +211,8 @@ const Home = {
                         </div>
                     </div>
 
-                    <div ref="projectsRef" data-speed="0.5" class="relative w-full pb-[100px] z-10 min-h-[720px] flex flex-col justify-start items-center bg-light-bg dark:bg-dark-bg dark:text-dark-text">
-                            <h3 ref="projectTitleRef" class="absolute -top-1 z-10 w-full text-center text-4xl font-bold p-8 bg-light-bg dark:bg-dark-bg">精選作品集</h3>
+                    <div ref="projectsRef" data-speed="0.5" class="w-full pb-[100px] z-1 min-h-[720px] flex flex-col justify-start items-center bg-light-bg dark:bg-dark-bg dark:text-dark-text">
+                            <h3 ref="projectTitleRef" class="z-10 w-full text-center text-4xl font-bold p-8 bg-light-bg dark:bg-dark-bg">精選．作品集</h3>
                             <div class="flex justify-center items-center flex-col flex-wrap gap-[40px] mt-24">
                                 <div
                                     v-for="(project, index) in projects" 
@@ -241,8 +241,8 @@ const Home = {
                                             :ref="(el) => setBubbleRef(el, index)"
                                             class="absolute bottom-0 left-0 z-1 pointer-events-none
                                                 bg-primary text-dark-text dark:text-light-text 
-                                                px-4 py-2 rounded-full shadow-xl text-sm tracking-wider whitespace-nowrap
-                                                border-2 border-transparent"
+                                                px-4 py-2 rounded-full text-sm tracking-wider whitespace-nowrap
+                                                border-2 border-black group-hover:shadow-[3px_3px_0px_hsl(from_var(--color-primary)_calc(h_+_120)_s_l)]"
                                             >
                                             了解更多<span class="font-bold">{{ project.name }}</span> <app-icon name="link" class="inline-block w-[15px] text-dark-text dark:text-light-text" />
                                         </div>

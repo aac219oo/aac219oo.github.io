@@ -147,7 +147,7 @@ export const HeaderTemplate = /* html */ `
                 </li>
                 <span 
                     ref="markerRef"
-                    class="absolute -bottom-[15px] h-0 w-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[8px] border-b-(--color-primary) opacity-0 pointer-events-none"
+                    class="absolute -bottom-[15px] -translate-x-1/2 h-0 w-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[8px] border-b-(--color-primary) opacity-0 pointer-events-none"
                     aria-hidden="true"
                 ></span>
             </ul>
@@ -195,8 +195,10 @@ const Header = {
             if (!el) {
                 // Sort keys by length descending to match longest prefix first
                 // e.g. Match '/blog/tech' before '/blog' before '/'
-                const keys = Object.keys(linkRefs.value).sort((a, b) => b.length - a.length);
-                
+                const keys = Object.keys(linkRefs.value).sort(
+                    (a, b) => b.length - a.length
+                );
+
                 for (const key of keys) {
                     // Check if current path starts with the key
                     // And ensure it's a valid path segment boundary
@@ -216,21 +218,21 @@ const Header = {
 
             if (el && markerRef.value) {
                 // Calculate center: offsetLeft + half width - half triangle width (6px)
-                const center = el.offsetLeft + el.offsetWidth / 2 - 6;
-                
+                const center = el.offsetLeft + el.offsetWidth / 2;
+
                 gsap.to(markerRef.value, {
                     x: center,
                     opacity: 1,
                     duration: 0.4,
                     ease: 'power2.out', // You can change this to 'back.out(1.7)' for a bouncy effect
-                    overwrite: true // Ensure new animations override old ones immediately
+                    overwrite: true, // Ensure new animations override old ones immediately
                 });
             } else if (markerRef.value) {
                 // Hide if no matching link
-                gsap.to(markerRef.value, { 
-                    opacity: 0, 
+                gsap.to(markerRef.value, {
+                    opacity: 0,
                     duration: 0.2,
-                    overwrite: true 
+                    overwrite: true,
                 });
             }
         };
@@ -318,13 +320,24 @@ const Header = {
             }
         );
 
+        watch(
+            () => props.i18n.global.locale.value, // Specifically watch the value
+            async (newVal) => {
+                // console.log('Locale changed to:', newVal);
+                // 1. Wait for the DOM to update (text length changes)
+                await nextTick(); 
+                // 2. Recalculate based on current route, not newPath (which is undefined here)
+                updateMarker(route.path);
+            }
+        );
+
         onMounted(() => {
             loadheader();
             window.addEventListener('resize', () => {
                 // Use gsap.set for instant resize updates instead of animating
                 const el = linkRefs.value[route.path];
                 if (el && markerRef.value) {
-                    const center = el.offsetLeft + el.offsetWidth / 2 - 6;
+                    const center = el.offsetLeft + el.offsetWidth / 2;
                     gsap.set(markerRef.value, { x: center });
                 }
             });
