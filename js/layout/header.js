@@ -110,7 +110,7 @@ export const HeaderTemplate = /* html */ `
                 </div>
             </div>
             
-            <div ref="langContainerRef" class="relative">
+            <div ref="langContainerRef" class="relative hidden">
                 <button
                     ref="langBtnRef"
                     @click="isLangSelectorOpen = !isLangSelectorOpen" 

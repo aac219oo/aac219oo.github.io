@@ -5,15 +5,10 @@ const Projects = {
         'app-icon': AppIcon,
     },
     template: /* html */ `
-            <div class="relative w-full mt-[110px]">
-                <img class="block w-full h-[480px] object-cover brightness-125" src="/assets/images/christian-joudrey-yCCZvWbah_g-unsplash.jpg" alt="banner">
-                <div class="absolute top-[40%] left-[50%] -translate-[50%]">
-                    <p class="text-white font-black text-7xl drop-shadow-xl/80 text-center">JH BLOG</p>
-                    <p class="text-white font-bold text-2xl drop-shadow-xl/80 text-center">"Fear is an interesting counselor."</p>
-                    <p class="text-white font-bold text-xl drop-shadow-xl/80 text-right">by Alex Honnold</p>
-                </div>
-                <app-icon name="vector" class="absolute top-[85%] left-[50%] w-[50px] -translate-[50%]" />
-            </div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h1 class="text-3xl font-bold mb-6">Projects Page</h1>
+            <p class="text-lg">This is the Projects page content.</p>
+        </div>
     `,
 };
 

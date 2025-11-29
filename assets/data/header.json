@@ -9,6 +9,10 @@
             "i18nKey": "menu.about"
         },
         {
+            "path": "/Projects",
+            "i18nKey": "menu.projects"
+        },
+        {
             "path": "/HW",
             "i18nKey": "menu.hw"
         }
