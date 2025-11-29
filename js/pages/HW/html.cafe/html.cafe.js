@@ -1,5 +1,5 @@
 const htmlCafe = {
-    template: `
+    template: /* html */ `
         <section>
             <ul>
                 <li><router-link to="/HW/html.cafe/02">2.段落</router-link></li>
@@ -8,7 +8,7 @@ const htmlCafe = {
                 <li><router-link to="/HW/html.cafe/05">5.圖片</router-link></li>
             </ul>
         </section>
-    `
+    `,
 };
 
 export default htmlCafe;

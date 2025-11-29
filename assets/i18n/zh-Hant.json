@@ -20,7 +20,17 @@
     "menu": {
         "home": "首頁",
         "about": "關於我",
-        "hw": "作業"
+        "projects": "作品集",
+        "hw": "作業",
+        "htmlcafe": "打造第一個網頁",
+        "htmlcafe02": "2.段落",
+        "htmlcafe03": "3.文字處理",
+        "htmlcafe04": "4.清單",
+        "htmlcafe05": "5.圖片",
+        "hw100218340": "增加網頁顯示技術",
+        "hw100218476": "表格練習",
+        "hw100219151": "課堂練習2",
+        "hw100219359": "課堂作業"
     },
     "pages": {
         "home_title": "應用程式首頁",
@@ -32,6 +42,10 @@
     },
     "home": {},
     "about": {},
+    "Projects": {
+        "title": "作品集",
+        "description": "以下是我參與過的一些專案："
+    },
     "HW": {
         "second": "02.打造第一個網頁",
         "third": "03.網域名稱與服務內容",
@@ -43,11 +57,16 @@
         "home": "首頁 {pipe} James Hsu",
         "about": "關於我 {pipe} James Hsu",
         "hw": "作業 {pipe} James Hsu",
+        "projects": "作品集 {pipe} James Hsu",
+        "hwhtmlcafe": "打造第一個網頁",
         "hwhtmlcafe02": "2.段落",
         "hwhtmlcafe03": "3.文字處理",
         "hwhtmlcafe04": "4.清單",
         "hwhtmlcafe05": "5.圖片",
-        "hw100218340": "04.增加網頁顯示技術",
+        "100218340": "04.增加網頁顯示技術",
+        "100218340p24": "`text-decoration` 混合樣式",
+        "100218340p27": "`text-shadow` 基本用法",
+        "100218340p28": "`text-shadow` 多重效果",
         "hw100218476": "05.表格練習",
         "hw100219151": {
             "index": "07.課堂練習2",
@@ -57,9 +76,6 @@
             "perplexity": "07.課堂練習2 - Perplexity"
         },
         "hw100219359": "08.課堂作業",
-        "hwp24": "`text-decoration` 混合樣式",
-        "hwp27": "`text-shadow` 基本用法",
-        "hwp28": "`text-shadow` 多重效果",
         "fallback": "找不到頁面"
     }
 }

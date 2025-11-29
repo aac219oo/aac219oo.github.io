@@ -15,6 +15,7 @@ import Animation from './components/animation.js';
 import Header, { THEMES } from './layout/header.js';
 import Footer from './layout/footer.js';
 import ProgressBar from './components/ProgressBar.js';
+import breadcrumb from './components/breadcrumb.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 const DEFAULT_LOCALE = 'zh-Hant';
@@ -85,6 +86,7 @@ async function bootstrapApp() {
             'app-header': Header,
             'app-footer': Footer,
             'app-progress-bar': ProgressBar,
+            'app-breadcrumb': breadcrumb,
         },
         setup() {
             const savedMode = localStorage.getItem('theme-mode');
@@ -245,6 +247,7 @@ async function bootstrapApp() {
                 />
                 <div id="smooth-wrapper">
                     <div id="smooth-content" class="flex flex-col min-h-screen">
+                        <app-breadcrumb />
                         <main class="flex justify-center items-center w-full">
                             <router-view />
                         </main>

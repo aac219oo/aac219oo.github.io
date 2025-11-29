@@ -32,6 +32,10 @@
     },
     "home": {},
     "about": {},
+    "Projects": {
+        "title": "作品集",
+        "description": "以下是我參與過的一些專案："
+    },
     "HW": {
         "second": "02.打造第一個網頁",
         "third": "03.網域名稱與服務內容",
@@ -43,6 +47,7 @@
         "home": "Home {pipe} James Hsu",
         "about": "About me {pipe} James Hsu",
         "hw": "Homework {pipe} James Hsu",
+        "projects": "作品集 {pipe} James Hsu",
         "hwhtmlcafe02": "2.段落",
         "hwhtmlcafe03": "3.文字處理",
         "hwhtmlcafe04": "4.清單",
@@ -57,9 +62,9 @@
             "perplexity": "07.課堂練習2 - Perplexity"
         },
         "hw100219359": "08.課堂作業",
-        "hwp24": "`text-decoration` 混合樣式",
-        "hwp27": "`text-shadow` 基本用法",
-        "hwp28": "`text-shadow` 多重效果",
+        "hw100219359p24": "`text-decoration` 混合樣式",
+        "hw100219359p27": "`text-shadow` 基本用法",
+        "hw100219359p28": "`text-shadow` 多重效果",
         "fallback": "Error {pipe} James Hsu"
     }
 }

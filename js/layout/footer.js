@@ -29,7 +29,7 @@ export const FooterTemplate = /* html */ `
             /></a>
         </li>
     </ul>
-    <p class="text-center text-sm text-primary">Copyright © Chiayu Hsu</p>
+    <p class="text-center text-sm text-light-text dark:text-dark-text">Copyright © Chiayu Hsu</p>
 </footer>
 `;
 
