@@ -21,20 +21,21 @@ const routes = [
     },
     {
         path: '/Projects',
+        name: 'Projects',
         component: { render: () => h(RouterView) },
+        meta: {
+            titleKey: 'pageTitle.projects',
+        },
         children: [
             {
                 path: '',
-                name: 'Projects',
+                name: '',
                 component: () => import('../pages/projects.js'),
-                meta: {
-                    titleKey: 'pageTitle.projects',
-                },
             },
             {
                 path: ':id',
-                name: 'ProjectDetail',
-                component: () => import('../pages/projects.js'),
+                name: 'project_detail',
+                component: () => import('../pages/projects/projectDetail.js'),
                 meta: { title: 'pageTitle.projects' },
             },
         ],
@@ -121,15 +122,15 @@ const routes = [
             },
             {
                 path: '100218476',
-                name: 'HW100218476',
+                name: '100218476',
                 component: () => import('../pages/HW/100218476.js'),
-                meta: { titleKey: 'pageTitle.hw100218476' },
+                meta: { titleKey: 'pageTitle.100218476' },
             },
             {
                 path: '100219151',
                 name: '100219151',
                 component: { render: () => h(RouterView) },
-                meta: { titleKey: 'pageTitle.hw100219151.index' },
+                meta: { titleKey: 'pageTitle.100219151' },
                 children: [
                     {
                         path: '',
@@ -141,34 +142,34 @@ const routes = [
                         name: '100219151_chatGPT',
                         component: () =>
                             import('../pages/HW/100219151/chatGPT.js'),
-                        meta: { titleKey: 'pageTitle.hw100219151.chatgpt' },
+                        meta: { titleKey: 'pageTitle.100219151_chatGPT' },
                     },
                     {
                         path: 'gemini',
                         name: '100219151_gemini',
                         component: () =>
                             import('../pages/HW/100219151/gemini.js'),
-                        meta: { titleKey: 'pageTitle.hw100219151.gemini' },
+                        meta: { titleKey: 'pageTitle.100219151_gemini' },
                     },
                     {
                         path: 'grok',
                         name: '100219151_grok',
                         component: () =>
                             import('../pages/HW/100219151/grok.js'),
-                        meta: { titleKey: 'pageTitle.hw100219151.grok' },
+                        meta: { titleKey: 'pageTitle.100219151_grok' },
                     },
                     {
                         path: 'perplexity',
                         name: '100219151_perplexity',
                         component: () =>
                             import('../pages/HW/100219151/perplexity.js'),
-                        meta: { titleKey: 'pageTitle.hw100219151.perplexity' },
+                        meta: { titleKey: 'pageTitle.100219151_perplexity' },
                     },
                 ],
             },
             {
                 path: '100219359',
-                name: 'HW/100219359',
+                name: '100219359',
                 component: () => import('../pages/HW/100219359.js'),
                 meta: { titleKey: 'pageTitle.hw100219359' },
             },

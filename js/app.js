@@ -248,7 +248,7 @@ async function bootstrapApp() {
                 <div id="smooth-wrapper">
                     <div id="smooth-content" class="flex flex-col min-h-screen">
                         <app-breadcrumb />
-                        <main class="flex justify-center items-center w-full">
+                        <main class="flex justify-center w-full">
                             <router-view />
                         </main>
                         <app-footer

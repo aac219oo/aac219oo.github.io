@@ -1,34 +1,110 @@
 {
     "projects": [
         {
-            "name": "麥斯科技專案管理系統",
-            "link": "/projects/fetnet",
-            "image": "/assets/images/projects/tec-login.jpg",
-            "description": "遠傳電信成立於1997年，是台灣領先的電信公司，提供多樣化的通訊解決方案及創新服務。"
-        },
-        {
-            "name": "台灣電力公司 電力維修處 人員管理系統",
-            "link": "/projects/taiwanmobile",
-            "image": "/assets/images/projects/tec-01.png",
-            "description": "台灣大哥大是台灣主要的電信服務提供商之一，致力於提供高品質的行動通訊及數據服務。"
-        },
-        {
-            "name": "商鼎數位出版",
-            "link": "/projects/scbooks",
-            "image": "/assets/images/projects/tec-login.jpg",
-            "description": "商鼎數位出版股份有限公司成立於2001年，專注於數位出版及電子書解決方案，提供多元化的數位內容服務。商鼎數位出版股份有限公司成立於2001年，專注於數位出版及電子書解決方案，提供多元化的數位內容服務。"
-        },
-        {
+            "id": "new-taipei-park",
             "name": "新北大都會公園專網",
-            "link": "/projects/chunghwa",
-            "image": "/assets/images/projects/tec-login.jpg",
-            "description": "中華電信是台灣最大的電信公司，提供全面的通訊服務，包括固定電話、行動通訊及寬頻網路。"
+            "image": "./assets/images/projects/new-taipei-park.png",
+            "images": [
+                "./assets/images/projects/new-taipei-park-1.jpeg",
+                "./assets/images/projects/new-taipei-park-2.jpeg",
+                "./assets/images/projects/new-taipei-park-3.jpeg",
+                "./assets/images/projects/new-taipei-park-4.jpeg",
+                "./assets/images/projects/new-taipei-park-5.jpeg"
+            ],
+            "description": "使用React + Next.js開發的入口網站",
+            "technologies": ["React", "Next.js"],
+            "content": "新北大都會公園專網是為了提供使用者最新的公園資訊與活動消息而設計的入口網站。此專案採用React與Next.js技術，確保網站具有高效能與良好的使用者體驗，優化SEO搜尋的排行。網站通過無障礙設計，包含多種互動功能，如活動報名、地圖導航及即時消息更新，讓使用者能夠輕鬆獲取所需資訊。",
+            "link": "https://www.hrcmntmp.ntpc.gov.tw/",
+            "github": "https://github.com/aac219oo/new-taipei-park"
         },
         {
-            "name": "中華電信",
-            "link": "/projects/chunghwa",
-            "image": "/assets/images/projects/tec-login.jpg",
-            "description": "中華電信是台灣最大的電信公司，提供全面的通訊服務，包括固定電話、行動通訊及寬頻網路。"
+            "id": "TARF2",
+            "name": "台北捷運工程局 TARF2",
+            "image": "./assets/images/projects/TARF2.png",
+            "images": [
+                "./assets/images/projects/TARF2-1.jpg",
+                "./assets/images/projects/TARF2-2.jpg",
+                "./assets/images/projects/TARF2-3.jpg",
+                "./assets/images/projects/TARF2-4.jpg",
+                "./assets/images/projects/TARF2-5.jpg",
+                "./assets/images/projects/TARF2-6.jpg",
+                "./assets/images/projects/TARF2-7.jpg"
+            ],
+            "description": "使用Vue3 + Element UI開發的EIP應用系統-技術文件線上簽核系統 -案件查詢及統計模組",
+            "technologies": ["React", "Next.js", "Element UI"],
+            "content": "台北捷運工程局 TARF2 系統是一個專為捷運工程管理設計的EIP應用系統，主要功能包括技術文件的線上簽核、案件查詢及統計模組。此系統採用Vue3與Element UI技術，提供使用者直觀且高效的操作介面。系統支援多種文件格式的上傳與審核流程，並具備強大的查詢功能，方便使用者快速找到所需資訊。此外，統計模組能夠生成各類報表，協助管理層進行決策分析。",
+            "link": null,
+            "github": "https://github.com/aac219oo/TARF2"
+        },
+        {
+            "id": "masspm",
+            "name": "麥斯科技專案管理系統",
+            "image": "./assets/images/projects/masspm.png",
+            "images": [
+                "./assets/images/projects/masspm-1.jpg",
+                "./assets/images/projects/masspm-2.jpg",
+                "./assets/images/projects/masspm-3.jpg",
+                "./assets/images/projects/masspm-4.jpg",
+                "./assets/images/projects/masspm-5.jpg"
+            ],
+            "description": "使用React + Axios開發的專案管理系統",
+            "technologies": ["React", "axios"],
+            "content": "麥斯科技專案管理系統是一個專為麥斯科技設計的專案管理工具，旨在提升團隊協作與專案執行效率。此系統採用React與Axios技術，提供使用者直觀且高效的操作介面。系統功能包括任務分配、進度追蹤、文件共享及即時通訊等，方便團隊成員隨時掌握專案狀況。此外，系統還具備報表生成與分析功能，協助管理層進行決策制定與資源分配。",
+            "link": null,
+            "github": "https://github.com/aac219oo/masspm"
+        },
+        {
+            "id": "scbooks",
+            "name": "商鼎數位出版",
+            "image": "./assets/images/projects/scbooks.png",
+            "images": [
+                "./assets/images/projects/scbooks-1.jpeg",
+                "./assets/images/projects/scbooks-2.jpeg",
+                "./assets/images/projects/scbooks-3.jpeg",
+                "./assets/images/projects/scbooks-4.jpeg",
+                "./assets/images/projects/scbooks-5.jpeg"
+            ],
+            "description": "使用Angular + Bootstrap開發的購物車系統",
+            "technologies": ["Angular", "Bootstrap"],
+            "content": "商鼎數位出版購物車系統是一個專為出版產品設計的線上購物平台，旨在提供使用者便捷的購物體驗。此系統採用Angular與Bootstrap技術，確保網站具有響應式設計與高效能。系統功能包括商品瀏覽、加入購物車、結帳及訂單管理等，並支援多種支付方式，方便使用者完成交易。此外，系統還具備會員管理功能，讓使用者能夠輕鬆追蹤訂單狀況及享受專屬優惠。",
+            "link": "https://www.scbooks.com.tw/",
+            "github": "https://github.com/aac219oo/scbooks"
+        },
+        {
+            "id": "marine_sys",
+            "name": "內政部國家公園署海洋國家公園管理處 物品管理系統",
+            "image": "./assets/images/projects/marine_sys.png",
+            "images": [
+                "./assets/images/projects/marine_sys-1.jpg",
+                "./assets/images/projects/marine_sys-2.jpg",
+                "./assets/images/projects/marine_sys-3.jpg",
+                "./assets/images/projects/marine_sys-4.jpg",
+                "./assets/images/projects/marine_sys-5.jpg",
+                "./assets/images/projects/marine_sys-6.jpg",
+                "./assets/images/projects/marine_sys-7.jpg"
+            ],
+            "description": "Asp.net & jQuery開發的內部物品管理系統",
+            "technologies": ["Asp.net", "jQuery"],
+            "content": "內政部國家公園署海洋國家公園管理處物品管理系統是一個專為管理處設計的內部系統，旨在提升物品管理的效率與準確性。此系統採用Asp.net與jQuery技術，提供使用者友好的操作介面。系統功能包括物品入庫、出庫、盤點及報廢等，並支援多種查詢與報表生成，方便管理人員隨時掌握物品狀況。此外，系統還具備權限管理功能，確保不同角色的使用者能夠依照其職責進行操作。",
+            "link": null,
+            "github": ""
+        },
+        {
+            "id": "electric",
+            "name": "台灣電力公司 電力維修處 人員管理系統",
+            "image": "./assets/images/projects/electric.png",
+            "images": [
+                "./assets/images/projects/electric-1.jpg",
+                "./assets/images/projects/electric-2.jpg",
+                "./assets/images/projects/electric-3.jpg",
+                "./assets/images/projects/electric-4.jpg",
+                "./assets/images/projects/electric-5.jpg"
+            ],
+            "description": "Asp.net & Bootstrap & jQuery開發的內部人員管理系統",
+            "technologies": ["Asp.net", "jQuery", "Bootstrap"],
+            "content": "台灣電力公司電力維修處人員管理系統是一個專為維修處設計的內部系統，旨在提升人員管理的效率與準確性。此系統採用Asp.net、Bootstrap與jQuery技術，提供使用者友好的操作介面。系統功能包括人員資料管理、排班安排、考勤記錄及績效評估等，並支援多種查詢與報表生成，方便管理人員隨時掌握人員狀況。此外，系統還具備權限管理功能，確保不同角色的使用者能夠依照其職責進行操作。",
+            "link": null,
+            "github": ""
         }
     ]
 }

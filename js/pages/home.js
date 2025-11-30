@@ -179,7 +179,9 @@ const Home = {
                                     <span class="text-7xl text-primary">James Hsu</span>
                                 </h2>
                                 <p class="">
-                                    具備跨領域的技術與管理能力，致力於打造高效且創新的網頁應用程式。
+                                    具備跨領域的技術與管理能力，
+                                    <br>
+                                    致力於打造高效且創新的應用程式。
                                 </p>
                             </div>
                         </div>
@@ -216,7 +218,7 @@ const Home = {
                                     class="flex justify-center items-center flex-col gap-[40px] w-full max-w-[1200px] w-1/2 mx-4"
                                 >
                                     <router-link 
-                                        :to="project.link" 
+                                        :to="{ name: 'project_detail', params: { id: project.id } }" 
                                         class="group relative flex justify-between items-center w-full hover:text-primary transition-shadow duration-300"
                                         @mouseenter="handleMouseEnter(index)"
                                         @mousemove="handleMouseMove($event, index)"
@@ -238,7 +240,7 @@ const Home = {
                                             class="absolute bottom-0 left-0 z-1 pointer-events-none
                                                 bg-primary text-dark-text dark:text-light-text 
                                                 px-4 py-2 rounded-full text-sm tracking-wider whitespace-nowrap
-                                                border-1 border-black group-hover:shadow-[3px_3px_0px_hsl(from_var(--color-primary)_calc(h_+_120)_s_l)]"
+                                                border-1 border-black group-hover:shadow-[3px_3px_0px_hsl(from_var(--color-primary)_calc(h_+_120)_s_l_/_0.5)]"
                                             >
                                             了解更多<span class="font-bold">{{ project.name }}</span> <app-icon name="link" class="inline-block w-[15px] text-dark-text dark:text-light-text" />
                                         </div>
