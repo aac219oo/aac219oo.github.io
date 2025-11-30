@@ -200,9 +200,58 @@ $delay-step: 125ms;
 
 @media screen and (max-width: 768px) {
     .animation {
-        svg {
-            width: 30px;
-            height: 30px;
+        div {
+            &:first-child {
+                svg {
+                    &:nth-child(1) {
+                        width: 20px;
+                        height: 30px;
+                    }
+                    &:nth-child(2) {
+                        width: 25px;
+                        height: 20px;
+                    }
+                    &:nth-child(3) {
+                        width: 25px;
+                        height: 20px;
+                    }
+                    &:nth-child(4) {
+                        width: 23px;
+                        height: 20px;
+                    }
+                    &:nth-child(5) {
+                        width: 16px;
+                        height: 19px;
+                    }
+                    &:nth-child(6) {
+                        width: 30px;
+                        height: 30px;
+                    }
+                    &:nth-child(7) {
+                        width: 16px;
+                        height: 19px;
+                    }
+                    &:nth-child(8) {
+                        width: 20px;
+                        height: 18px;
+                    }
+                }
+            }
+            &.second {
+                margin-top: 2px;
+                svg {
+                    width: 30px;
+                    height: 30px;
+                    &:nth-child(2) {
+                        width: 30px;
+                        height: 27px;
+                    }
+                    &:nth-child(5) {
+                        width: 30px;
+                        height: 29px;
+                    }
+                }
+            }
         }
     }
 }
