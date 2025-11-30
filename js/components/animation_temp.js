@@ -128,7 +128,7 @@ export const AnimationTemplate = `
             />
         </svg>
         </div>
-        <div class="flex items-end">
+        <div class="second flex items-end">
         <svg
             width="127"
             height="128"
