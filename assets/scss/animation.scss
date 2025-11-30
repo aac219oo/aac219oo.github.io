@@ -197,3 +197,12 @@ $delay-step: 125ms;
         fill: #fff;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .animation {
+        svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
+}

@@ -278,4 +278,10 @@
   to {
     fill: #fff;
   }
+}
+@media screen and (max-width: 768px) {
+  .animation svg {
+    width: 30px;
+    height: 30px;
+  }
 }/*# sourceMappingURL=animation.css.map */

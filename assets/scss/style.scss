@@ -14,7 +14,6 @@ a {
 
 .theme-selector-popover {
     position: absolute;
-    top: 100%;
     margin-top: 8px;
     width: auto;
     padding: 16px;
@@ -87,7 +86,6 @@ nav {
     padding: 0;
     margin: 10px;
     border: none;
-    color: #000;
 }
 main {
     display: flex;
@@ -281,23 +279,10 @@ footer {
     div.orange {
         opacity: 0.5;
     }
-    header {
-        nav {
-            ul {
-                width: 100%;
-                // flex-direction: column;
-                li {
-                    padding: 1rem 0;
-                    // border-bottom: 2px solid gray;
-                }
-            }
-        }
-    }
 
     section.left {
         h1 {
             font-size: 3rem;
-            color: black;
         }
     }
     section.right {
@@ -334,7 +319,7 @@ footer {
     }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 768px) {
     img {
         &.orange {
             width: 100vw;
@@ -346,7 +331,6 @@ footer {
             justify-content: right;
             opacity: 0;
             flex-direction: column;
-            background: #444;
             position: fixed;
             top: 0;
             right: 0;
@@ -358,13 +342,14 @@ footer {
             transition: all 0.5s ease-in-out;
             ul {
                 display: flex;
+                flex-direction: column;
+                justify-content: center;
                 padding: 1rem;
                 gap: 0.5rem;
+                width: 100%;
                 li {
+                    width: 100%;
                     justify-items: right;
-                    a {
-                        color: #f9ac7f;
-                    }
                 }
             }
 
@@ -382,7 +367,6 @@ footer {
     }
     .menu-close {
         display: block;
-        color: rgb(255, 239, 221);
         margin-left: auto;
     }
     section {

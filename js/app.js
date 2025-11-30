@@ -19,7 +19,7 @@ import breadcrumb from './components/breadcrumb.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 const DEFAULT_LOCALE = 'zh-Hant';
-const FALLBACK_LOCALE = 'en';
+const FALLBACK_LOCALE = 'zh-Hant';
 const DEFAULT_THEME = 'orange';
 
 async function loadLanguageMessages(locale) {

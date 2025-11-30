@@ -1,4 +1,4 @@
-import { ref, toRef, onMounted, nextTick, watch } from 'vue';
+import { ref, toRef, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import gsap from 'gsap';
 import AppIcon from '/js/components/AppIcon.js';
@@ -31,7 +31,7 @@ export const HeaderTemplate = /* html */ `
             <app-icon name="menu" width="40" height="40" class="fill-black" />
         </button>
         
-        <nav ref="navRef" :class="{ 'show': isMenuOpen }" class="w-full gap-2 mx-2"> 
+        <nav ref="navRef" :class="{ 'show': isMenuOpen }" class="w-full gap-2 px-2 bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text border-(--color-primary) border-l-[1px] border-solid md:border-none"> 
             <button
                 class="menu-toggle menu-close"
                 id="menu-close"
@@ -133,7 +133,7 @@ export const HeaderTemplate = /* html */ `
                 </div>
             </div>
         
-            <ul class="ml-auto relative flex" @mouseleave="handleMouseLeave">
+            <ul class="ml-auto relative flex overflow-auto md:overflow-visible" @mouseleave="handleMouseLeave">
                 <li 
                     v-for="link in navLinks" 
                     :key="link.path"
@@ -147,7 +147,7 @@ export const HeaderTemplate = /* html */ `
                 </li>
                 <span 
                     ref="markerRef"
-                    class="absolute -bottom-[15px] -translate-x-1/2 h-0 w-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[8px] border-b-(--color-primary) opacity-0 pointer-events-none"
+                    class="absolute h-0 w-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[8px] border-b-(--color-primary) opacity-0 pointer-events-none top-0 left-0"
                     aria-hidden="true"
                 ></span>
             </ul>
@@ -217,15 +217,42 @@ const Header = {
             }
 
             if (el && markerRef.value) {
-                // Calculate center: offsetLeft + half width - half triangle width (6px)
-                const center = el.offsetLeft + el.offsetWidth / 2;
+                const isMobile = window.innerWidth <= 720;
+                let targetParams = {};
 
+                if (isMobile) {
+                    // === 手機版 (垂直選單) ===
+                    // 計算 Y 軸中心
+                    const centerY = el.offsetTop + el.offsetHeight / 2;
+
+                    targetParams = {
+                        x: el.offsetLeft - 12, // 放在文字左邊 (微調間距)
+                        y: centerY,
+                        xPercent: 0, // 不需要水平置中
+                        yPercent: -50, // 需要垂直置中 (讓三角形尖端對準中心)
+                        rotation: 90, // 旋轉 90度，讓原本朝上的三角形變成朝右 (指向文字)
+                    };
+                } else {
+                    // === 桌機版 (水平選單) ===
+                    // 計算 X 軸中心
+                    const centerX = el.offsetLeft + el.offsetWidth / 2;
+
+                    targetParams = {
+                        x: centerX,
+                        y: el.offsetTop + el.offsetHeight + 5, // 放在文字下方
+                        xPercent: -50, // 需要水平置中
+                        yPercent: 0, // 不需要垂直置中
+                        rotation: 0, // 轉回原本的朝上方向
+                    };
+                }
+
+                // 執行動畫
                 gsap.to(markerRef.value, {
-                    x: center,
+                    ...targetParams,
                     opacity: 1,
                     duration: 0.4,
-                    ease: 'power2.out', // You can change this to 'back.out(1.7)' for a bouncy effect
-                    overwrite: true, // Ensure new animations override old ones immediately
+                    ease: 'power2.out',
+                    overwrite: true,
                 });
             } else if (markerRef.value) {
                 // Hide if no matching link
@@ -237,6 +264,47 @@ const Header = {
             }
         };
 
+        const adjustPopoverPosition = async (containerRef) => {
+            await nextTick(); // 1. 等待 Vue 將 DOM 放入頁面
+
+            // 2. 使用 requestAnimationFrame 確保瀏覽器已完成排版 (Layout)
+            //    這能解決第一次開啟時抓不到正確寬度/位置的問題
+            requestAnimationFrame(() => {
+                const container = containerRef.value;
+                if (!container) return;
+
+                // 找到該容器內的 popover 元素
+                const popover = container.querySelector(
+                    '.theme-selector-popover'
+                );
+                if (!popover) return;
+
+                // 重置 Transform 以獲取原始位置
+                popover.style.transform = 'translateX(0)';
+
+                // 獲取位置資訊
+                const rect = popover.getBoundingClientRect();
+                const windowWidth = window.innerWidth;
+                const padding = 16; // 安全距離
+
+                let offsetX = 0;
+
+                // 檢查右邊界是否超出螢幕
+                if (rect.right > windowWidth - padding) {
+                    offsetX = -(rect.right - windowWidth + padding);
+                }
+
+                // 檢查左邊界是否超出螢幕
+                if (rect.left < padding) {
+                    offsetX = padding - rect.left;
+                }
+
+                // 應用修正
+                if (offsetX !== 0) {
+                    popover.style.transform = `translateX(${offsetX}px)`;
+                }
+            });
+        };
         const handleMouseEnter = (path) => {
             updateMarker(path);
         };
@@ -320,16 +388,50 @@ const Header = {
             }
         );
 
+        watch(isThemeSelectorOpen, (isOpen) => {
+            if (isOpen) {
+                // 關閉其他的 popover
+                isLangSelectorOpen.value = false;
+                // 計算位置
+                adjustPopoverPosition(themeContainerRef);
+            }
+        });
+
+        // === 修改：監聽 Lang 開啟狀態 ===
+        watch(isLangSelectorOpen, (isOpen) => {
+            if (isOpen) {
+                // 關閉其他的 popover
+                isThemeSelectorOpen.value = false;
+                // 計算位置
+                adjustPopoverPosition(langContainerRef);
+            }
+        });
+
         watch(
             () => props.i18n.global.locale.value, // Specifically watch the value
             async (newVal) => {
                 // console.log('Locale changed to:', newVal);
                 // 1. Wait for the DOM to update (text length changes)
-                await nextTick(); 
+                await nextTick();
                 // 2. Recalculate based on current route, not newPath (which is undefined here)
                 updateMarker(route.path);
             }
         );
+
+        watch(isMenuOpen, (isOpen) => {
+            if (isOpen) {
+                // 禁止滾動
+                document.body.style.overflow = 'hidden';
+            } else {
+                // 恢復滾動
+                document.body.style.overflow = '';
+            }
+        });
+
+        // 安全措施：確保組件卸載時一定會恢復滾動
+        onUnmounted(() => {
+            document.body.style.overflow = '';
+        });
 
         onMounted(() => {
             loadheader();
@@ -370,6 +472,7 @@ const Header = {
             markerRef, // Changed from markerStyle
             handleMouseEnter,
             handleMouseLeave,
+            adjustPopoverPosition,
         };
     },
 
