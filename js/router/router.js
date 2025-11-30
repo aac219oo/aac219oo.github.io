@@ -35,7 +35,7 @@ const routes = [
             {
                 path: ':id',
                 name: 'project_detail',
-                component: () => import('../pages/projects/projectDetail.js'),
+                component: () => import('../pages/projectDetail.js'),
                 meta: { title: 'pageTitle.projects' },
             },
         ],

@@ -31,7 +31,7 @@
                 "./assets/images/projects/TARF2-7.jpg"
             ],
             "description": "使用Vue3 + Element UI開發的EIP應用系統-技術文件線上簽核系統 -案件查詢及統計模組",
-            "technologies": ["React", "Next.js", "Element UI"],
+            "technologies": ["Vue3", "Element UI"],
             "content": "台北捷運工程局 TARF2 系統是一個專為捷運工程管理設計的EIP應用系統，主要功能包括技術文件的線上簽核、案件查詢及統計模組。此系統採用Vue3與Element UI技術，提供使用者直觀且高效的操作介面。系統支援多種文件格式的上傳與審核流程，並具備強大的查詢功能，方便使用者快速找到所需資訊。此外，統計模組能夠生成各類報表，協助管理層進行決策分析。",
             "link": null,
             "github": "https://github.com/aac219oo/TARF2"
@@ -48,7 +48,7 @@
                 "./assets/images/projects/masspm-5.jpg"
             ],
             "description": "使用React + Axios開發的專案管理系統",
-            "technologies": ["React", "axios"],
+            "technologies": ["React", "Axios"],
             "content": "麥斯科技專案管理系統是一個專為麥斯科技設計的專案管理工具，旨在提升團隊協作與專案執行效率。此系統採用React與Axios技術，提供使用者直觀且高效的操作介面。系統功能包括任務分配、進度追蹤、文件共享及即時通訊等，方便團隊成員隨時掌握專案狀況。此外，系統還具備報表生成與分析功能，協助管理層進行決策制定與資源分配。",
             "link": null,
             "github": "https://github.com/aac219oo/masspm"
