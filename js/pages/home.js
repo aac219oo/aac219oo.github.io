@@ -171,12 +171,12 @@ const Home = {
         };
     },
     template: /* html */ `
-                    <div ref="containerRef" class="max-w-[2160px] flex items-center min-h-screen dark:text-dark-text">
-                        <div class="w-1/2 flex flex-col justify-center items-center h-full px-10">
-                            <div class="max-w-md">
+                    <div ref="containerRef" class="max-w-[2160px] flex flex-col md:flex-row items-center md:min-h-screen mt-[120px] md:mt-0 dark:text-dark-text">
+                        <div class="md:w-1/2 mb-6 flex flex-col justify-center items-center h-full px-10">
+                            <div class="md:max-w-md">
                                 <h2 class="font-bold pb-3">
                                     <span class="block pb-3 text-4xl">你好, 我是</span>
-                                    <span class="text-7xl text-primary">James Hsu</span>
+                                    <span class="text-5xl md:text-7xl text-primary">James Hsu</span>
                                 </h2>
                                 <p class="">
                                     具備跨領域的技術與管理能力，
@@ -186,7 +186,7 @@ const Home = {
                             </div>
                         </div>
 
-                        <div class="w-1/2 flex justify-center">
+                        <div class="w-full md:w-1/2 flex justify-center">
                             <img 
                                 class="block brightness-125 shadow-lg" 
                                 src="/assets/images/F52A146D-D370-4161-9414-21A16814CE54.jpg" 
@@ -195,7 +195,7 @@ const Home = {
                         </div>
                     </div>
 
-                    <div ref="aboutRef" data-speed="0.5" class="z-1 w-full min-h-[360px] flex flex-col justify-center items-center bg-sky-50 dark:bg-gray-500 dark:text-dark-text">
+                    <div ref="aboutRef" data-speed="0.5" class="px-2 z-1 w-full min-h-[360px] flex flex-col justify-center items-center bg-sky-50 dark:bg-gray-500 dark:text-dark-text">
                         <div class="text-center max-w-[480px]">
                             <h3 class="text-4xl font-bold mb-4">關於我</h3>
                             <p class="text-justify mb-4">
@@ -215,16 +215,16 @@ const Home = {
                                 <div
                                     v-for="(project, index) in projects" 
                                     :key="project.name" 
-                                    class="flex justify-center items-center flex-col gap-[40px] w-full max-w-[1200px] w-1/2 mx-4"
+                                    class="flex justify-center items-center flex-col gap-[40px] w-full max-w-[1200px] w-1/2"
                                 >
                                     <router-link 
                                         :to="{ name: 'project_detail', params: { id: project.id } }" 
-                                        class="group relative flex justify-between items-center w-full hover:text-primary transition-shadow duration-300"
+                                        class="group relative flex justify-between items-center flex-col-reverse md:flex-row w-full hover:text-primary transition-shadow duration-300"
                                         @mouseenter="handleMouseEnter(index)"
                                         @mousemove="handleMouseMove($event, index)"
                                         @mouseleave="handleMouseLeave(index)"
                                     >
-                                        <div class="p-4 text-justify">
+                                        <div class="p-4 text-justify mb-[50px] md:mb-0">
                                             <p class="font-bold text-xl mb-2">{{ project.name }}</p>
                                             <p class="">{{ project.description }}</p>
                                         </div>
@@ -232,12 +232,12 @@ const Home = {
                                         <img 
                                             :src="project.image" 
                                             :alt="project.name" 
-                                            class="rounded-lg w-full max-w-md m-4 transition-all duration-300 group-hover:scale-[1.05] group-hover:shadow-2xl"
+                                            class="rounded-lg w-3/4 md:w-full max-w-md m-4 transition-all duration-300 group-hover:scale-[1.05] group-hover:shadow-2xl"
                                         />
 
                                         <div 
                                             :ref="(el) => setBubbleRef(el, index)"
-                                            class="absolute bottom-0 left-0 z-1 pointer-events-none
+                                            class="absolute bottom-0 left-3 md:left-0 z-1 pointer-events-none
                                                 bg-primary text-dark-text dark:text-light-text 
                                                 px-4 py-2 rounded-full text-sm tracking-wider whitespace-nowrap
                                                 border-1 border-black group-hover:shadow-[3px_3px_0px_hsl(from_var(--color-primary)_calc(h_+_120)_s_l_/_0.5)]"
