@@ -133,7 +133,7 @@ export const HeaderTemplate = /* html */ `
                 </div>
             </div>
         
-            <ul class="ml-auto relative flex overflow-auto md:overflow-visible" @mouseleave="handleMouseLeave">
+            <ul class="ml-auto relative flex" @mouseleave="handleMouseLeave">
                 <li 
                     v-for="link in navLinks" 
                     :key="link.path"
@@ -141,7 +141,7 @@ export const HeaderTemplate = /* html */ `
                     @click="isMenuOpen = false"
                     @mouseenter="handleMouseEnter(link.path)"
                 >
-                    <router-link :to="link.path" class="hover:text-primary">
+                    <router-link :to="link.path" class="ml-auto hover:text-primary">
                         {{ $t(link.i18nKey) }}
                     </router-link>
                 </li>
@@ -169,7 +169,8 @@ const Header = {
     components: {
         'app-icon': AppIcon,
     },
-    setup(props) {
+    emits: ['menu-toggled'],
+    setup(props, { emit }) {
         const route = useRoute();
         const isMenuOpen = ref(false);
         const navLinks = ref([]);
@@ -217,7 +218,7 @@ const Header = {
             }
 
             if (el && markerRef.value) {
-                const isMobile = window.innerWidth <= 720;
+                const isMobile = window.innerWidth <= 768;
                 let targetParams = {};
 
                 if (isMobile) {
@@ -226,7 +227,7 @@ const Header = {
                     const centerY = el.offsetTop + el.offsetHeight / 2;
 
                     targetParams = {
-                        x: el.offsetLeft - 12, // 放在文字左邊 (微調間距)
+                        x: el.offsetLeft - 20, // 放在文字左邊 (微調間距)
                         y: centerY,
                         xPercent: 0, // 不需要水平置中
                         yPercent: -50, // 需要垂直置中 (讓三角形尖端對準中心)
@@ -317,6 +318,11 @@ const Header = {
         const toggleMenu = () => {
             isMenuOpen.value = !isMenuOpen.value;
         };
+
+        watch(isMenuOpen, (isOpen) => {
+            emit('menu-toggled', isOpen);
+        });
+
         const setThemeColor = (theme) => {
             props.changeColorTheme(theme);
         };
@@ -418,25 +424,12 @@ const Header = {
             }
         );
 
-        watch(isMenuOpen, (isOpen) => {
-            if (isOpen) {
-                // 禁止滾動
-                document.body.style.overflow = 'hidden';
-            } else {
-                // 恢復滾動
-                document.body.style.overflow = '';
-            }
-        });
-
-        // 安全措施：確保組件卸載時一定會恢復滾動
-        onUnmounted(() => {
-            document.body.style.overflow = '';
-        });
-
         onMounted(() => {
             loadheader();
             window.addEventListener('resize', () => {
-                // Use gsap.set for instant resize updates instead of animating
+                if (window.innerWidth === lastWidth) return;
+                lastWidth = window.innerWidth;
+                
                 const el = linkRefs.value[route.path];
                 if (el && markerRef.value) {
                     const center = el.offsetLeft + el.offsetWidth / 2;

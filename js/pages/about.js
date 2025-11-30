@@ -57,6 +57,11 @@ const About = {
                             alt="Javascript"
                         />
                         <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"
+                            title="Typescript"
+                            alt="Typescript"
+                        />
+                        <img
                             src="https://upload.wikimedia.org/wikipedia/commons/9/90/Angular-new-logo-small.svg"
                             title="Angular"
                             alt="Angular"

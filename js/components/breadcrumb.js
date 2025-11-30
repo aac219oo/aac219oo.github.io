@@ -42,8 +42,8 @@ export default {
         };
     },
     template: /* html */ `
-        <nav v-if="!isHome" aria-label="Breadcrumb" class="w-full mt-[110px] mb-6 mx-10">
-            <ol class="flex flex-wrap items-center text-sm md:text-base">
+        <nav v-if="!isHome" aria-label="Breadcrumb" class="w-full mt-[110px] mb-6 px-2 md:px-10">
+            <ol class="flex flex-wrap items-center text-base">
                 
                 <!-- Home Icon -->
                 <li class="flex items-center">
@@ -52,7 +52,7 @@ export default {
                         class="flex items-center transition-colors duration-200 text-(--color-light-text) dark:text-(--color-dark-text) hover:text-primary dark:hover:text-primary"
                         title="Home"
                     >
-                        <app-icon name="home" class="w-4 h-4 md:w-[25px] md:h-[25px]" />
+                        <app-icon name="home" class="w-[25px] md:h-[25px]" />
                     </router-link>
                 </li>
 

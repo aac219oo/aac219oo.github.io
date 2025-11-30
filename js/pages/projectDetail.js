@@ -8,7 +8,7 @@ import AppIcon from '/js/components/AppIcon.js';
 gsap.registerPlugin(Draggable);
 
 const ProjectDetail = {
-    components: { AppIcon },
+    components: { 'app-icon': AppIcon },
     setup() {
         const route = useRoute();
         const router = useRouter();
@@ -18,7 +18,7 @@ const ProjectDetail = {
         const isLightboxOpen = ref(false);
         const selectedImage = ref('');
         const currentImageIndex = ref(0);
-        
+
         let ctx;
         let loopTween;
         let dragInstance; // [新增] 用來儲存 Draggable 實體
@@ -257,13 +257,13 @@ const ProjectDetail = {
                     </div>
                 </div>
 
-                <div class="p-8">
+                <div class="p-2 md:p-8">
                     <div class="prose max-w-none">
                         <h3 class="text-2xl font-bold mb-4">專案介紹</h3>
-                        <p class="text-lg leading-relaxed mb-6">{{ project.description }}</p>
+                        <p class="text-lg leading-relaxed mb-4">{{ project.description }}</p>
                         
-                        <div class="p-6 mt-8">                            
-                            <p><strong>主要技術：</strong> <span v-for="(tech, index) in project.technologies" :key="index">{{ tech }}<span v-if="index < project.technologies.length - 1">, </span></span></p>
+                        <div class="">                            
+                            <p><strong>主要技術：</strong> <span v-for="(tech, index) in project.technologies" :key="index" class="w-fit inline-block"><app-icon :name="tech" class="h-[30px] fill-none mr-2" /></span></p>
                             <p><strong>專案連結：</strong> <a v-if="project.link" :href="project.link" target="_blank" class="hover:text-primary hover:underline">{{ project.link }}</a><span v-else>暫無提供</span></p>
                             <p><strong>GitHub：</strong> <a v-if="project.github" :href="project.github" target="_blank" class="hover:text-primary hover:underline">{{ project.github }}</a><span v-else>暫無提供</span></p>
                             <br />
