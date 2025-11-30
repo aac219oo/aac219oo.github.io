@@ -1,8 +1,8 @@
 import { h } from 'vue';
 
 const About = {
-    template: `
-        <section class="left table mt-[110px]">
+    template: /* html */ `
+        <section class="left table text-light-text dark:text-dark-text px-4 lg:px-8">
         <h1>
             Hi. I am <br />
             James Hsu.
@@ -40,7 +40,7 @@ const About = {
                 </tr>
                 <tr>
                     <td>專長</td>
-                    <td class="icon">
+                    <td class="icon flex flex-wrap gap-4">
                         <img
                             src="./assets/images/icons8-html-5.svg"
                             title="HTML5"
@@ -57,7 +57,7 @@ const About = {
                             alt="Javascript"
                         />
                         <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg"
+                            src="https://upload.wikimedia.org/wikipedia/commons/9/90/Angular-new-logo-small.svg"
                             title="Angular"
                             alt="Angular"
                         />

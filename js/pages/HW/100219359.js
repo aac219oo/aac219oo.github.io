@@ -53,7 +53,7 @@ const HW100219359 = {
     },
     template: `
         <section>
-            <p>現在是【{{ currentAuthor.model }}】模式<p>
+            <p>{{ '現在是【' + currentAuthor.model + '】模式' }}</p>
             <picture>
                 <source
                     media="(min-width: 1200px)"

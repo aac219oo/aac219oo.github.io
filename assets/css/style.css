@@ -99,15 +99,11 @@ main {
   flex: 1;
 }
 
-section {
-  padding: 2rem;
-}
 section.left {
   flex: 3 1 50%;
 }
 section.left h1 {
   font-size: 4rem;
-  color: #e08958;
 }
 section.left p {
   font-size: 1.5rem;
@@ -119,7 +115,6 @@ section.right {
 }
 section.table {
   flex: 3 1 500px;
-  padding: 3rem;
 }
 section.table table {
   border-collapse: collapse;
@@ -285,10 +280,10 @@ footer a:hover img {
   div.orange {
     opacity: 0.5;
   }
-  nav ul {
+  header nav ul {
     width: 100%;
   }
-  nav ul li {
+  header nav ul li {
     padding: 1rem 0;
   }
   section.left h1 {
@@ -333,7 +328,7 @@ footer a:hover img {
     width: 100vw;
     height: 200vh;
   }
-  nav {
+  header nav {
     justify-content: right;
     opacity: 0;
     flex-direction: column;
@@ -348,18 +343,18 @@ footer a:hover img {
     transform: translateX(250px);
     transition: all 0.5s ease-in-out;
   }
-  nav ul {
+  header nav ul {
     display: flex;
     padding: 1rem;
     gap: 0.5rem;
   }
-  nav ul li {
+  header nav ul li {
     justify-items: right;
   }
-  nav ul li a {
+  header nav ul li a {
     color: #f9ac7f;
   }
-  nav.show {
+  header nav.show {
     display: flex;
     opacity: 1;
     transform: translateX(0);
@@ -367,7 +362,6 @@ footer a:hover img {
   }
   .menu-toggle {
     display: block;
-    padding: 1rem;
   }
   .menu-close {
     display: block;
