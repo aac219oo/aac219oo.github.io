@@ -100,8 +100,17 @@ async function bootstrapApp() {
             const headerRef = ref(null);
             const isHeaderHidden = ref(false);
             const isHeaderActive = ref(false);
-
+            const isMenuOpen = ref(false);
+            
             let ctx;
+
+            const handleMenuToggle = (isOpen) => {
+                isMenuOpen.value = isOpen;
+                // 當選單打開時，強制顯示 Header，避免使用者在 Header 隱藏時打開選單導致選單懸空
+                if (isOpen) {
+                    isHeaderHidden.value = false;
+                }
+            };
 
             const initScrollTrigger = () => {
                 ctx = gsap.context(() => {
@@ -114,6 +123,8 @@ async function bootstrapApp() {
                         start: 'top top',
                         end: 99999,
                         onUpdate: (self) => {
+                            if (isMenuOpen.value) return;
+
                             const scrollTop = self.scroll();
                             const direction = self.direction;
                             if (scrollTop <= 100) {
@@ -222,6 +233,7 @@ async function bootstrapApp() {
                 isHeaderHidden,
                 isHeaderActive,
                 headerClasses,
+                handleMenuToggle,
             };
         },
 
@@ -244,6 +256,7 @@ async function bootstrapApp() {
                     :i18n="i18n"
                     :isHeaderActive="isHeaderActive"
                     :isHeaderHidden="isHeaderHidden"
+                    @menu-toggled="handleMenuToggle"
                 />
                 <div id="smooth-wrapper">
                     <div id="smooth-content" class="flex flex-col min-h-screen">

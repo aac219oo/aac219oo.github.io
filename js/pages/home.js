@@ -43,10 +43,11 @@ const Home = {
                     trigger: containerRef.value,
                     start: 'top top',
                     endTrigger: aboutRef.value,
-                    end: 'bottom top',
+                    end: 'top top',
                     pin: true,
                     pinSpacing: false,
                     scrub: true,
+                    anticipatePin: 1,
                 });
 
                 ScrollTrigger.create({
@@ -54,6 +55,7 @@ const Home = {
                     pin: true,
                     start: 'top top',
                     end: 'bottom top',
+                    anticipatePin: 1,
                 });
 
                 ScrollTrigger.create({
@@ -63,6 +65,7 @@ const Home = {
                     endTrigger: 'footer',
                     end: 'bottom bottom',
                     pinSpacing: false,
+                    anticipatePin: 1,
                 });
             });
         };
@@ -171,7 +174,7 @@ const Home = {
         };
     },
     template: /* html */ `
-                    <div ref="containerRef" class="max-w-[2160px] flex flex-col md:flex-row items-center md:min-h-screen mt-[120px] md:mt-0 dark:text-dark-text">
+                    <div ref="containerRef" class="will-change-transform max-w-[2160px] flex flex-col md:flex-row items-center md:min-h-screen mt-[120px] md:mt-0 dark:text-dark-text">
                         <div class="md:w-1/2 mb-6 flex flex-col justify-center items-center h-full px-10">
                             <div class="md:max-w-md">
                                 <h2 class="font-bold pb-3">
@@ -195,7 +198,7 @@ const Home = {
                         </div>
                     </div>
 
-                    <div ref="aboutRef" data-speed="0.5" class="px-2 z-1 w-full min-h-[360px] flex flex-col justify-center items-center bg-sky-50 dark:bg-gray-500 dark:text-dark-text">
+                    <div ref="aboutRef" data-speed="0.5" class="will-change-transform px-2 z-1 w-full min-h-[360px] flex flex-col justify-center items-center bg-sky-50 dark:bg-gray-500 dark:text-dark-text">
                         <div class="text-center max-w-[480px]">
                             <h3 class="text-4xl font-bold mb-4">關於我</h3>
                             <p class="text-justify mb-4">
@@ -210,7 +213,7 @@ const Home = {
                     </div>
 
                     <div ref="projectsRef" data-speed="0.5" class="w-full pb-[100px] z-1 min-h-[720px] flex flex-col justify-start items-center bg-light-bg dark:bg-dark-bg dark:text-dark-text">
-                            <h3 ref="projectTitleRef" class="z-10 w-full text-center text-4xl font-bold p-8 bg-light-bg dark:bg-dark-bg">精選．作品集</h3>
+                            <h3 ref="projectTitleRef" class="will-change-transform z-10 w-full text-center text-4xl font-bold p-8 bg-light-bg dark:bg-dark-bg">精選．作品集</h3>
                             <div class="flex justify-center items-center flex-col flex-wrap gap-[40px] mt-12">
                                 <div
                                     v-for="(project, index) in projects" 
