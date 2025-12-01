@@ -7,6 +7,8 @@ const About = {
             Hi. I am <br />
             James Hsu.
         </h1>
+        <br>
+        <h2 class="text-4xl">~ 全職接案中 ~</h2>
         <table>
             <tbody>
                 <tr>
