@@ -17,7 +17,7 @@ export const LANGUAGES = [
 ];
 
 export const HeaderTemplate = /* html */ `
-    <header class="fixed w-full top-0 left-0 z-999 px-[2rem] py-[0.8rem] border-(--color-primary) border-b-[1px] border-solid bg-(--color-light-bg) text-(--color-light-text) dark:bg-(--color-dark-bg) dark:text-(--color-dark-text)">
+    <header class="fixed w-full top-0 left-0 z-999 px-[2rem] py-[0.8rem] border-(--color-primary) border-b-[1px] border-solid bg-(--color-light-bg)/50 text-(--color-light-text) dark:bg-(--color-dark-bg)/60 dark:text-(--color-dark-text) after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-[hsla(0_0%_100%_.6);] after:backdrop-blur-[30px] after:-z-[1]">
         <router-link to="/" title="James Hsu 首頁" class="w-[70px] hover:text-primary transition-all duration-500 origin-left ease-in-out">
             <app-icon name="logo"/>
         </router-link>
@@ -28,10 +28,10 @@ export const HeaderTemplate = /* html */ `
             aria-label="切換選單"
             @click="toggleMenu"
         >
-            <app-icon name="menu" width="40" height="40" class="fill-black" />
+            <app-icon name="menu" width="40" height="40" />
         </button>
         
-        <nav ref="navRef" :class="{ 'show': isMenuOpen }" class="w-full gap-2 px-2 bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text border-(--color-primary) border-l-[1px] border-solid md:border-none"> 
+        <nav ref="navRef" :class="{ 'show': isMenuOpen }" class="w-full gap-2 px-2 bg-light-bg dark:bg-dark-bg md:bg-transparent md:dark:bg-transparent text-light-text dark:text-dark-text border-(--color-primary) border-l-[1px] border-solid md:border-none"> 
             <button
                 class="menu-toggle menu-close"
                 id="menu-close"
@@ -186,6 +186,7 @@ const Header = {
         const langContainerRef = ref(null);
         const linkRefs = ref({});
         const markerRef = ref(null);
+        const isMobile = ref(false);
 
         const updateMarker = (path) => {
             // 1. Try to find an exact match first
@@ -218,10 +219,10 @@ const Header = {
             }
 
             if (el && markerRef.value) {
-                const isMobile = window.innerWidth <= 768;
+                // const isMobile = window.innerWidth <= 768;
                 let targetParams = {};
 
-                if (isMobile) {
+                if (isMobile.value) {
                     // === 手機版 (垂直選單) ===
                     // 計算 Y 軸中心
                     const centerY = el.offsetTop + el.offsetHeight / 2;
@@ -426,14 +427,45 @@ const Header = {
 
         onMounted(() => {
             loadheader();
+
+                        isMobile.value = window.innerWidth <= 768;
+            let lastWidth = window.innerWidth;
+
             window.addEventListener('resize', () => {
+                // 忽略沒有改變寬度的 resize 事件 (特別是 Safari 手機版滑動時會觸發 resize)
                 if (window.innerWidth === lastWidth) return;
                 lastWidth = window.innerWidth;
                 
+                // [新增] 更新 isMobile 狀態
+                isMobile.value = window.innerWidth <= 768;
+
+                // [修改] 根據 isMobile 執行對應的位置更新邏輯 (instant update)
                 const el = linkRefs.value[route.path];
                 if (el && markerRef.value) {
-                    const center = el.offsetLeft + el.offsetWidth / 2;
-                    gsap.set(markerRef.value, { x: center });
+                    let targetParams = {};
+
+                    if (isMobile.value) {
+                        // === 手機版重算 ===
+                        const centerY = el.offsetTop + el.offsetHeight / 2;
+                        targetParams = {
+                            x: el.offsetLeft - 20,
+                            y: centerY,
+                            xPercent: 0,
+                            yPercent: -50,
+                            rotation: 90,
+                        };
+                    } else {
+                        // === 桌機版重算 ===
+                        const center = el.offsetLeft + el.offsetWidth / 2;
+                        targetParams = { 
+                            x: center,
+                            y: el.offsetTop + el.offsetHeight + 5,
+                            xPercent: -50,
+                            yPercent: 0,
+                            rotation: 0,
+                        };
+                    }
+                    gsap.set(markerRef.value, targetParams);
                 }
             });
         });

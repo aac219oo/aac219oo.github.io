@@ -3,12 +3,15 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import { onMounted, ref, onUnmounted, nextTick } from 'vue';
 import AppIcon from '/js/components/AppIcon.js';
 import { useWaitForImages } from '/js/composables/useWaitForImages.js';
+import ContactForm from '/js/components/contactForm.js';
 
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 const Home = {
     components: {
         'app-icon': AppIcon,
+        'contact-form': ContactForm,
     },
     setup() {
         const containerRef = ref(null);
@@ -17,8 +20,36 @@ const Home = {
         const projectsRef = ref(null);
         const projectTitleRef = ref(null);
         const bubbleRefs = ref([]);
+        const bgRef = ref(null);
+        const contactSectionRef = ref(null);
 
         let ctx;
+        const handleFormFocus = () => {
+            // 取得目標元素
+            const target = e.target;
+
+            // 延遲一點點執行，確保鍵盤彈出後的視窗高度已穩定 (選擇性，視效果調整)
+            setTimeout(() => {
+                // 計算目標元素相對於文件的絕對 Y 座標
+                const rect = target.getBoundingClientRect();
+                const scrollTop =
+                    window.scrollY || document.documentElement.scrollTop;
+                const absoluteTop = rect.top + scrollTop;
+
+                // 設定偏移量 (例如 Header 高度 + 一些緩衝)
+                // 假設 Header 高度約 80px，多留 20px 緩衝
+                const offset = 0;
+
+                // 計算最終捲動位置
+                const targetScrollY = absoluteTop - offset;
+
+                // 執行捲動
+                window.scrollTo({
+                    top: targetScrollY,
+                    behavior: 'smooth', // 平滑捲動
+                });
+            }, 100); // [建議] 稍微增加延遲 (100->300ms) 以配合 iOS 鍵盤彈出動畫時間
+        };
 
         const initScrollTrigger = () => {
             if (ctx) ctx.revert();
@@ -62,11 +93,43 @@ const Home = {
                     trigger: projectsRef.value,
                     pin: projectTitleRef.value,
                     start: 'top -1px',
-                    endTrigger: 'footer',
-                    end: 'bottom bottom',
+                    endTrigger: contactSectionRef.value,
+                    end: 'top 25%',
                     pinSpacing: false,
                     anticipatePin: 1,
                 });
+
+                gsap.fromTo(
+                    projectsRef.value,
+                    { opacity: 1 },
+                    {
+                        opacity: 0,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: contactSectionRef.value,
+                            start: 'top bottom',
+                            end: 'top 25%',
+                            scrub: true,
+                        },
+                    }
+                );
+
+                gsap.fromTo(
+                    bgRef.value,
+                    {
+                        yPercent: -100, // 初始：背景圖底部 對齊 區塊頂部 (整張圖在上面)
+                    },
+                    {
+                        yPercent: 0, // 結束：背景圖置中/填滿區塊
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: contactSectionRef.value,
+                            start: 'top bottom', // 當區塊頂部 進入 視窗底部時開始
+                            end: 'bottom bottom', // 當區塊底部 碰到 視窗底部時結束
+                            scrub: true,
+                        },
+                    }
+                );
             });
         };
 
@@ -171,10 +234,13 @@ const Home = {
             handleMouseEnter,
             handleMouseMove,
             handleMouseLeave,
+            bgRef,
+            contactSectionRef,
+            handleFormFocus,
         };
     },
     template: /* html */ `
-                    <div ref="containerRef" class="will-change-transform max-w-[2160px] flex flex-col md:flex-row items-center md:min-h-screen mt-[120px] md:mt-0 dark:text-dark-text">
+                    <div ref="containerRef" class="will-change-transform max-w-[2160px] flex flex-col md:flex-row items-center min-h-[90vh] md:min-h-screen mt-[120px] md:mt-0 dark:text-dark-text">
                         <div class="md:w-1/2 mb-6 flex flex-col justify-center items-center h-full px-10">
                             <div class="md:max-w-md">
                                 <h2 class="font-bold pb-3">
@@ -212,7 +278,7 @@ const Home = {
                         </div>
                     </div>
 
-                    <div ref="projectsRef" data-speed="0.5" class="w-full pb-[100px] z-1 min-h-[720px] flex flex-col justify-start items-center bg-light-bg dark:bg-dark-bg dark:text-dark-text">
+                    <div ref="projectsRef" data-speed="0.5" class="will-change-transform w-full pb-[100px] z-1 min-h-[720px] flex flex-col justify-start items-center bg-light-bg dark:bg-dark-bg dark:text-dark-text">
                             <h3 ref="projectTitleRef" class="will-change-transform z-10 w-full text-center text-4xl font-bold p-8 bg-light-bg dark:bg-dark-bg">精選．作品集</h3>
                             <div class="flex justify-center items-center flex-col flex-wrap gap-[40px] mt-12">
                                 <div
@@ -255,6 +321,35 @@ const Home = {
                                 </div>
                                 <router-link to="/Projects" class="block w-fit border p-2 underline rounded hover:text-primary">更多作品集</router-link>
                             </div>
+                    </div>
+                    <div 
+                        ref="contactSectionRef"
+                        class="will-change-transform relative w-full overflow-hidden" 
+                        data-speed="1.1"
+                    >
+                        <div 
+                            ref="bgRef"
+                            class="will-change-transform absolute top-0 left-0 w-full h-full z-0"
+                        >
+                            <picture>
+                                <source
+                                    media="(max-width: 768px)"
+                                    srcset="./assets/images/christian-joudrey-yCCZvWbah_g-unsplash-768.jpg"
+                                />
+                                <img
+                                    src="./assets/images/christian-joudrey-yCCZvWbah_g-unsplash.jpg"
+                                    alt="Contact Background"
+                                    class="w-full h-full object-cover brightness-75"
+                                />
+                            </picture>
+                        </div>
+
+                        <!-- 內容層：相對定位，z-10 蓋過背景 -->
+                        <div
+                            class="relative z-10 w-full py-20 px-4 text-light-text dark:text-dark-text"
+                        >
+                            <contact-form />
+                        </div>
                     </div>
     `,
 };

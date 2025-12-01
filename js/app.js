@@ -18,6 +18,8 @@ import ProgressBar from './components/ProgressBar.js';
 import breadcrumb from './components/breadcrumb.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 const DEFAULT_LOCALE = 'zh-Hant';
 const FALLBACK_LOCALE = 'zh-Hant';
 const DEFAULT_THEME = 'orange';
