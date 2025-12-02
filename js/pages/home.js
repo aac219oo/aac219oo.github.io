@@ -4,6 +4,7 @@ import { onMounted, ref, onUnmounted, nextTick } from 'vue';
 import AppIcon from '/js/components/AppIcon.js';
 import { useWaitForImages } from '/js/composables/useWaitForImages.js';
 import ContactForm from '/js/components/contactForm.js';
+import { CONFIG } from '/js/config.js';
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
@@ -135,7 +136,9 @@ const Home = {
 
         const loadProjects = async () => {
             try {
-                const response = await fetch('/assets/data/projects.json');
+                const response = await fetch(
+                    CONFIG.LOCAL_DATA + 'projects.json'
+                );
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -250,7 +253,7 @@ const Home = {
                                 <p class="">
                                     具備跨領域的技術與管理能力，
                                     <br>
-                                    致力於打造高效且創新的應用程式。
+                                    致力於打造高效且貼近使用者的應用程式。
                                 </p>
                             </div>
                         </div>

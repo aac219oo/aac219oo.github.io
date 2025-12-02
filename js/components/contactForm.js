@@ -1,12 +1,11 @@
 import { ref, reactive, onMounted } from 'vue';
-
+import { CONFIG } from '/js/config.js';
 export default {
     name: 'ContactForm',
     props: {},
     setup(props) {
         // GAS Google Apps Script 網址
-        const GAS_URL =
-            'https://script.google.com/macros/s/AKfycbxbuWHGwpL_NcOcTQL_mTwFRS8hSDqGQp9e4R6U35bn1VAIvChNyKHoqSjF1h9LhmdJmw/exec';
+        const GAS_URL = CONFIG.GAS_URL;
 
         const form = reactive({
             name: '',
@@ -30,6 +29,23 @@ export default {
             { value: 'evening', label: '18:00 ~ 21:00' },
             { value: 'any', label: '隨時皆可' },
         ];
+
+        const handleTimeChange = (type) => {
+            if (!form.contactDay.includes(type)) {
+                form.contactDay.push(type);
+            }
+        };
+
+        const handleDayChange = (type) => {
+            // Vue 的 v-model 會先更新 form.contactDay，所以這裡可以直接檢查
+            if (!form.contactDay.includes(type)) {
+                if (type === 'weekday') {
+                    form.weekdayTime = '';
+                } else if (type === 'weekend') {
+                    form.weekendTime = '';
+                }
+            }
+        };
 
         // 驗證碼相關邏輯
         const captchaCanvas = ref(null);
@@ -254,6 +270,8 @@ ${form.message}
             resetForm,
             timeOptions,
             handleGenderChange,
+            handleTimeChange,
+            handleDayChange,
         };
     },
     template: /* html */ `
@@ -284,7 +302,7 @@ ${form.message}
 
                 <!-- 性別 -->
                 <div>
-                    <label class="block mb-2 font-medium">性別 <span class="text-gray-600 dark:text-gray-300 text-sm font-normal">(選填)</span></label>
+                    <label class="block mb-2 font-medium">稱謂 <span class="text-gray-600 dark:text-gray-300 text-sm font-normal">(選填)</span></label>
                     <div class="flex items-center gap-6">
                         <label class="flex items-center cursor-pointer">
                             <input 
@@ -346,6 +364,7 @@ ${form.message}
                                     type="checkbox" 
                                     v-model="form.contactDay" 
                                     value="weekday"
+                                    @change="handleDayChange('weekday')"
                                     class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary dark:border-gray-600 dark:bg-gray-700"
                                 >
                                 <span class="ml-2">平日</span>
@@ -353,8 +372,8 @@ ${form.message}
                             
                             <select 
                                 v-model="form.weekdayTime"
-                                :disabled="!form.contactDay.includes('weekday')"
-                                class="flex-1 min-w-[150px] px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                                @change="handleTimeChange('weekday')"
+                                class="flex-1 min-w-[150px] px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 cursor-pointer"
                             >
                                 <option value="" disabled selected>請選擇平日時段</option>
                                 <option v-for="opt in timeOptions" :key="'wk-'+opt.value" :value="opt.value">
@@ -370,6 +389,7 @@ ${form.message}
                                     type="checkbox" 
                                     v-model="form.contactDay" 
                                     value="weekend"
+                                    @change="handleDayChange('weekend')"
                                     class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary dark:border-gray-600 dark:bg-gray-700"
                                 >
                                 <span class="ml-2">週末</span>
@@ -377,8 +397,8 @@ ${form.message}
                             
                             <select 
                                 v-model="form.weekendTime"
-                                :disabled="!form.contactDay.includes('weekend')"
-                                class="flex-1 min-w-[150px] px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                                @change="handleTimeChange('weekend')"
+                                class="flex-1 min-w-[150px] px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 cursor-pointer"
                             >
                                 <option value="" disabled selected>請選擇週末時段</option>
                                 <option v-for="opt in timeOptions" :key="'wd-'+opt.value" :value="opt.value">

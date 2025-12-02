@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router';
 import gsap from 'gsap';
 import AppIcon from '/js/components/AppIcon.js';
 import { useClickOutside } from '/js/composables/useClickOutside.js';
+import { CONFIG } from '/js/config.js';
 
 export const THEME_COLORS = {
     orange: '#E08958',
@@ -361,7 +362,7 @@ const Header = {
 
         const loadheader = async () => {
             try {
-                const response = await fetch('/assets/data/header.json');
+                const response = await fetch(CONFIG.LOCAL_DATA + 'header.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

@@ -4,21 +4,174 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>James Hsu | 前端工程師 & Web3 開發者作品集</title>
+
         <meta name="author" content="James Hsu" />
+
+        <!-- Description: 建議 75~160 字元，包含關鍵字，吸引用戶點擊 -->
+        <meta
+            name="description"
+            content="James Hsu 的個人作品集與部落格。具備前端工程師與專案經理雙重經驗，專長 Vue.js, React, Angular 及 Web3 應用開發。這裡記錄了我的專案實作、技術筆記與職涯歷程。"
+        />
+
+        <!-- Keywords: 關鍵字標籤 -->
+        <meta
+            name="keywords"
+            content="James Hsu, 前端工程師, Frontend Engineer, Web3, Vue, React, Angular, 專案經理, 作品集, 部落格"
+        />
+
         <meta name="robots" content="index, follow" />
-        <meta name="description" content="歡迎來到James Hsu的Blog。" />
-        <title>首頁 | James Hsu</title>
+
+        <!-- Canonical: 標準網址，避免重複內容 -->
+        <link rel="canonical" href="https://aac219oo.github.io/" />
+
+        <!-- =========================================
+             Open Graph / Social Media (FB, Line, LinkedIn)
+             ========================================= -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://aac219oo.github.io/" />
+        <meta
+            property="og:title"
+            content="James Hsu | 前端工程師 & Web3 開發者作品集"
+        />
+        <meta
+            property="og:description"
+            content="具備跨領域的技術與管理能力，致力於打造高效且創新的應用程式。點擊查看我的作品集與技術文章。"
+        />
+        <meta
+            property="og:image"
+            content="https://aac219oo.github.io/assets/images/myselfL.jpg"
+        />
+        <meta property="og:site_name" content="James Hsu Portfolio" />
+        <meta property="og:locale" content="zh_TW" />
+
+        <!-- =========================================
+             Twitter Card
+             ========================================= -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://aac219oo.github.io/" />
+        <meta
+            name="twitter:title"
+            content="James Hsu | 前端工程師 & Web3 開發者作品集"
+        />
+        <meta
+            name="twitter:description"
+            content="具備跨領域的技術與管理能力，致力於打造高效且創新的應用程式。"
+        />
+        <meta
+            name="twitter:image"
+            content="https://aac219oo.github.io/assets/images/myselfL.jpg"
+        />
+
+        <!-- =========================================
+             Favicon & PWA
+             ========================================= -->
         <link
             rel="icon"
             href="./assets/images/okz8k-sln39-001.ico"
             type="image/x-icon"
         />
+        <meta name="theme-color" content="#e08958" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
             rel="stylesheet"
         />
+
+        <style>
+            #error-overlay {
+                display: none; /* Hidden by default */
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #ffffff;
+                z-index: 2147483647; /* Max z-index */
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-family: sans-serif;
+                padding: 20px;
+                box-sizing: border-box;
+            }
+            #error-overlay h2 {
+                color: #333;
+                margin-bottom: 1rem;
+            }
+            #error-overlay p {
+                color: #666;
+                margin-bottom: 2rem;
+            }
+            #error-overlay .fallback-btn {
+                background-color: #d9534f;
+                color: white;
+                text-decoration: none;
+                padding: 15px 30px;
+                border-radius: 5px;
+                font-size: 1.2rem;
+                transition: background-color 0.3s;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            #error-overlay .fallback-btn:hover {
+                background-color: #c9302c;
+            }
+            #error-overlay .link-text {
+                margin-top: 15px;
+                font-size: 0.9rem;
+                color: #888;
+            }
+            #error-overlay .link-text a {
+                color: #d9534f;
+            }
+        </style>
+        <script>
+            (function () {
+                function showFallback() {
+                    var overlay = document.getElementById('error-overlay');
+                    var app = document.getElementById('app');
+                    if (overlay) overlay.style.display = 'flex';
+                    if (app) app.style.display = 'none';
+                    console.error(
+                        'Importmap or Module loading failed. Showing fallback.'
+                    );
+                }
+
+                // 1. Check for Importmap support
+                if (
+                    !(
+                        HTMLScriptElement.supports &&
+                        HTMLScriptElement.supports('importmap')
+                    )
+                ) {
+                    // Browser doesn't support importmap
+                    window.onload = showFallback;
+                }
+
+                // 2. Listen for global errors (e.g. module resolution failures)
+                window.addEventListener(
+                    'error',
+                    function (e) {
+                        // Filter for errors likely related to module loading or importmap failure
+                        // Messages like "Failed to resolve module specifier", "bare import", "SyntaxError" in modules
+                        var msg = e.message ? e.message.toLowerCase() : '';
+                        if (
+                            msg.includes('module') ||
+                            msg.includes('import') ||
+                            msg.includes('syntaxerror') ||
+                            msg.includes('loading chunk')
+                        ) {
+                            showFallback();
+                        }
+                    },
+                    true
+                ); // Use capture phase to catch resource loading errors
+            })();
+        </script>
+
         <script type="importmap">
             {
                 "imports": {
@@ -34,20 +187,35 @@
             }
         </script>
         <script src="./assets/libs/tailwindcss/browser@4.js"></script>
-        <link rel="stylesheet" href="./assets/css/animation.css" />
-        <link rel="stylesheet" href="./assets/css/style.css" />
         <style type="text/tailwindcss">
             @custom-variant dark (&:where(.dark, .dark *));
             @theme {
                 --color-primary: #e08958;
                 --color-light-text: #222222;
-                --color-light-bg: #FDFAF5;
+                --color-light-bg: #fdfaf5;
                 --color-dark-text: #f1f1f1;
                 --color-dark-bg: #363636;
             }
         </style>
+        <link rel="stylesheet" href="./assets/css/animation.css" />
+        <link rel="stylesheet" href="./assets/css/style.css" />
     </head>
     <body>
+        <div id="error-overlay">
+            <h2>無法載入應用程式</h2>
+            <p>
+                您的瀏覽器可能不支援此網頁的技術，或者發生了載入錯誤。<br />請嘗試點擊下方按鈕前往備用頁面。
+            </p>
+            <a href="https://www.chiayu.somee.com/" class="fallback-btn"
+                >前往備用網站</a
+            >
+            <div class="link-text">
+                或是直接複製網址:
+                <a href="https://www.chiayu.somee.com/"
+                    >https://www.chiayu.somee.com/</a
+                >
+            </div>
+        </div>
         <div
             class="mask bg-primary flex flex-col items-center justify-center w-full h-full fixed top-0 left-0 z-[9998] opacity-100 transition-opacity ease-out duration-500"
         >
@@ -55,22 +223,11 @@
                 <div class="spinner-container" id="spinner"></div>
             </div>
         </div>
-        <div id="app" class="flex justify-center items-center h-[inherit] bg-light-bg dark:bg-dark-bg"></div>
+        <div
+            id="app"
+            class="flex justify-center items-center h-[inherit] bg-light-bg dark:bg-dark-bg"
+        ></div>
     </body>
     <script type="module" src="./js/app.js"></script>
-    <script>
-        // spinner animation
-        const spinner = document.getElementById('spinner');
-        const numDots = 6;
-        const radius = 20;
-
-        for (let i = 0; i < numDots; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('dot', `dot-${i}`);
-            const angle = (i / numDots) * Math.PI * 2;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
-            spinner.appendChild(dot);
-        }
-    </script>
+    <script type="module" src="./js/components/spinner_animation.js"></script>
 </html>
