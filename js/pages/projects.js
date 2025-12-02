@@ -1,5 +1,6 @@
 import { onMounted, ref, onUnmounted, nextTick } from 'vue';
 import AppIcon from '/js/components/AppIcon.js';
+import { CONFIG } from '/js/config.js';
 
 const Projects = {
     components: {
@@ -8,7 +9,7 @@ const Projects = {
     setup() {
         const projects = ref([]);
         onMounted(async () => {
-            const response = await fetch('/assets/data/projects.json');
+            const response = await fetch(CONFIG.LOCAL_DATA + 'projects.json');
             const data = await response.json();
             projects.value = data.projects;
         });

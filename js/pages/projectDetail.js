@@ -3,6 +3,7 @@ import { useRoute, useRouter } from 'vue-router';
 import gsap from 'gsap';
 import Draggable from 'gsap/Draggable';
 import AppIcon from '/js/components/AppIcon.js';
+import { CONFIG } from '/js/config.js';
 
 // [新增] 註冊插件
 gsap.registerPlugin(Draggable);
@@ -174,7 +175,7 @@ const ProjectDetail = {
         onMounted(async () => {
             window.addEventListener('keydown', handleKeydown);
             try {
-                const response = await fetch('/assets/data/projects.json');
+                const response = await fetch(CONFIG.LOCAL_DATA + 'projects.json');
                 if (!response.ok)
                     throw new Error('Network response was not ok');
                 const data = await response.json();
@@ -263,9 +264,28 @@ const ProjectDetail = {
                         <p class="text-lg leading-relaxed mb-4">{{ project.description }}</p>
                         
                         <div class="">                            
-                            <p><strong>主要技術：</strong> <span v-for="(tech, index) in project.technologies" :key="index" class="w-fit inline-block"><app-icon :name="tech" class="h-[30px] fill-none mr-2" /></span></p>
-                            <p><strong>專案連結：</strong> <a v-if="project.link" :href="project.link" target="_blank" class="hover:text-primary hover:underline">{{ project.link }}</a><span v-else>暫無提供</span></p>
-                            <p><strong>GitHub：</strong> <a v-if="project.github" :href="project.github" target="_blank" class="hover:text-primary hover:underline">{{ project.github }}</a><span v-else>暫無提供</span></p>
+                            <p>
+                                <strong>主要技術：</strong>
+                                <span v-for="(tech, index) in project.technologies" :key="index" class="w-fit inline-block">
+                                    <app-icon :name="tech" class="h-[30px] fill-none mr-2" />
+                                </span>
+                            </p>
+                            <p>
+                                <strong>專案連結：</strong>
+                                <a v-if="project.link" :href="project.link" target="_blank" class="hover:text-primary hover:underline">
+                                    {{ project.link }}
+                                    <app-icon name="link" class="inline-block w-[15px]" />
+                                </a>
+                                <span v-else>暫無提供</span>
+                            </p>
+                            <p>
+                                <strong>GitHub：</strong>
+                                <a v-if="project.github" :href="project.github" target="_blank" class="hover:text-primary hover:underline">
+                                    {{ project.github }}
+                                    <app-icon name="link" class="inline-block w-[15px]" />
+                                </a>
+                                <span v-else>暫無提供</span>
+                            </p>
                             <br />
                             <h3 class="font-bold mb-2">專案資訊</h3>
                             <p class="space-y-2">{{ project.content }}</p>

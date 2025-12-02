@@ -1,0 +1,5 @@
+export const CONFIG = {
+    LOCAL_DATA: '/assets/data/',
+    
+    GAS_URL: 'https://script.google.com/macros/s/AKfycbxbuWHGwpL_NcOcTQL_mTwFRS8hSDqGQp9e4R6U35bn1VAIvChNyKHoqSjF1h9LhmdJmw/exec'
+};
