@@ -173,6 +173,37 @@ const routes = [
                 component: () => import('../pages/HW/100219359.js'),
                 meta: { titleKey: 'pageTitle.hw100219359' },
             },
+            {
+                path: '100220477',
+                name: '100220477',
+                component: { render: () => h(RouterView) },
+                meta: { titleKey: 'pageTitle.hw100220477' },
+                children: [
+                    {
+                        path: '',
+                        name: '',
+                        component: () => import('../pages/HW/100220477.js'),
+                    },
+                    {
+                        path: 'panorama',
+                        name: '100220477_panorama',
+                        component: () =>
+                            import('../pages/HW/100220477/panorama.js'),
+                        meta: { titleKey: 'pageTitle.100220477_panorama' },
+                    },
+                    {
+                        path: 'googleEarthStudio',
+                        name: '100220477_googleEarthStudio',
+                        component: () =>
+                            import(
+                                '../pages/HW/100220477/googleEarthStudio.js'
+                            ),
+                        meta: {
+                            titleKey: 'pageTitle.100220477_googleEarthStudio',
+                        },
+                    },
+                ],
+            },
         ],
     },
     {
