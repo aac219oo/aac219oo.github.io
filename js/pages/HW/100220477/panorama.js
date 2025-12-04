@@ -85,11 +85,10 @@ const HW100220477_panorama = {
         };
     },
     template: /* html */ `
-        <div class="panorama-box" style="position: relative; width: 100%;">
+        <div class="panorama-box max-w-4xl relative w-full">
             <div 
                 ref="panoramaContainer" 
-                class="panorama" 
-                style="width: 100%; height: 600px; background-color: #eee;"
+                class="panorama w-full bg-[#eeeeee]"
             ></div>
             
             </div>
