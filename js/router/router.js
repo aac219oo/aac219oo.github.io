@@ -174,6 +174,12 @@ const routes = [
                 meta: { titleKey: 'pageTitle.hw100219359' },
             },
             {
+                path: '100220208',
+                name: '100220208',
+                component: () => import('../pages/HW/100220208.js'),
+                meta: { titleKey: 'pageTitle.hw100220208' },
+            },
+            {
                 path: '100220477',
                 name: '100220477',
                 component: { render: () => h(RouterView) },
