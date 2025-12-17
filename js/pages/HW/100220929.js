@@ -1,33 +1,48 @@
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 
 const HW100220929 = {
     setup() {
+        const resources = [
+            {
+                id: 'bootstrap-css',
+                type: 'link',
+                href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
+            },
+            {
+                id: 'bootstrap-js',
+                type: 'script',
+                src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
+            },
+            {
+                id: 'contact-css',
+                type: 'link',
+                href: '/assets/css/brand.css',
+            },
+        ];
         onMounted(() => {
             // 動態引入 Bootstrap 5 CSS
-            if (!document.getElementById('bootstrap-css')) {
-                const link = document.createElement('link');
-                link.id = 'bootstrap-css';
-                link.rel = 'stylesheet';
-                link.href =
-                    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css';
-                document.head.appendChild(link);
-            }
-            // 動態引入 Bootstrap 5 JS
-            if (!document.getElementById('bootstrap-js')) {
-                const script = document.createElement('script');
-                script.id = 'bootstrap-js';
-                script.src =
-                    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js';
-                document.head.appendChild(script);
-            }
-            // 引入自訂 contact.css
-            if (!document.getElementById('contact-css')) {
-                const link2 = document.createElement('link');
-                link2.id = 'contact-css';
-                link2.rel = 'stylesheet';
-                link2.href = '/assets/css/brand.css';
-                document.head.appendChild(link2);
-            }
+            resources.forEach((res) => {
+                if (!document.getElementById(res.id)) {
+                    const el = document.createElement(res.type);
+                    el.id = res.id;
+                    if (res.type === 'link') {
+                        el.rel = 'stylesheet';
+                        el.href = res.href;
+                    } else {
+                        el.src = res.src;
+                    }
+                    document.head.appendChild(el);
+                }
+            });
+        });
+
+        onUnmounted(() => {
+            resources.forEach((res) => {
+                const el = document.getElementById(res.id);
+                if (el) {
+                    el.remove(); // 從 DOM 中移除樣式與腳本
+                }
+            });
         });
     },
     template: /*html*/ `
