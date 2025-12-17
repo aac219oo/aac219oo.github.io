@@ -1,0 +1,10 @@
+.btn-primary {
+  transition: transform 0.5s, color 0.5s;
+}
+.btn-primary:hover {
+  transform: translateX(5px);
+  color: #fff !important;
+}
+.modal {
+  z-index: 9999 !important;
+}

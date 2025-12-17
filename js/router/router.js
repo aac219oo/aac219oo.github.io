@@ -210,6 +210,18 @@ const routes = [
                     },
                 ],
             },
+            {
+                path: '100220929',
+                name: '100220929',
+                component: () => import('../pages/HW/100220929.js'),
+                meta: { titleKey: 'pageTitle.hw100220929' },
+            },
+            {
+                path: '100220930',
+                name: '100220930',
+                component: () => import('../pages/HW/100220930.js'),
+                meta: { titleKey: 'pageTitle.hw100220930' },
+            },
         ],
     },
     {

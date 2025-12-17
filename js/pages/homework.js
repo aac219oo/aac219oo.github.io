@@ -16,6 +16,8 @@ const Homework = {
                 <li><router-link to="/HW/100220208" class="hover:text-primary hover:underline hover:decoration-solid">12.課堂練習</router-link></li>
                 <li><router-link to="/HW/100220477" class="hover:text-primary hover:underline hover:decoration-solid">13.全景及3D網頁</router-link></li>
                 <li><a href="https://aac219oo.github.io/next_practice/coupon" target="_blank" class="hover:text-primary hover:underline hover:decoration-solid">14.課堂練習</a></li>
+                <li><router-link to="/HW/100220929" class="hover:text-primary hover:underline hover:decoration-solid">15-1.課堂練習</router-link></li>
+                <li><router-link to="/HW/100220930" class="hover:text-primary hover:underline hover:decoration-solid">15-2.課堂練習</router-link></li>
             </ul>
     `,
 };
