@@ -317,6 +317,7 @@ const ProjectDetail = {
                                 <img  
                                     :src="img" 
                                     :alt="project.name + ' 截圖 ' + (index + 1)" 
+                                    loading="lazy"
                                     class="block object-cover object-top px-3 pointer-events-none w-full h-full"
                                 >
                                 <!-- pointer-events-none 確保圖片本身不會被瀏覽器預設的拖曳行為影響 -->

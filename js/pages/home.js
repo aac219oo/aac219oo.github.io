@@ -261,8 +261,9 @@ const Home = {
                         <div class="w-full md:w-1/2 flex justify-center">
                             <img 
                                 class="block brightness-125 shadow-lg" 
-                                src="/assets/images/F52A146D-D370-4161-9414-21A16814CE54.jpg" 
+                                src="/assets/images/yehlier-scenery.webp" 
                                 alt="野柳風景照"
+                                fetchpriority="high"
                             >
                         </div>
                     </div>
@@ -304,6 +305,7 @@ const Home = {
                                         <img 
                                             :src="project.image" 
                                             :alt="project.name" 
+                                            loading="lazy"
                                             class="rounded-lg w-3/4 md:w-full max-w-md m-4 transition-all duration-300 group-hover:scale-[1.05] group-hover:shadow-2xl"
                                         />
 
@@ -337,11 +339,12 @@ const Home = {
                             <picture>
                                 <source
                                     media="(max-width: 768px)"
-                                    srcset="./assets/images/christian-joudrey-yCCZvWbah_g-unsplash-768.jpg"
+                                    srcset="./assets/images/contact-bg-768.webp"
                                 />
                                 <img
-                                    src="./assets/images/christian-joudrey-yCCZvWbah_g-unsplash.jpg"
+                                    src="./assets/images/contact-bg.webp"
                                     alt="Contact Background"
+                                    loading="lazy"
                                     class="w-full h-full object-cover brightness-75"
                                 />
                             </picture>

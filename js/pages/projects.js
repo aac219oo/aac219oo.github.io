@@ -34,6 +34,7 @@ const Projects = {
                         <img 
                             :src="project.image" 
                             :alt="project.name" 
+                            loading="lazy"
                             class="w-full h-full object-cover absolute z-1 transform group-hover:scale-105 transition-transform duration-500"
                         >
                         <!-- 覆蓋層 (可選：增加互動感) -->

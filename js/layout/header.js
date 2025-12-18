@@ -111,7 +111,7 @@ export const HeaderTemplate = /* html */ `
                 </div>
             </div>
             
-            <div ref="langContainerRef" class="relative hidden">
+            <div ref="langContainerRef" class="relative">
                 <button
                     ref="langBtnRef"
                     @click="isLangSelectorOpen = !isLangSelectorOpen" 
@@ -429,14 +429,14 @@ const Header = {
         onMounted(() => {
             loadheader();
 
-                        isMobile.value = window.innerWidth <= 768;
+            isMobile.value = window.innerWidth <= 768;
             let lastWidth = window.innerWidth;
 
             window.addEventListener('resize', () => {
                 // 忽略沒有改變寬度的 resize 事件 (特別是 Safari 手機版滑動時會觸發 resize)
                 if (window.innerWidth === lastWidth) return;
                 lastWidth = window.innerWidth;
-                
+
                 // [新增] 更新 isMobile 狀態
                 isMobile.value = window.innerWidth <= 768;
 
@@ -458,7 +458,7 @@ const Header = {
                     } else {
                         // === 桌機版重算 ===
                         const center = el.offsetLeft + el.offsetWidth / 2;
-                        targetParams = { 
+                        targetParams = {
                             x: center,
                             y: el.offsetTop + el.offsetHeight + 5,
                             xPercent: -50,
