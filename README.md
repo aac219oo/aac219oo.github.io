@@ -2,7 +2,7 @@
 
 ## Hi. I am James Hsu. (許家瑜)
 
-<img src="https://aac219oo.github.io/assets/images/F52A146D-D370-4161-9414-21A16814CE54.jpg" alt="生活照" width="250" style="max-width: 100%;" />
+<img src="https://aac219oo.github.io/assets/images/yehlier-scenery.webp" alt="生活照" width="250" style="max-width: 100%;" />
 
 <br />
 
