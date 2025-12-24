@@ -1,6 +1,7 @@
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { onMounted, ref, onUnmounted, nextTick } from 'vue';
+import { onMounted, ref, onUnmounted, nextTick, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppIcon from '/js/components/AppIcon.js';
 import { useWaitForImages } from '/js/composables/useWaitForImages.js';
 import ContactForm from '/js/components/contactForm.js';
@@ -15,6 +16,7 @@ const Home = {
         'contact-form': ContactForm,
     },
     setup() {
+        const { t, locale } = useI18n();
         const containerRef = ref(null);
         const aboutRef = ref(null);
         const projects = ref([]);
@@ -25,7 +27,7 @@ const Home = {
         const contactSectionRef = ref(null);
 
         let ctx;
-        const handleFormFocus = () => {
+        const handleFormFocus = (e) => {
             // 取得目標元素
             const target = e.target;
 
@@ -136,9 +138,15 @@ const Home = {
 
         const loadProjects = async () => {
             try {
-                const response = await fetch(
-                    CONFIG.LOCAL_DATA + 'projects.json'
-                );
+                // Determine which file to load based on current locale
+                const currentLocale = locale.value;
+                // Fallback to 'zh-Hant' if locale is somehow undefined or strange (safety check)
+                const langFile =
+                    currentLocale === 'en'
+                        ? 'projects_en.json'
+                        : 'projects_zh-Hant.json';
+
+                const response = await fetch(CONFIG.LOCAL_DATA + langFile);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -151,12 +159,16 @@ const Home = {
                     ScrollTrigger.refresh();
                 }, 100);
             } catch (error) {
-                console.error('Failed to load navigation links:', error);
+                console.error('Failed to load projects:', error);
             }
         };
 
         useWaitForImages(() => {
             ScrollTrigger.refresh();
+        });
+
+        watch(locale, () => {
+            loadProjects();
         });
 
         onMounted(() => {
@@ -247,14 +259,10 @@ const Home = {
                         <div class="md:w-1/2 mb-6 flex flex-col justify-center items-center h-full px-10">
                             <div class="md:max-w-md">
                                 <h2 class="font-bold pb-3">
-                                    <span class="block pb-3 text-4xl">你好, 我是</span>
+                                    <span class="block pb-3 text-4xl">{{ $t('home.greeting') }}</span>
                                     <span class="text-5xl md:text-7xl text-primary">James Hsu</span>
                                 </h2>
-                                <p class="">
-                                    具備跨領域的技術與管理能力，
-                                    <br>
-                                    致力於打造高效且貼近使用者的應用程式。
-                                </p>
+                                <p class="" v-html="$t('home.role')"></p>
                             </div>
                         </div>
 
@@ -270,20 +278,14 @@ const Home = {
 
                     <div ref="aboutRef" data-speed="0.5" class="will-change-transform px-2 z-1 w-full min-h-[360px] flex flex-col justify-center items-center bg-sky-50 dark:bg-gray-500 dark:text-dark-text">
                         <div class="text-center max-w-[480px]">
-                            <h3 class="text-4xl font-bold mb-4">關於我</h3>
-                            <p class="text-justify mb-4">
-                            我擁有2年多的Web3前後端相關網頁應用的實務開發經驗，具備前端工程師、專案管理師與MIS三重實務經驗，曾任職於麥斯科技與哲煜科技。
-                            自軍旅與美國進修背景成功轉職，精通HTML、CSS、JavaScript及Angular、Vue3、React等主流框架。
-                            <br>
-                            我將過往培養的紀律與執行力轉化為職場優勢，擅長跨領域溝通與問題解決。
-                            這段跨領域歷程證明我具備高度適應力與學習熱忱，能以「技術＋管理」的全面視角，為專案創造最大價值。
-                            </p>
-                            <router-link to="/About" class="underline float-right hover:text-primary block w-fit border p-2 rounded">更多關於我</router-link>
+                            <h3 class="text-4xl font-bold mb-4">{{ $t('home.about_title') }}</h3>
+                            <p class="text-justify mb-4" v-html="$t('home.about_summary')"></p>
+                            <router-link to="/About" class="underline float-right hover:text-primary block w-fit border p-2 rounded">{{ $t('home.more_about') }}</router-link>
                         </div>
                     </div>
 
                     <div ref="projectsRef" data-speed="0.5" class="will-change-transform w-full pb-[100px] z-1 min-h-[720px] flex flex-col justify-start items-center bg-light-bg dark:bg-dark-bg dark:text-dark-text">
-                            <h3 ref="projectTitleRef" class="will-change-transform z-10 w-full text-center text-4xl font-bold p-8 bg-light-bg dark:bg-dark-bg">精選．作品集</h3>
+                            <h3 ref="projectTitleRef" class="will-change-transform z-10 w-full text-center text-4xl font-bold p-8 bg-light-bg dark:bg-dark-bg">{{ $t('home.featured_projects') }}</h3>
                             <div class="flex justify-center items-center flex-col flex-wrap gap-[40px] mt-12">
                                 <div
                                     v-for="(project, index) in projects" 
@@ -316,7 +318,7 @@ const Home = {
                                                 px-4 py-2 rounded-full text-sm tracking-wider whitespace-nowrap
                                                 border-1 border-black group-hover:shadow-[3px_3px_0px_hsl(from_var(--color-primary)_calc(h_+_120)_s_l_/_0.5)]"
                                             >
-                                            了解更多<span class="font-bold">{{ project.name }}</span> <app-icon name="link" class="inline-block w-[15px] text-dark-text dark:text-light-text" />
+                                            {{ $t('home.read_more') }}<span class="font-bold">{{ project.name }}</span> <app-icon name="link" class="inline-block w-[15px] text-dark-text dark:text-light-text" />
                                         </div>
                                     </router-link>
                                     <hr
@@ -324,7 +326,7 @@ const Home = {
                                         class="w-full border-t border-primary"
                                     />
                                 </div>
-                                <router-link to="/Projects" class="block w-fit border p-2 underline rounded hover:text-primary">更多作品集</router-link>
+                                <router-link to="/Projects" class="block w-fit border p-2 underline rounded hover:text-primary">{{ $t('home.more_projects') }}</router-link>
                             </div>
                     </div>
                     <div 

@@ -1,5 +1,6 @@
-import { onMounted, ref, nextTick, onUnmounted } from 'vue';
+import { onMounted, ref, nextTick, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import gsap from 'gsap';
 import Draggable from 'gsap/Draggable';
 import AppIcon from '/js/components/AppIcon.js';
@@ -13,6 +14,7 @@ const ProjectDetail = {
     setup() {
         const route = useRoute();
         const router = useRouter();
+        const { t, locale } = useI18n();
         const project = ref(null);
         const loading = ref(true);
         const error = ref(null);
@@ -172,10 +174,16 @@ const ProjectDetail = {
             else if (e.key === 'Escape') closeLightbox();
         };
 
-        onMounted(async () => {
-            window.addEventListener('keydown', handleKeydown);
+        const loadProjectData = async () => {
+            loading.value = true;
+            error.value = null;
             try {
-                const response = await fetch(CONFIG.LOCAL_DATA + 'projects.json');
+                const currentLocale = locale.value;
+                const langFile =
+                    currentLocale === 'en'
+                        ? 'projects_en.json'
+                        : 'projects_zh-Hant.json';
+                const response = await fetch(CONFIG.LOCAL_DATA + langFile);
                 if (!response.ok)
                     throw new Error('Network response was not ok');
                 const data = await response.json();
@@ -186,7 +194,7 @@ const ProjectDetail = {
                 if (foundProject) {
                     project.value = foundProject;
                 } else {
-                    error.value = '找不到該專案資料';
+                    error.value = t('ProjectDetail.error_not_found'); //'找不到該專案資料';
                 }
 
                 await nextTick();
@@ -195,10 +203,19 @@ const ProjectDetail = {
                 }, 100);
             } catch (err) {
                 console.error(err);
-                error.value = '讀取資料發生錯誤';
+                error.value = t('ProjectDetail.error_load'); // '讀取資料發生錯誤';
             } finally {
                 loading.value = false;
             }
+        };
+
+        watch(locale, () => {
+            loadProjectData();
+        });
+
+        onMounted(async () => {
+            window.addEventListener('keydown', handleKeydown);
+            loadProjectData();
         });
 
         // 記得在組件銷毀時清理
@@ -224,18 +241,19 @@ const ProjectDetail = {
             closeLightbox,
             prevImage,
             nextImage,
+            t
         };
     },
     template: /* html */ `
         <div class="w-full mx-auto px-4 lg:px-8 text-light-text dark:text-dark-text">
             
             <div v-if="loading" class="text-center py-20">
-                載入中...
+                {{ $t('ProjectDetail.loading') }}
             </div>
 
             <div v-else-if="error" class="text-center py-20">
                 <p class="text-xl mb-4">{{ error }}</p>
-                <button @click="goBack" class="text-blue-600 hover:underline">返回列表</button>
+                <button @click="goBack" class="text-blue-600 hover:underline">{{ $t('ProjectDetail.back_list') }}</button>
             </div>
 
             <div v-else class="">
@@ -246,7 +264,7 @@ const ProjectDetail = {
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
                     </svg>
-                    返回作品集
+                    {{ $t('ProjectDetail.back_projects') }}
                 </button>
                 
                 <div class="w-full h-64 md:h-96 relative">
@@ -260,34 +278,34 @@ const ProjectDetail = {
 
                 <div class="p-2 md:p-8">
                     <div class="prose max-w-none">
-                        <h3 class="text-2xl font-bold mb-4">專案介紹</h3>
+                        <h3 class="text-2xl font-bold mb-4">{{ $t('ProjectDetail.intro') }}</h3>
                         <p class="text-lg leading-relaxed mb-4">{{ project.description }}</p>
                         
                         <div class="">                            
                             <p>
-                                <strong>主要技術：</strong>
+                                <strong>{{ $t('ProjectDetail.tech') }}</strong>
                                 <span v-for="(tech, index) in project.technologies" :key="index" class="w-fit inline-block">
                                     <app-icon :name="tech" class="h-[30px] fill-none mr-2" />
                                 </span>
                             </p>
                             <p>
-                                <strong>專案連結：</strong>
+                                <strong>{{ $t('ProjectDetail.link') }}</strong>
                                 <a v-if="project.link" :href="project.link" target="_blank" class="hover:text-primary hover:underline">
                                     {{ project.link }}
                                     <app-icon name="link" class="inline-block w-[15px]" />
                                 </a>
-                                <span v-else>暫無提供</span>
+                                <span v-else>{{ $t('ProjectDetail.none') }}</span>
                             </p>
                             <p>
-                                <strong>GitHub：</strong>
+                                <strong>{{ $t('ProjectDetail.github') }}</strong>
                                 <a v-if="project.github" :href="project.github" target="_blank" class="hover:text-primary hover:underline">
                                     {{ project.github }}
                                     <app-icon name="link" class="inline-block w-[15px]" />
                                 </a>
-                                <span v-else>暫無提供</span>
+                                <span v-else>{{ $t('ProjectDetail.none') }}</span>
                             </p>
                             <br />
-                            <h3 class="font-bold mb-2">專案資訊</h3>
+                            <h3 class="font-bold mb-2">{{ $t('ProjectDetail.info') }}</h3>
                             <p class="space-y-2">{{ project.content }}</p>
                         </div>
                     </div>

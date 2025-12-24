@@ -1,0 +1,130 @@
+{
+    "projects": [
+        {
+            "id": "new-taipei-park",
+            "name": "New Taipei Metropolitan Park Website",
+            "image": "./assets/images/projects/new-taipei-park.webp",
+            "images": [
+                "./assets/images/projects/new-taipei-park-1.webp",
+                "./assets/images/projects/new-taipei-park-2.webp",
+                "./assets/images/projects/new-taipei-park-3.webp",
+                "./assets/images/projects/new-taipei-park-4.webp",
+                "./assets/images/projects/new-taipei-park-5.webp"
+            ],
+            "description": "Portal website developed using React + Next.js",
+            "technologies": [
+                "React",
+                "Nextjs"
+            ],
+            "content": "The New Taipei Metropolitan Park website is a portal designed to provide users with the latest park information and event news. This project uses React and Next.js technology to ensure the website has high performance and a good user experience, optimizing SEO search rankings. The website adopts accessible design and includes various interactive functions such as event registration, map navigation, and real-time news updates, allowing users to easily obtain the information they need.",
+            "link": "https://www.hrcmntmp.ntpc.gov.tw/",
+            "github": "https://github.com/aac219oo/new-taipei-park"
+        },
+        {
+            "id": "TARF2",
+            "name": "DORTS TARF2 System",
+            "image": "./assets/images/projects/TARF2.webp",
+            "images": [
+                "./assets/images/projects/TARF2-1.webp",
+                "./assets/images/projects/TARF2-2.webp",
+                "./assets/images/projects/TARF2-3.webp",
+                "./assets/images/projects/TARF2-4.webp",
+                "./assets/images/projects/TARF2-5.webp",
+                "./assets/images/projects/TARF2-6.webp",
+                "./assets/images/projects/TARF2-7.webp"
+            ],
+            "description": "EIP application system developed using Vue3 + Element UI",
+            "technologies": [
+                "Vue",
+                "ElementUI"
+            ],
+            "content": "The DORTS TARF2 system is an EIP application system designed for subway engineering management. Its main functions include online approval of technical documents, case inquiry, and statistics modules. This system uses Vue3 and Element UI technology to provide users with an intuitive and efficient operation interface. The system supports uploading and reviewing various document formats, and has powerful query functions to help users quickly find the information they need. In addition, the statistical module can generate various reports to assist management in decision-making analysis.",
+            "link": null,
+            "github": "https://github.com/aac219oo/TARF2"
+        },
+        {
+            "id": "masspm",
+            "name": "Mass Technology Project Management System",
+            "image": "./assets/images/projects/masspm.webp",
+            "images": [
+                "./assets/images/projects/masspm-1.webp",
+                "./assets/images/projects/masspm-2.webp",
+                "./assets/images/projects/masspm-3.webp",
+                "./assets/images/projects/masspm-4.webp",
+                "./assets/images/projects/masspm-5.webp"
+            ],
+            "description": "Project management system developed using React + Axios",
+            "technologies": [
+                "React",
+                "Axios"
+            ],
+            "content": "The Mass Technology Project Management System is a project management tool designed for Mass Technology to improve team collaboration and project execution efficiency. This system uses React and Axios technology to provide users with an intuitive and efficient operation interface. System functions include task assignment, progress tracking, file sharing, and instant messaging, allowing team members to keep abreast of project status at any time. In addition, the system also has report generation and analysis functions to assist management in decision-making and resource allocation.",
+            "link": null,
+            "github": "https://github.com/aac219oo/masspm"
+        },
+        {
+            "id": "scbooks",
+            "name": "Sun Ding Digital Publishing",
+            "image": "./assets/images/projects/scbooks.webp",
+            "images": [
+                "./assets/images/projects/scbooks-1.webp",
+                "./assets/images/projects/scbooks-2.webp",
+                "./assets/images/projects/scbooks-3.webp",
+                "./assets/images/projects/scbooks-4.webp",
+                "./assets/images/projects/scbooks-5.webp"
+            ],
+            "description": "Shopping cart system developed using Angular + Bootstrap",
+            "technologies": [
+                "Angular",
+                "Bootstrap",
+                "TypeScript"
+            ],
+            "content": "The Sun Ding Digital Publishing Shopping Cart System is an online shopping platform designed for publishing products, aiming to provide users with a convenient shopping experience. This system uses Angular and Bootstrap technology to ensure the website has responsive design and high performance. System functions include product browsing, adding to cart, checkout, and order management, and supports multiple payment methods to facilitate users to complete transactions. In addition, the system also has a member management function, allowing users to easily track order status and enjoy exclusive offers.",
+            "link": "https://www.scbooks.com.tw/",
+            "github": "https://github.com/aac219oo/scbooks"
+        },
+        {
+            "id": "marine_sys",
+            "name": "Marine National Park Item Management System",
+            "image": "./assets/images/projects/marine_sys.webp",
+            "images": [
+                "./assets/images/projects/marine_sys-1.webp",
+                "./assets/images/projects/marine_sys-2.webp",
+                "./assets/images/projects/marine_sys-3.webp",
+                "./assets/images/projects/marine_sys-4.webp",
+                "./assets/images/projects/marine_sys-5.webp",
+                "./assets/images/projects/marine_sys-6.webp",
+                "./assets/images/projects/marine_sys-7.webp"
+            ],
+            "description": "Internal item management system developed using Asp.net & jQuery",
+            "technologies": [
+                "AspNet",
+                "jQuery"
+            ],
+            "content": "The Marine National Park Headquarters Item Management System is an internal system designed for the management office to improve the efficiency and accuracy of item management. This system uses Asp.net and jQuery technology to provide a user-friendly operation interface. System functions include item entry, exit, inventory, and scrapping, and supports various inquiries and report generation, allowing managers to keep abreast of item status at any time. In addition, the system also has authority management functions to ensure that users with different roles can operate according to their responsibilities.",
+            "link": null,
+            "github": ""
+        },
+        {
+            "id": "electric",
+            "name": "Taipower Personnel Management System",
+            "image": "./assets/images/projects/electric.webp",
+            "images": [
+                "./assets/images/projects/electric-1.webp",
+                "./assets/images/projects/electric-2.webp",
+                "./assets/images/projects/electric-3.webp",
+                "./assets/images/projects/electric-4.webp",
+                "./assets/images/projects/electric-5.webp"
+            ],
+            "description": "Internal personnel management system developed using Asp.net & Bootstrap & jQuery",
+            "technologies": [
+                "AspNet",
+                "jQuery",
+                "Bootstrap"
+            ],
+            "content": "The Taipower Power Maintenance Department Personnel Management System is an internal system designed for the maintenance department to improve the efficiency and accuracy of personnel management. This system uses Asp.net, Bootstrap, and jQuery technology to provide a user-friendly operation interface. System functions include personnel data management, shift scheduling, attendance recording, and performance evaluation, and supports various inquiries and report generation, allowing managers to keep abreast of personnel status at any time. In addition, the system also has authority management functions to ensure that users with different roles can operate according to their responsibilities.",
+            "link": null,
+            "github": ""
+        }
+    ]
+}

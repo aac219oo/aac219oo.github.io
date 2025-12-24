@@ -1,4 +1,5 @@
-import { onMounted, ref, onUnmounted, nextTick } from 'vue';
+import { onMounted, ref, onUnmounted, nextTick, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppIcon from '/js/components/AppIcon.js';
 import { CONFIG } from '/js/config.js';
 
@@ -7,20 +8,36 @@ const Projects = {
         'app-icon': AppIcon,
     },
     setup() {
+        const { t, locale } = useI18n();
         const projects = ref([]);
-        onMounted(async () => {
-            const response = await fetch(CONFIG.LOCAL_DATA + 'projects.json');
+
+        const loadProjects = async () => {
+            const currentLocale = locale.value;
+            const langFile =
+                currentLocale === 'en'
+                    ? 'projects_en.json'
+                    : 'projects_zh-Hant.json';
+
+            const response = await fetch(CONFIG.LOCAL_DATA + langFile);
             const data = await response.json();
             projects.value = data.projects;
+        };
+
+        watch(locale, () => {
+            loadProjects();
+        });
+
+        onMounted(async () => {
+            loadProjects();
         });
         // console.log(projects);
-        return { projects };
+        return { projects, t };
     },
     template: /* html */ `
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-light-text dark:text-dark-text">
             <!-- 頁面標題區塊 -->
             <div class="text-center mb-12">
-                <h1 class="text-4xl font-extrabold mb-4">作品集</h1>
+                <h1 class="text-4xl font-extrabold mb-4">{{ $t('Projects.title') }}</h1>
             </div>
 
             <!-- 專案卡片 Grid 佈局 -->
@@ -52,7 +69,7 @@ const Projects = {
                                 :to="{ name: 'project_detail', params: { id: project.id } }" 
                                 class="text-primary font-medium hover:text-[hsl(from_var(--color-primary)_calc(h_+_120)_s_l)] flex items-center gap-2 transition-colors inline-flex"
                             >
-                                查看詳情
+                                {{ $t('Projects.view_detail') }}
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                 </svg>
@@ -62,7 +79,7 @@ const Projects = {
                 </div>
 
             </div>
-            <p class="mt-6 text-right">還有更多作品持續上架中...</p>
+            <p class="mt-6 text-right">{{ $t('Projects.more_coming') }}</p>
         </div>
     `,
 };
