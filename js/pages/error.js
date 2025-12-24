@@ -1,13 +1,17 @@
 import { h } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // 模組化分頁元件
-const Error = {
-    // 您可以在這裡使用 setup() 函式或 options api
+const ErrorPage = {
+    setup() {
+        const { t } = useI18n();
+        return { t };
+    },
     template: `
-        <div class="text-center py-12">
-            <h2>404 - 找不到頁面</h2>
-            <p>您要找的頁面不存在，請
-                <router-link to="/">回首頁</router-link>
+        <div class="text-center py-12 text-light-text dark:text-dark-text">
+            <h2>{{ $t('Error.title') }}</h2>
+            <p>{{ $t('Error.description') }}
+                <router-link to="/">{{ $t('Error.back_home') }}</router-link>
             </p>
         </div>
     `

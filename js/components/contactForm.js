@@ -1,9 +1,12 @@
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { CONFIG } from '/js/config.js';
+
 export default {
     name: 'ContactForm',
     props: {},
     setup(props) {
+        const { t, locale } = useI18n();
         // GAS Google Apps Script 網址
         const GAS_URL = CONFIG.GAS_URL;
 
@@ -23,12 +26,12 @@ export default {
         const submitStatus = ref({ type: '', message: '' });
 
         // 定義時間段選項
-        const timeOptions = [
+        const timeOptions = computed(() => [
             { value: 'morning', label: '09:00 ~ 12:00' },
             { value: 'afternoon', label: '13:00 ~ 17:00' },
             { value: 'evening', label: '18:00 ~ 21:00' },
-            { value: 'any', label: '隨時皆可' },
-        ];
+            { value: 'any', label: t('Contact.anytime') },
+        ]);
 
         const handleTimeChange = (type) => {
             if (!form.contactDay.includes(type)) {
@@ -158,6 +161,12 @@ export default {
             }
         };
 
+        watch(locale, () => {
+            // Re-draw captcha or update options needed?
+            // Options are computed, so they update automatically.
+            // Captcha drawing is canvas based, no translation needed inside canvas (random chars).
+        });
+
         onMounted(() => {
             generateCaptcha();
         });
@@ -170,7 +179,7 @@ export default {
             ) {
                 submitStatus.value = {
                     type: 'error',
-                    message: '驗證碼錯誤，請重新輸入。',
+                    message: t('Contact.invalid_captcha'),
                 };
                 generateCaptcha();
                 form.captcha = '';
@@ -180,35 +189,35 @@ export default {
             isSubmitting.value = true;
             submitStatus.value = {
                 type: 'info',
-                message: '正在傳送訊息，請稍候...',
+                message: t('Contact.sending'),
             }; // 設定傳送中狀態
 
             try {
                 // 2. 整理資料：將性別與時間合併到 message 中
                 let genderText = '';
-                if (form.gender === 'male') genderText = '先生';
-                else if (form.gender === 'female') genderText = '女士';
-                else genderText = '未選擇';
+                if (form.gender === 'male') genderText = t('Contact.male');
+                else if (form.gender === 'female') genderText = t('Contact.female');
+                else genderText = t('Contact.unselected');
 
                 // 整理聯絡時間字串
                 let contactInfo = [];
 
                 // 取得選項文字的 helper
                 const getTimeLabel = (val) => {
-                    if (!val) return '未指定時段';
-                    const opt = timeOptions.find((o) => o.value === val);
-                    return opt ? opt.label : '未指定';
+                    if (!val) return t('Contact.unspecified_time');
+                    const opt = timeOptions.value.find((o) => o.value === val);
+                    return opt ? opt.label : t('Contact.unspecified');
                 };
 
                 if (form.contactDay.includes('weekday')) {
-                    contactInfo.push(`平日: ${getTimeLabel(form.weekdayTime)}`);
+                    contactInfo.push(`${t('Contact.weekday_prefix')}${getTimeLabel(form.weekdayTime)}`);
                 }
                 if (form.contactDay.includes('weekend')) {
-                    contactInfo.push(`週末: ${getTimeLabel(form.weekendTime)}`);
+                    contactInfo.push(`${t('Contact.weekend_prefix')}${getTimeLabel(form.weekendTime)}`);
                 }
 
                 const timeText =
-                    contactInfo.length > 0 ? contactInfo.join(' / ') : '未指定';
+                    contactInfo.length > 0 ? contactInfo.join(' / ') : t('Contact.unspecified');
 
                 // 組合新的訊息內容
                 const finalMessage = `
@@ -242,7 +251,7 @@ ${form.message}
                 if (result.status === 'success') {
                     submitStatus.value = {
                         type: 'success',
-                        message: '發送成功！我會盡快回覆您。',
+                        message: t('Contact.success'),
                     };
                     // [修改] 傳入 false，表示不要清空剛剛設定好的成功訊息
                     resetForm(false);
@@ -253,7 +262,7 @@ ${form.message}
                 console.error('Error:', error);
                 submitStatus.value = {
                     type: 'error',
-                    message: '發送失敗，請檢查網路連線或稍後再試。',
+                    message: t('Contact.fail'),
                 };
             } finally {
                 isSubmitting.value = false;
@@ -272,6 +281,7 @@ ${form.message}
             handleGenderChange,
             handleTimeChange,
             handleDayChange,
+            t
         };
     },
     template: /* html */ `
@@ -281,28 +291,25 @@ ${form.message}
             after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-2xl after:bg-[hsla(0_0%_100%_.6);] after:backdrop-blur-[30px] after:-z-[1]
             "
         >
-            <h2 class="text-3xl font-bold text-center mb-8">聯絡我</h2>
+            <h2 class="text-3xl font-bold text-center mb-8">{{ $t('Contact.title') }}</h2>
 
-            <!--<p class="text-2xl font-bold">聯絡資訊</p>
-            
-            <p class="text-2xl font-bold">聯絡表單</p>-->
             <form @submit.prevent="submitForm" class="space-y-6">
                 <!-- 姓名 -->
                 <div>
-                    <label for="name" class="block mb-2 font-medium">姓名 <span class="text-red-500">*</span></label>
+                    <label for="name" class="block mb-2 font-medium">{{ $t('Contact.name') }} <span class="text-red-500">*</span></label>
                     <input 
                         type="text" 
                         id="name" 
                         v-model="form.name" 
                         required 
-                        placeholder="您的名字"
+                        :placeholder="$t('Contact.name_placeholder')"
                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400"
                     >
                 </div>
 
                 <!-- 性別 -->
                 <div>
-                    <label class="block mb-2 font-medium">稱謂 <span class="text-gray-600 dark:text-gray-300 text-sm font-normal">(選填)</span></label>
+                    <label class="block mb-2 font-medium">{{ $t('Contact.gender') }} <span class="text-gray-600 dark:text-gray-300 text-sm font-normal">{{ $t('Contact.optional') }}</span></label>
                     <div class="flex items-center gap-6">
                         <label class="flex items-center cursor-pointer">
                             <input 
@@ -311,7 +318,7 @@ ${form.message}
                                 @change="handleGenderChange('male')"
                                 class="w-4 h-4 text-primary border-gray-300 focus:ring-primary dark:border-gray-600 dark:bg-gray-700"
                             >
-                            <span class="ml-2">先生</span>
+                            <span class="ml-2">{{ $t('Contact.male') }}</span>
                         </label>
 
                         <label class="flex items-center cursor-pointer">
@@ -321,20 +328,20 @@ ${form.message}
                                 @change="handleGenderChange('female')"
                                 class="w-4 h-4 text-primary border-gray-300 focus:ring-primary dark:border-gray-600 dark:bg-gray-700"
                             >
-                            <span class="ml-2">女士</span>
+                            <span class="ml-2">{{ $t('Contact.female') }}</span>
                         </label>
                     </div>
                 </div>
 
                 <!-- Email -->
                 <div>
-                    <label for="email" class="block mb-2 font-medium">Email <span class="text-red-500">*</span></label>
+                    <label for="email" class="block mb-2 font-medium">{{ $t('Contact.email') }} <span class="text-red-500">*</span></label>
                     <input 
                         type="email" 
                         id="email" 
                         v-model="form.email" 
                         required 
-                        placeholder="您的 Email"
+                        :placeholder="$t('Contact.email_placeholder')"
                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400"
                     >
                 </div>
@@ -342,20 +349,20 @@ ${form.message}
                 <!-- 手機號碼 (選填) -->
                 <div>
                     <label for="phone" class="block mb-2 font-medium">
-                        電話/手機號碼 <span class="text-gray-600 dark:text-gray-300 text-sm font-normal">(選填)</span>
+                        {{ $t('Contact.phone') }} <span class="text-gray-600 dark:text-gray-300 text-sm font-normal">{{ $t('Contact.optional') }}</span>
                     </label>
                     <input 
                         type="tel" 
                         id="phone" 
                         v-model="form.phone" 
-                        placeholder="您的電話或手機號碼擇一"
+                        :placeholder="$t('Contact.phone_placeholder')"
                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400"
                     >
                 </div>
 
                 <!-- 方便聯絡時間 (新增) -->
                 <div>
-                    <label class="block mb-2 font-medium">方便聯絡時間 <span class="text-gray-600 dark:text-gray-300 text-sm font-normal">(選填、可複選)</span></label>
+                    <label class="block mb-2 font-medium">{{ $t('Contact.time') }} <span class="text-gray-600 dark:text-gray-300 text-sm font-normal">{{ $t('Contact.time_hint') }}</span></label>
                     <div class="space-y-3">
                         <!-- 平日選項 -->
                         <div class="flex items-center flex-wrap gap-4">
@@ -367,7 +374,7 @@ ${form.message}
                                     @change="handleDayChange('weekday')"
                                     class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary dark:border-gray-600 dark:bg-gray-700"
                                 >
-                                <span class="ml-2">平日</span>
+                                <span class="ml-2">{{ $t('Contact.weekday') }}</span>
                             </label>
                             
                             <select 
@@ -375,7 +382,7 @@ ${form.message}
                                 @change="handleTimeChange('weekday')"
                                 class="flex-1 min-w-[150px] px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 cursor-pointer"
                             >
-                                <option value="" disabled selected>請選擇平日時段</option>
+                                <option value="" disabled selected>{{ $t('Contact.select_weekday') }}</option>
                                 <option v-for="opt in timeOptions" :key="'wk-'+opt.value" :value="opt.value">
                                     {{ opt.label }}
                                 </option>
@@ -392,7 +399,7 @@ ${form.message}
                                     @change="handleDayChange('weekend')"
                                     class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary dark:border-gray-600 dark:bg-gray-700"
                                 >
-                                <span class="ml-2">週末</span>
+                                <span class="ml-2">{{ $t('Contact.weekend') }}</span>
                             </label>
                             
                             <select 
@@ -400,7 +407,7 @@ ${form.message}
                                 @change="handleTimeChange('weekend')"
                                 class="flex-1 min-w-[150px] px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 cursor-pointer"
                             >
-                                <option value="" disabled selected>請選擇週末時段</option>
+                                <option value="" disabled selected>{{ $t('Contact.select_weekend') }}</option>
                                 <option v-for="opt in timeOptions" :key="'wd-'+opt.value" :value="opt.value">
                                     {{ opt.label }}
                                 </option>
@@ -412,27 +419,27 @@ ${form.message}
 
                 <!-- 訊息 -->
                 <div>
-                    <label for="message" class="block mb-2 font-medium">訊息 <span class="text-red-500">*</span></label>
+                    <label for="message" class="block mb-2 font-medium">{{ $t('Contact.message') }} <span class="text-red-500">*</span></label>
                     <textarea 
                         id="message" 
                         v-model="form.message" 
                         required 
                         rows="5"
-                        placeholder="想說的話..."
+                        :placeholder="$t('Contact.message_placeholder')"
                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 resize-none"
                     ></textarea>
                 </div>
 
                 <!-- 圖形驗證碼 -->
                 <div>
-                    <label for="captcha" class="block mb-2 font-medium">驗證碼 <span class="text-red-500">*</span></label>
+                    <label for="captcha" class="block mb-2 font-medium">{{ $t('Contact.captcha') }} <span class="text-red-500">*</span></label>
                     <div class="flex items-center gap-3">
                         <input 
                             type="text" 
                             id="captcha" 
                             v-model="form.captcha" 
                             required 
-                            placeholder="請輸入驗證碼"
+                            :placeholder="$t('Contact.captcha_placeholder')"
                             class="flex-1 w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400"
                         >
                         <!-- 驗證碼畫布 -->
@@ -441,7 +448,7 @@ ${form.message}
                             width="120" 
                             height="42" 
                             class="cursor-pointer rounded border border-gray-300 dark:border-gray-600"
-                            title="點擊刷新驗證碼"
+                            :title="$t('Contact.refresh_captcha')"
                             @click="generateCaptcha"
                         ></canvas>
                         <!-- 刷新按鈕 (輔助) -->
@@ -449,7 +456,7 @@ ${form.message}
                             type="button" 
                             @click="generateCaptcha"
                             class="p-2 text-gray-500 hover:text-primary transition-colors cursor-pointer"
-                            title="刷新驗證碼"
+                            :title="$t('Contact.refresh_tooltip')"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -478,7 +485,7 @@ ${form.message}
                     "
                 >
                     <span v-if="isSubmitting" class="inline-block animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
-                    <span>{{ isSubmitting ? '傳送中...' : '送出訊息' }}</span>
+                    <span>{{ isSubmitting ? $t('Contact.submitting') : $t('Contact.submit') }}</span>
                 </button>
             </form>
         </div>
