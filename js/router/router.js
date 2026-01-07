@@ -225,20 +225,27 @@ const routes = [
             {
                 path: '100221395',
                 name: '100221395',
-                component: () => import('../pages/HW/100221395.js'),
+                component: { render: () => h(RouterView) },
                 meta: { titleKey: 'pageTitle.hw100221395' },
-            },
-            {
-                path: '100221395/section1',
-                name: '100221395_section1',
-                component: () => import('../pages/HW/100221395/section1.js'),
-                meta: { titleKey: 'pageTitle.hw100221395_section1' },
-            },
-            {
-                path: '100221395/section2',
-                name: '100221395_section2',
-                component: () => import('../pages/HW/100221395/section2.js'),
-                meta: { titleKey: 'pageTitle.hw100221395_section2' },
+                children: [
+                    {
+                        path: '',
+                        name: '',
+                        component: () => import('../pages/HW/100221395.js'),
+                    },
+                    {
+                        path: 'section1',
+                        name: '100221395_section1',
+                        component: () => import('../pages/HW/100221395/section1.js'),
+                        meta: { titleKey: 'pageTitle.hw100221395_section1' },
+                    },
+                    {
+                        path: 'section2',
+                        name: '100221395_section2',
+                        component: () => import('../pages/HW/100221395/section2.js'),
+                        meta: { titleKey: 'pageTitle.hw100221395_section2' },
+                    },
+                ],
             }
         ],
     },
