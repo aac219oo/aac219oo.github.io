@@ -222,6 +222,24 @@ const routes = [
                 component: () => import('../pages/HW/100220930.js'),
                 meta: { titleKey: 'pageTitle.hw100220930' },
             },
+            {
+                path: '100221395',
+                name: '100221395',
+                component: () => import('../pages/HW/100221395.js'),
+                meta: { titleKey: 'pageTitle.hw100221395' },
+            },
+            {
+                path: '100221395/section1',
+                name: '100221395_section1',
+                component: () => import('../pages/HW/100221395/section1.js'),
+                meta: { titleKey: 'pageTitle.hw100221395_section1' },
+            },
+            {
+                path: '100221395/section2',
+                name: '100221395_section2',
+                component: () => import('../pages/HW/100221395/section2.js'),
+                meta: { titleKey: 'pageTitle.hw100221395_section2' },
+            }
         ],
     },
     {

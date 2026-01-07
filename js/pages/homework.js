@@ -19,6 +19,7 @@ const Homework = {
                 <li><router-link to="/HW/100220929" class="hover:text-primary hover:underline hover:decoration-solid">15-1.課堂練習</router-link></li>
                 <li><router-link to="/HW/100220930" class="hover:text-primary hover:underline hover:decoration-solid">15-2.課堂練習</router-link></li>
                 <li><a href="https://aac219oo.github.io/okinawa" target="_blank" class="hover:text-primary hover:underline hover:decoration-solid">期末作業展示(旅遊網站)</a></li>
+                <li><router-link to="/HW/100221395" class="hover:text-primary hover:underline hover:decoration-solid">期末考</router-link></li>
             </ul>
     `,
 };
