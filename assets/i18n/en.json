@@ -48,7 +48,10 @@
         "100220477_panorama": "Panorama",
         "100220477_googleearthstudio": "Google Earth Studio",
         "100220929": "Homework 100220929",
-        "100220930": "Homework 100220930"
+        "100220930": "Homework 100220930",
+        "100221395": "Final Exam",
+        "100221395_section1": "Task 1 - RWD Card",
+        "100221395_section2": "Task 2 - Semantic Table"
     },
     "pages": {
         "home_title": "Home",
@@ -209,6 +212,9 @@
         "100220477_googleEarthStudio": "Google Earth Studio",
         "hw100220929": "Homework 100220929",
         "hw100220930": "Homework 100220930",
+        "hw100221395": "Final Exam",
+        "hw100221395_section1": "Task 1 - RWD Card",
+        "hw100221395_section2": "Task 2 - Semantic Table",
         "fallback": "Page Not Found"
     }
 }
